@@ -1,0 +1,575 @@
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\shaders.hlsl
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\Template.exe.config
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.D3DCompiler.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Desktop.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Diagnostics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct2D1.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct3D11.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct3D11.Effects.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct3D9.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.DirectInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.DirectSound.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.DXGI.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Mathematics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.MediaFoundation.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.RawInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.XAudio2.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.XInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.D3DCompiler.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.D3DCompiler.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Desktop.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Desktop.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Diagnostics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct2D1.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct2D1.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct3D11.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct3D11.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct3D11.Effects.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct3D11.Effects.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct3D9.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Direct3D9.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.DirectInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.DirectInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.DirectSound.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.DirectSound.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.DXGI.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.DXGI.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Mathematics.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.Mathematics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.MediaFoundation.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.MediaFoundation.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.RawInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.RawInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.XAudio2.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.XAudio2.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.XInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\SharpDX.XInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\obj\x64\Debug\Template.Properties.Resources.resources
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\obj\x64\Debug\Template.csproj.GenerateResource.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\obj\x64\Debug\Template.csproj.CoreCompileInputs.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\obj\x64\Debug\Template.csproj.CopyComplete
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\obj\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\obj\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\obj\x64\Debug\Template.csprojAssemblyReference.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab\Template\bin\x64\Debug\sharpdx_direct3d11_1_effects_x64.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\shaders.hlsl
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\sharpdx_direct3d11_1_effects_x64.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\Template.exe.config
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.D3DCompiler.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Desktop.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Diagnostics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct2D1.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct3D11.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct3D11.Effects.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct3D9.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.DirectInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.DirectSound.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.DXGI.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Mathematics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.MediaFoundation.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.RawInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.XAudio2.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.XInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.D3DCompiler.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.D3DCompiler.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Desktop.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Desktop.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Diagnostics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct2D1.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct2D1.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct3D11.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct3D11.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct3D11.Effects.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct3D11.Effects.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct3D9.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Direct3D9.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.DirectInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.DirectInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.DirectSound.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.DirectSound.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.DXGI.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.DXGI.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Mathematics.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.Mathematics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.MediaFoundation.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.MediaFoundation.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.RawInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.RawInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.XAudio2.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.XAudio2.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.XInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\bin\x64\Debug\SharpDX.XInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\obj\x64\Debug\Template.csprojAssemblyReference.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\obj\x64\Debug\Template.Properties.Resources.resources
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\obj\x64\Debug\Template.csproj.GenerateResource.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\obj\x64\Debug\Template.csproj.CoreCompileInputs.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\obj\x64\Debug\Template.csproj.CopyComplete
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\obj\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v2\Template\obj\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\shaders.hlsl
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\Template.exe.config
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.D3DCompiler.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Desktop.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Diagnostics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Direct2D1.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Direct3D11.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Direct3D9.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.DirectInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.DirectSound.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.DXGI.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Mathematics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.MediaFoundation.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.RawInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.XAudio2.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.XInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.D3DCompiler.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.D3DCompiler.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Desktop.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Desktop.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Diagnostics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Direct2D1.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Direct2D1.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Direct3D11.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Direct3D11.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Direct3D9.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Direct3D9.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.DirectInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.DirectInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.DirectSound.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.DirectSound.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.DXGI.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.DXGI.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Mathematics.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.Mathematics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.MediaFoundation.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.MediaFoundation.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.RawInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.RawInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.XAudio2.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.XAudio2.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.XInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\bin\x64\Debug\SharpDX.XInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\obj\x64\Debug\Template.csprojAssemblyReference.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\obj\x64\Debug\Template.Properties.Resources.resources
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\obj\x64\Debug\Template.csproj.GenerateResource.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\obj\x64\Debug\Template.csproj.CoreCompileInputs.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\obj\x64\Debug\Template.csproj.CopyComplete
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\obj\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v3\Template\obj\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\shaders.hlsl
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\Template.exe.config
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.D3DCompiler.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Desktop.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Diagnostics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Direct2D1.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Direct3D11.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Direct3D9.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.DirectInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.DirectSound.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.DXGI.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Mathematics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.MediaFoundation.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.RawInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.XAudio2.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.XInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.D3DCompiler.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.D3DCompiler.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Desktop.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Desktop.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Diagnostics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Direct2D1.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Direct2D1.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Direct3D11.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Direct3D11.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Direct3D9.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Direct3D9.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.DirectInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.DirectInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.DirectSound.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.DirectSound.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.DXGI.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.DXGI.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Mathematics.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.Mathematics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.MediaFoundation.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.MediaFoundation.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.RawInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.RawInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.XAudio2.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.XAudio2.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.XInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\bin\x64\Debug\SharpDX.XInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\obj\x64\Debug\Template.csprojAssemblyReference.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\obj\x64\Debug\Template.Properties.Resources.resources
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\obj\x64\Debug\Template.csproj.GenerateResource.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\obj\x64\Debug\Template.csproj.CoreCompileInputs.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\obj\x64\Debug\Template.csproj.CopyComplete
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\obj\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v4\Template\obj\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\shaders.hlsl
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\Template.exe.config
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.D3DCompiler.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Desktop.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Diagnostics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Direct2D1.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Direct3D11.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Direct3D9.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.DirectInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.DirectSound.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.DXGI.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Mathematics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.MediaFoundation.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.RawInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.XAudio2.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.XInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.D3DCompiler.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.D3DCompiler.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Desktop.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Desktop.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Diagnostics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Direct2D1.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Direct2D1.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Direct3D11.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Direct3D11.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Direct3D9.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Direct3D9.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.DirectInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.DirectInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.DirectSound.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.DirectSound.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.DXGI.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.DXGI.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Mathematics.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.Mathematics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.MediaFoundation.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.MediaFoundation.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.RawInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.RawInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.XAudio2.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.XAudio2.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.XInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\bin\x64\Debug\SharpDX.XInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\obj\x64\Debug\Template.csprojAssemblyReference.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\obj\x64\Debug\Template.Properties.Resources.resources
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\obj\x64\Debug\Template.csproj.GenerateResource.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\obj\x64\Debug\Template.csproj.CoreCompileInputs.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\obj\x64\Debug\Template.csproj.CopyComplete
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\obj\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v5\Template\obj\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\shaders.hlsl
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\Template.exe.config
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.D3DCompiler.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Desktop.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Diagnostics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Direct2D1.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Direct3D11.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Direct3D9.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.DirectInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.DirectSound.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.DXGI.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Mathematics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.MediaFoundation.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.RawInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.XAudio2.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.XInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.D3DCompiler.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.D3DCompiler.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Desktop.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Desktop.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Diagnostics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Direct2D1.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Direct2D1.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Direct3D11.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Direct3D11.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Direct3D9.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Direct3D9.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.DirectInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.DirectInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.DirectSound.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.DirectSound.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.DXGI.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.DXGI.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Mathematics.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.Mathematics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.MediaFoundation.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.MediaFoundation.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.RawInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.RawInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.XAudio2.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.XAudio2.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.XInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\SharpDX.XInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\obj\x64\Debug\Template.csprojAssemblyReference.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\obj\x64\Debug\Template.Properties.Resources.resources
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\obj\x64\Debug\Template.csproj.GenerateResource.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\obj\x64\Debug\Template.csproj.CoreCompileInputs.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\obj\x64\Debug\Template.csproj.CopyComplete
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\obj\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\obj\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v6\Template\bin\x64\Debug\armor.bmp
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\armor.bmp
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\shaders.hlsl
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\Template.exe.config
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.D3DCompiler.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Desktop.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Diagnostics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Direct2D1.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Direct3D11.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Direct3D9.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.DirectInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.DirectSound.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.DXGI.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Mathematics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.MediaFoundation.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.RawInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.XAudio2.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.XInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.D3DCompiler.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.D3DCompiler.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Desktop.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Desktop.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Diagnostics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Direct2D1.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Direct2D1.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Direct3D11.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Direct3D11.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Direct3D9.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Direct3D9.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.DirectInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.DirectInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.DirectSound.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.DirectSound.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.DXGI.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.DXGI.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Mathematics.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.Mathematics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.MediaFoundation.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.MediaFoundation.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.RawInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.RawInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.XAudio2.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.XAudio2.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.XInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\bin\x64\Debug\SharpDX.XInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\obj\x64\Debug\Template.csprojAssemblyReference.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\obj\x64\Debug\Template.Properties.Resources.resources
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\obj\x64\Debug\Template.csproj.GenerateResource.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\obj\x64\Debug\Template.csproj.CoreCompileInputs.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\obj\x64\Debug\Template.csproj.CopyComplete
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\obj\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v7\Template\obj\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Template.exe.config
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.D3DCompiler.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Desktop.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Diagnostics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Direct2D1.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D11.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D9.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.DirectInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.DirectSound.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.DXGI.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Mathematics.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.MediaFoundation.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.RawInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.XAudio2.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.XInput.dll
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.D3DCompiler.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.D3DCompiler.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Desktop.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Desktop.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Diagnostics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Direct2D1.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Direct2D1.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D11.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D11.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D9.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D9.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.DirectInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.DirectInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.DirectSound.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.DirectSound.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.DXGI.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.DXGI.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Mathematics.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.Mathematics.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.MediaFoundation.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.MediaFoundation.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.RawInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.RawInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.XAudio2.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.XAudio2.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.XInput.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\SharpDX.XInput.xml
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\obj\x64\Debug\Template.Properties.Resources.resources
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\obj\x64\Debug\Template.csproj.GenerateResource.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\obj\x64\Debug\Template.csproj.CoreCompileInputs.cache
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\obj\x64\Debug\Template.csproj.CopyComplete
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\obj\x64\Debug\Template.exe
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\obj\x64\Debug\Template.pdb
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Resources\armor.bmp
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Resources\cube.png
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Resources\floor.txt
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Shaders\pixel.hlsl
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Shaders\vertex.hlsl
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Resources\white.bmp
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Resources\cube.txt
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\bin\x64\Debug\Resources\materials.txt
+C:\ZeVS\Учеба\Прогр графики и звука\Projects\Lab v8\Template\obj\x64\Debug\Template.csprojAssemblyReference.cache
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Resources\armor.bmp
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Resources\cube.png
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Resources\cube.txt
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Resources\floor.txt
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Resources\materials.txt
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Shaders\pixel.hlsl
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Shaders\vertex.hlsl
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Resources\white.bmp
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Template.exe.config
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Template.exe
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\Template.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.D3DCompiler.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Desktop.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Diagnostics.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Direct2D1.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D11.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D9.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.DirectInput.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.DirectSound.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.DXGI.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Mathematics.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.MediaFoundation.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.RawInput.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.XAudio2.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.XInput.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.D3DCompiler.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.D3DCompiler.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Desktop.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Desktop.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Diagnostics.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Direct2D1.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Direct2D1.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D11.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D11.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D9.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Direct3D9.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.DirectInput.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.DirectInput.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.DirectSound.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.DirectSound.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.DXGI.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.DXGI.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Mathematics.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.Mathematics.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.MediaFoundation.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.MediaFoundation.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.RawInput.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.RawInput.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.XAudio2.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.XAudio2.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.XInput.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\SharpDX.XInput.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\obj\x64\Debug\Template.csprojAssemblyReference.cache
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\obj\x64\Debug\Template.Properties.Resources.resources
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\obj\x64\Debug\Template.csproj.GenerateResource.cache
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\obj\x64\Debug\Template.csproj.CoreCompileInputs.cache
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\obj\x64\Debug\Template.csproj.CopyComplete
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\obj\x64\Debug\Template.exe
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\obj\x64\Debug\Template.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\ClassLibrary1.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач\Lab v8\Template\bin\x64\Debug\ClassLibrary1.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Resources\armor.bmp
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Resources\cube.png
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Resources\cube.txt
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Resources\floor.txt
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Resources\materials.txt
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Shaders\pixel.hlsl
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Shaders\vertex.hlsl
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Resources\white.bmp
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Template.exe.config
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Template.exe
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\Template.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\ClassLibrary1.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.D3DCompiler.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Desktop.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Diagnostics.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Direct2D1.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Direct3D11.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Direct3D9.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.DirectInput.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.DirectSound.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.DXGI.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Mathematics.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.MediaFoundation.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.RawInput.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.XAudio2.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.XInput.dll
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\ClassLibrary1.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.D3DCompiler.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.D3DCompiler.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Desktop.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Desktop.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Diagnostics.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Direct2D1.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Direct2D1.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Direct3D11.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Direct3D11.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Direct3D9.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Direct3D9.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.DirectInput.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.DirectInput.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.DirectSound.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.DirectSound.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.DXGI.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.DXGI.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Mathematics.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.Mathematics.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.MediaFoundation.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.MediaFoundation.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.RawInput.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.RawInput.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.XAudio2.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.XAudio2.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.XInput.pdb
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\bin\x64\Debug\SharpDX.XInput.xml
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\obj\x64\Debug\Template.csprojAssemblyReference.cache
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\obj\x64\Debug\Template.Properties.Resources.resources
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\obj\x64\Debug\Template.csproj.GenerateResource.cache
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\obj\x64\Debug\Template.csproj.CoreCompileInputs.cache
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\obj\x64\Debug\Template.csproj.CopyComplete
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\obj\x64\Debug\Template.exe
+D:\Я универ\ИТИ-31\3 курс\3 курс, 2 семестр\Курсач_ПГИЗ\RacingGame\Template\obj\x64\Debug\Template.pdb

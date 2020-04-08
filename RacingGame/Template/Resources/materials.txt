@@ -1,0 +1,71 @@
+﻿name:			Floor // magenta, plastic
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		white.bmp
+
+name:			Red // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.5		0.5		0.5		1.0
+diffuse:		1.0		0.2		1.0		1.0
+specular:		0.0		0.2		0.5		1.0
+specularPower:	10.0
+textured:		1
+texture:		red.bmp
+
+name:			Green // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.5		0.5		0.5		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.0		0.2		0.5		1.0
+specularPower:	10.0
+textured:		1
+texture:		green.bmp
+
+name:			Blue // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		blue.bmp
+
+name:			Cube // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		cube.png
+
+name:			Delorean // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		delorean.png
+
+name:			FloorNew // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		floor.png
+
+name:			Road // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		road.png
