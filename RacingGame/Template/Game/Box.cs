@@ -8,17 +8,14 @@ using Template.Graphics;
 
 namespace Template
 {
-    class Box
+    class Box : PhysicalObject
     {
         private MeshObject _mesh;
 
         public void SetMaterial(Material material)
         {
             _mesh.Material = material;
-        }
-        
-        /// <summary> The oriented bounding box </summary>
-        public OrientedBoundingBox boundingBox;
+        } 
 
         private Vector4 _direction;
         /// <summary> Напрвление движения </summary>
@@ -26,7 +23,7 @@ namespace Template
 
         public short moveSign;
 
-        public Vector4 Position
+        public new Vector4 Position
         {
             get
             {
@@ -41,31 +38,14 @@ namespace Template
         }
 
 
-        public Box(MeshObject mesh)
+        public Box(MeshObject mesh) : base(mesh)
         {
             _mesh = mesh;
 
-            float minX, maxX, minY, maxY, minZ, maxZ;
-            minX = maxX = minY = maxY = minZ = maxZ = 0;
-
-            mesh.Vertices.ForEach(v =>
-            {
-                if (v.position.X < minX) minX = v.position.X;
-                if (v.position.X > maxX) maxX = v.position.X;
-
-                if (v.position.Y < minY) minY = v.position.Y;
-                if (v.position.Y > maxY) maxY = v.position.Y;
-
-                if (v.position.Z < minZ) minZ = v.position.Z;
-                if (v.position.Z > maxZ) maxZ = v.position.Z;
-            });
-            
-            boundingBox = new OrientedBoundingBox(new Vector3(minX, minY, minZ), new Vector3(maxX, maxY, maxZ));
             _direction = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
             moveSign = 1;
         }
-
-
+        
         public void MoveTo(float x, float y, float z)
         {
             var pos = _mesh.Position;
@@ -73,7 +53,7 @@ namespace Template
             Position += pos;
         }
 
-        public void MoveBy(float dX, float dY, float dZ)
+        public new void MoveBy(float dX, float dY, float dZ)
         {
             var pos = _mesh.Position;
             pos += new Vector4(dX, dY, dZ, pos.W);
@@ -108,6 +88,11 @@ namespace Template
             boundingBox.Translate(dv);
             boundingBox.Transform(matrix);
             boundingBox.Translate(-dv);
+        }
+
+        public override void CollisionTest(PhysicalObject obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -9,7 +9,18 @@ namespace Template
 {
     abstract class PhysicalObject : GameObject
     {
+        /// <summary> The oriented bounding box </summary>
         public OrientedBoundingBox boundingBox;
+
+        protected ContainmentType collied;
+        /// <summary> Столкнулся ли объект с другим объектом </summary>
+        public bool IsCollied
+        {
+            get
+            {
+                return (collied == ContainmentType.Intersects) ? true : false;
+            }
+        }
 
         public PhysicalObject(MeshObject mesh) : base(mesh)
         {
@@ -52,5 +63,7 @@ namespace Template
         {
             MoveBy(v.X, v.Y, v.Z);
         }
+
+        public abstract void CollisionTest(PhysicalObject obj);
     }
 }

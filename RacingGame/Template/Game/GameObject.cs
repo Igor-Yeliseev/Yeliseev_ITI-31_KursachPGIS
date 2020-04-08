@@ -17,6 +17,7 @@ namespace Template
 
         public GameObject(MeshObject mesh)
         {
+            _meshes = new List<MeshObject>();
             _meshes.Add(mesh);
             _position = mesh._position;
         }

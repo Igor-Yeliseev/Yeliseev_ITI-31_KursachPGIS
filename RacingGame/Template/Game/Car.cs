@@ -10,9 +10,6 @@ namespace Template
 {
     class Car : PhysicalObject
     {
-        /// <summary> Меши объекта </summary>
-        //private List<MeshObject> _meshes;
-
         /// <summary> Переднее левое колесо </summary>
         private MeshObject wheel1;
         /// <summary> Переднее правое колесо </summary>
@@ -22,11 +19,6 @@ namespace Template
         private Vector4 _direction;
         /// <summary> Вектор направления движения </summary>
         public Vector4 Direction { get => _direction; set => _direction = value; }
-
-        /// <summary> Position of the car in virtual world. </summary>
-        //private Vector4 _position;
-        /// <summary> Position of the car in virtual world. </summary>
-        //public Vector4 Position { get => _position; set => _position = value; }
 
         /// <summary> Передний мост (точка центра) </summary>
         private Vector4 _frontAxle;
@@ -215,19 +207,6 @@ namespace Template
                 turnCount += 2;
             }
         }
-
-        //public void MoveBy(float dX, float dY, float dZ)
-        //{
-        //    _meshes.ForEach(m => m.MoveBy(dX, dY, dZ));
-
-        //    _position += new Vector4(dX, dY, dZ, 0.0f);
-        //    boundingBox.Translate(new Vector3(dX, dY, dZ));
-        //}
-
-        //public void MoveBy(Vector4 v)
-        //{
-        //    MoveBy(v.X, v.Y, v.Z);
-        //}
 
         public void MoveForward()
         {
@@ -436,6 +415,29 @@ namespace Template
             }
             else
                 return false;
+        }
+
+        /// <summary>
+        /// Определение и разрешение коллизий
+        /// </summary>
+        /// <param name="obj"></param>
+        public override void CollisionTest(PhysicalObject obj)
+        {
+            collied = boundingBox.Contains(ref obj.boundingBox);
+
+            if (collied == ContainmentType.Intersects)
+            {
+                if (moveSign > 0)
+                {
+                    while (boundingBox.Contains(ref obj.boundingBox) == ContainmentType.Intersects)
+                        MoveProperly(-1);
+                }
+                else
+                {
+                    while (boundingBox.Contains(ref obj.boundingBox) == ContainmentType.Intersects)
+                        MoveProperly(1);
+                }
+            }
         }
     }
 }

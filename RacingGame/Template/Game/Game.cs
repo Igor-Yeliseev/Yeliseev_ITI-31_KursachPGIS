@@ -316,8 +316,8 @@ namespace Template
 
         float ANGLE;
         string screen = "";
-        bool flag = false;
-        FileStream fs;
+        //bool flag = false;
+        //FileStream fs;
 
         ContainmentType collied;
 
@@ -361,12 +361,12 @@ namespace Template
                 
                 if (_inputController.UpPressed)
                 {
-                    if (collied != ContainmentType.Intersects)
+                    if (car.IsCollied == false)
                         car.MoveProperly(1);
                 }
                 if (_inputController.DownPressed)
                 {
-                    if (collied != ContainmentType.Intersects)
+                    if (car.IsCollied == false)
                         car.MoveProperly(-1);
                 }
 
@@ -441,22 +441,7 @@ namespace Template
 
             // Collision Detection
             {
-                collied = car.boundingBox.Contains(ref box2.boundingBox);
-
-                if(collied == ContainmentType.Intersects)
-                {
-                    if (car.moveSign > 0)
-                    {
-                        while(car.boundingBox.Contains(ref box2.boundingBox) == ContainmentType.Intersects)
-                            car.MoveProperly(-1);
-                    }
-                    else if (car.moveSign < 0)
-                    {
-                        while (car.boundingBox.Contains(ref box2.boundingBox) == ContainmentType.Intersects)
-                            car.MoveProperly(1);
-                    }
-                        
-                }
+                car.CollisionTest(box2);
 
                 //if (collied == ContainmentType.Intersects)
                 //{
@@ -466,7 +451,7 @@ namespace Template
                 //        box1.Move(box1.Direction);
                 //}
 
-                screen = (collied == ContainmentType.Intersects) ? "True" : "False";
+                screen = (car.IsCollied) ? "True" : "False";
             }
 
 
