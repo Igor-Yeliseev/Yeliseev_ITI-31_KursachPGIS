@@ -362,13 +362,13 @@ namespace Template
                 
                 if (_inputController.UpPressed)
                 {
-                    //line.MoveBy(-dir / 100);
-                    car.MoveProperly(1);
+                    if (collied != ContainmentType.Intersects)
+                        car.MoveProperly(1);
                 }
                 if (_inputController.DownPressed)
                 {
-                    //line.MoveBy(dir / 100);
-                    car.MoveProperly(-1);
+                    if (collied != ContainmentType.Intersects)
+                        car.MoveProperly(-1);
                 }
 
                 
@@ -376,40 +376,33 @@ namespace Template
                 {
                     Animation.IsWheelsAnimate = false;
                     car.TurnWheelsLeft(alpha);
-                    //line.YawBy(-alpha);
-                    //dir = Vector4.Transform(dir, Matrix.RotationY(-alpha));
                 }
                 if (_inputController.RightPressed)
                 {
                     Animation.IsWheelsAnimate = false;
                     car.TurnWheelsRight(alpha);
-                    //line.YawBy(alpha);
-                    //dir = Vector4.Transform(dir, Matrix.RotationY(alpha));
                 }
                 
                 if (_inputController.Space)
                 {
                     box1.SetMaterial(_materials[2]);
                     //line.MoveTo(car.RearAxle);
-                    //car.BackWheels();
                 }
 
-                if((!_inputController.RightPressed && !_inputController.LeftPressed) && car.IsWheelsTirned)
-                {
-                    Animation.IsWheelsAnimate = true;
-                } Animation.AnimateWheels(car, alpha);
+                //if((!_inputController.RightPressed && !_inputController.LeftPressed) && car.IsWheelsTirned)
+                //{
+                //    Animation.IsWheelsAnimate = true;
+                //} Animation.AnimateWheels(car, alpha);
 
 
 
                 if (_inputController.Num4Pressed)
                 {
-                    if (collied != ContainmentType.Intersects)
-                        box1.RotateY(-alpha);
+                    box1.RotateY(-alpha);
                 }
                 if (_inputController.Num6Pressed)
                 {
-                    if(collied != ContainmentType.Intersects)
-                        box1.RotateY(alpha);
+                    box1.RotateY(alpha);
                 }
                 if (_inputController.Num8Pressed)
                 {
@@ -449,7 +442,20 @@ namespace Template
 
             // Collision Detection
             {
-                //collied = box1.boundingBox.Contains(ref box2.boundingBox);
+                collied = car.boundingBox.Contains(ref box2.boundingBox);
+
+                if(collied == ContainmentType.Intersects)
+                {
+                    if (car.moveSign > 0)
+                    {
+                        car.MoveProperly(-1);
+                    }
+                    else if (car.moveSign < 0)
+                    {
+                        car.MoveProperly(1);
+                    }
+                        
+                }
 
                 //if (collied == ContainmentType.Intersects)
                 //{
@@ -458,8 +464,6 @@ namespace Template
                 //    else if(box1.moveSign < 0)
                 //        box1.Move(box1.Direction);
                 //}
-
-                collied = car.boundingBox.Contains(ref box2.boundingBox);
 
                 screen = (collied == ContainmentType.Intersects) ? "True" : "False";
             }

@@ -144,7 +144,7 @@ namespace Template
         public void BeginRender()
         {
             // Clear depth and stencil buffer and render view
-            _directX3DGraphics.ClearBuffers(Color.Black);
+            _directX3DGraphics.ClearBuffers(Color.LightBlue);
         }
 
         /// <summary>Render 3D object.</summary>

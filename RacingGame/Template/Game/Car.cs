@@ -92,10 +92,11 @@ namespace Template
             _wheelRadius = (maxZ - minZ) / 2;
 
             var body = meshes.Find(m => m.Name.Contains("DELOREAN"));
-            boundingBox = SetOBB(body); // Меши остаются в центре
+            boundingBox = SetOBB(body);
             _position = body.Position;
             boundingBox.Translate((Vector3)_position);
         }
+        
 
         /// <summary>
         /// Задание бокса коллизий
@@ -292,22 +293,24 @@ namespace Template
             turnCount = 0;
         }
 
+        public short moveSign = 0;
+
         /// <summary>
         /// Двигать автомобиль, sign - направление движения (1 - вперед, -1 - назад)
         /// </summary>
         /// <param name="sign"> Направление движения (1 - вперед, -1 - назад)</param>
         public void MoveProperly(short sign)
         {
+            moveSign = sign;
+            //if (moveSign == 0) return;
+
             var point = _frontAxle + _direction;
             var v1 = _frontAxle - _rearAxle; v1.Normalize();
             var v2 = point - _rearAxle;
             float angle = MyVector.GetAngle(v1, v2) / scale; // Угол поворота машины
 
             float projDir = MyVector.DotProduct(v1, _direction) / v1.Length(); // Смещение вдоль направления
-
-            v1.X *= projDir; v1.Y *= projDir; v1.Z *= projDir;
-            
-            moveCar(v1, sign);
+            v1.X *= projDir; v1.Y *= projDir; v1.Z *= projDir; // Получаем проекцию вектора направления
 
             if (sign > 0) // Двигаюсь вперед
             {
@@ -315,6 +318,8 @@ namespace Template
                     turnCar(angle);
                 else
                     turnCar(-angle);
+
+                moveCar(v1, sign);
             }
             else // Двигаюсь назад
             {
@@ -322,6 +327,11 @@ namespace Template
                     turnCar(-angle);
                 else
                     turnCar(angle);
+
+                v1 = _frontAxle - _rearAxle; v1.Normalize();
+                projDir = MyVector.DotProduct(v1, _direction) / v1.Length(); 
+                v1.X *= projDir; v1.Y *= projDir; v1.Z *= projDir;
+                moveCar(v1, sign);
             }
             
         }

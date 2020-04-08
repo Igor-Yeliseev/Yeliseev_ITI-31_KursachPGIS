@@ -52,5 +52,10 @@ namespace Template
         {
             return (v1.X * v2.Z - v2.X * v1.Z);
         }
+
+        //public static Vector4 GetNormal(Vector4 v)
+        //{
+
+        //}
     }
 }
