@@ -18,24 +18,24 @@ namespace Template
         /// <value>Speed of character movements.</value>
         public float Speed { get => _speed; set => _speed = value; }
 
-        /// <summary> The character's car </summary>
-        private List<MeshObject> car;
+        ///// <summary> The character's car </summary>
+        //private List<MeshObject> car;
 
-        /// <summary> The character's car </summary>
-        public List<MeshObject> Car
-        {
-            get
-            {
-                return car;
-            }
-            set
-            {
-                if (value is List<MeshObject> && value != null)
-                {
-                    car = value;
-                }
-            }
-        }
+        ///// <summary> The character's car </summary>
+        //public List<MeshObject> Car
+        //{
+        //    get
+        //    {
+        //        return car;
+        //    }
+        //    set
+        //    {
+        //        if (value is List<MeshObject> && value != null)
+        //        {
+        //            car = value;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Constructor sets initial position, rotation angles and speed.
@@ -59,10 +59,7 @@ namespace Template
 
             _position.X -= dx;
             _position.Z -= dz;
-            car.ForEach(m =>
-            {
-                m.Position = new Vector4(m.Position.X - dx, m.Position.Y, m.Position.Z - dz, 0.0f);
-            });
+            
         }
 
         /// <summary>Move to right or to left (depends of moveBy sign: positive - to right).</summary>
@@ -74,10 +71,7 @@ namespace Template
 
             _position.X -= dx;
             _position.Z += dz;
-            car.ForEach(m =>
-            {
-                m.Position = new Vector4(m.Position.X - dx, m.Position.Y, m.Position.Z + dz, 0.0f);
-            });
+            
         }
 
         /// <summary>Rotate around 0X axis by deltaPitch (x - to left, y - to up, z - to back), rad. In virtual world, where X0Z is
@@ -86,27 +80,15 @@ namespace Template
         /// <param name="deltaPitch">Angle, rad.</param>
         public override void PitchBy(float deltaPitch)
         {
-            //Matrix rotation = Matrix.RotationYawPitchRoll(_yaw, _pitch, _roll);
-            //Vector4 viewTo = Vector4.Transform(-Vector4.UnitZ, rotation);
-            //car.ForEach(m =>
-            //{
-            //    viewTo.Z += viewTo.Z * 50.0f;
-            //    var pos = Position + viewTo;
-            //    m.Position = pos;
-            //});
-
             _pitch += deltaPitch;
-            //car.ForEach(m => m._pitch -= deltaPitch);
 
             if (_PI2 < _pitch)
             {
                 _pitch = _PI2;
-                //car.ForEach(m => m._pitch = _PI2);
             }
             else if (-_PI2 > _pitch)
             {
                 _pitch = -_PI2;
-                //car.ForEach(m => m._pitch = -_PI2);
             }
         }
 

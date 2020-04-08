@@ -183,30 +183,6 @@ namespace Template
             MoveTo(vector.X, vector.Y, vector.Z);
         }
 
-        //public override void PitchBy(float deltaPitch)
-        //{
-        //    base.PitchBy(deltaPitch);
-
-        //    Vector3 axis = new Vector3(1, 0, 0);
-        //    _center2Position = Vector4.Transform(_center2Position, Matrix.RotationAxis(axis, deltaPitch));
-        //}
-
-        //public override void YawBy(float deltaYaw)
-        //{
-        //    base.YawBy(deltaYaw);
-
-        //    Vector3 axis = new Vector3(0, 1, 0);
-        //    _center2Position = Vector4.Transform(_center2Position, Matrix.RotationAxis(axis, deltaYaw));
-        //}
-
-        //public override void RollBy(float deltaRoll)
-        //{
-        //    base.RollBy(deltaRoll);
-
-        //    Vector3 axis = new Vector3(0, 0, 1);
-        //    _center2Position = Vector4.Transform(_center2Position, Matrix.RotationAxis(axis, deltaRoll));
-        //}
-
         private void ToPosition()
         {
             Vector4[] vertices = new Vector4[_verticesCount];
@@ -283,7 +259,6 @@ namespace Template
         public override Matrix GetWorldMatrix()
         {
             return Matrix.Multiply(Matrix.RotationYawPitchRoll(_yaw, _pitch, _roll), Matrix.Translation((Vector3)_position));
-
         }
     }
 }

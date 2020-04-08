@@ -112,9 +112,7 @@ namespace Template
         /// <returns>World transform matrix.</returns>
         public virtual Matrix GetWorldMatrix()
         {
-
-            //return Matrix.Multiply(Matrix.RotationYawPitchRoll(_yaw, _pitch, _roll), Matrix.Translation((Vector3)_position));
-            return Matrix.Identity;
+            return Matrix.Multiply(Matrix.RotationYawPitchRoll(_yaw, _pitch, _roll), Matrix.Translation((Vector3)_position));
         }
     }
 }

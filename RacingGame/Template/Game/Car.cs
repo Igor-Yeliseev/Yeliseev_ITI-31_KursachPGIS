@@ -8,10 +8,10 @@ using Template.Graphics;
 
 namespace Template
 {
-    class Car
+    class Car : PhysicalObject
     {
         /// <summary> Меши объекта </summary>
-        private List<MeshObject> _meshes;
+        //private List<MeshObject> _meshes;
 
         /// <summary> Переднее левое колесо </summary>
         private MeshObject wheel1;
@@ -24,9 +24,9 @@ namespace Template
         public Vector4 Direction { get => _direction; set => _direction = value; }
 
         /// <summary> Position of the car in virtual world. </summary>
-        private Vector4 _position;
+        //private Vector4 _position;
         /// <summary> Position of the car in virtual world. </summary>
-        public Vector4 Position { get => _position; set => _position = value; }
+        //public Vector4 Position { get => _position; set => _position = value; }
 
         /// <summary> Передний мост (точка центра) </summary>
         private Vector4 _frontAxle;
@@ -63,15 +63,14 @@ namespace Template
         int itrs = 54;
 
         /// <summary> The oriented bounding box </summary>
-        public OrientedBoundingBox boundingBox;
+        //public OrientedBoundingBox boundingBox;
 
         /// <summary>
         /// Конструктор машины
         /// </summary>
         /// <param name="meshes"></param>
-        public Car(List<MeshObject> meshes)
+        public Car(List<MeshObject> meshes) : base(meshes) 
         {
-            _meshes = meshes;
 
             wheel1 = meshes.Find(m => m.Name.Contains("wheel"));
             wheel2 = meshes.Find(m => m.Name.Contains("wheel2"));
@@ -97,7 +96,6 @@ namespace Template
             boundingBox.Translate((Vector3)_position);
         }
         
-
         /// <summary>
         /// Задание бокса коллизий
         /// </summary>
@@ -218,17 +216,18 @@ namespace Template
             }
         }
 
-        public void MoveBy(float dX, float dY, float dZ)
-        {
-            _meshes.ForEach(m => m.MoveBy(dX, dY, dZ));
+        //public void MoveBy(float dX, float dY, float dZ)
+        //{
+        //    _meshes.ForEach(m => m.MoveBy(dX, dY, dZ));
 
-            boundingBox.Translate(new Vector3(dX, dY, dZ));
-        }
+        //    _position += new Vector4(dX, dY, dZ, 0.0f);
+        //    boundingBox.Translate(new Vector3(dX, dY, dZ));
+        //}
 
-        public void MoveBy(Vector4 v)
-        {
-            MoveBy(v.X, v.Y, v.Z);
-        }
+        //public void MoveBy(Vector4 v)
+        //{
+        //    MoveBy(v.X, v.Y, v.Z);
+        //}
 
         public void MoveForward()
         {
@@ -302,7 +301,6 @@ namespace Template
         public void MoveProperly(short sign)
         {
             moveSign = sign;
-            //if (moveSign == 0) return;
 
             var point = _frontAxle + _direction;
             var v1 = _frontAxle - _rearAxle; v1.Normalize();
@@ -331,6 +329,7 @@ namespace Template
                 v1 = _frontAxle - _rearAxle; v1.Normalize();
                 projDir = MyVector.DotProduct(v1, _direction) / v1.Length(); 
                 v1.X *= projDir; v1.Y *= projDir; v1.Z *= projDir;
+
                 moveCar(v1, sign);
             }
             

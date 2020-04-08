@@ -278,7 +278,6 @@ namespace Template
 
             // Character and camera. X0Z - ground, 0Y - to up.
             _character = new Character(new Vector4(0.0f, 6.0f, -12.0f, 1.0f), Game3DObject._PI, 0.0f, 0.0f, 10.0f); //********
-            _character.Car = new List<MeshObject>() { cube2 };
             _camera = new Camera(new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
             _camera.AttachToObject(_character);
 
@@ -448,11 +447,13 @@ namespace Template
                 {
                     if (car.moveSign > 0)
                     {
-                        car.MoveProperly(-1);
+                        while(car.boundingBox.Contains(ref box2.boundingBox) == ContainmentType.Intersects)
+                            car.MoveProperly(-1);
                     }
                     else if (car.moveSign < 0)
                     {
-                        car.MoveProperly(1);
+                        while (car.boundingBox.Contains(ref box2.boundingBox) == ContainmentType.Intersects)
+                            car.MoveProperly(1);
                     }
                         
                 }
