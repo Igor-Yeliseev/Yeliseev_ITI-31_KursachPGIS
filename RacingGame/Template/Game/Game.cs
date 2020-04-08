@@ -415,10 +415,12 @@ namespace Template
                 {
                     box1.MoveForward();
                 }
-                if (_inputController.Num5Pressed)
+                else if (_inputController.Num5Pressed)
                 {
                     box1.MoveBackward();
                 }
+                else
+                    box1.moveSign = 0;
 
                 if (_inputController.Num7Pressed)
                 {
@@ -447,12 +449,19 @@ namespace Template
 
             // Collision Detection
             {
-                collied = box1.boundingBox.Contains(ref box2.boundingBox);
+                //collied = box1.boundingBox.Contains(ref box2.boundingBox);
 
-                if (collied == ContainmentType.Intersects)
-                {
-                    box1.Move(-box1.Direction);
-                }
+                //if (collied == ContainmentType.Intersects)
+                //{
+                //    if (box1.moveSign > 0)
+                //        box1.Move(-box1.Direction);
+                //    else if(box1.moveSign < 0)
+                //        box1.Move(box1.Direction);
+                //}
+
+                collied = car.boundingBox.Contains(ref box2.boundingBox);
+
+                screen = (collied == ContainmentType.Intersects) ? "True" : "False";
             }
 
 

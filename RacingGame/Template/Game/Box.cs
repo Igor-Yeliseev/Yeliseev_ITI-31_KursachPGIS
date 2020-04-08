@@ -24,6 +24,8 @@ namespace Template
         /// <summary> Напрвление движения </summary>
         public Vector4 Direction { get => _direction; set => _direction = value; }
 
+        public short moveSign;
+
         public Vector4 Position
         {
             get
@@ -60,6 +62,7 @@ namespace Template
             
             boundingBox = new OrientedBoundingBox(new Vector3(minX, minY, minZ), new Vector3(maxX, maxY, maxZ));
             _direction = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
+            moveSign = 1;
         }
 
 
@@ -81,16 +84,14 @@ namespace Template
 
         public void MoveForward()
         {
-            _direction -= _direction;
-            Move(_direction);
-            //Position += _direction / 20;
+            Position += _direction / 20;
+            moveSign = 1;
         }
 
         public void MoveBackward()
         {
-            _direction -= _direction;
-            Move(_direction);
-            //Position -= _direction / 20;
+            Position -= _direction / 20;
+            moveSign = -1;
         }
 
         public void Move(Vector4 direction)

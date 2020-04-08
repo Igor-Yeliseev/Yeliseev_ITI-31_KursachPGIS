@@ -13,30 +13,39 @@ namespace Template
         /// <summary> Меши объекта </summary>
         private List<MeshObject> _meshes;
 
-        private MeshObject wheel1, wheel2;
+        /// <summary> Переднее левое колесо </summary>
+        private MeshObject wheel1;
+        /// <summary> Переднее правое колесо </summary>
+        private MeshObject wheel2;
 
         /// <summary> Вектор направления движения </summary>
         private Vector4 _direction;
         /// <summary> Вектор направления движения </summary>
         public Vector4 Direction { get => _direction; set => _direction = value; }
 
+        /// <summary> Position of the car in virtual world. </summary>
+        private Vector4 _position;
+        /// <summary> Position of the car in virtual world. </summary>
+        public Vector4 Position { get => _position; set => _position = value; }
+
         /// <summary> Передний мост (точка центра) </summary>
         private Vector4 _frontAxle;
         /// <summary> Передний мост (точка центра) </summary>
         public Vector4 FrontAxle { get => _frontAxle; set => _frontAxle = value; }
 
-        /// <summary> Передний мост (точка центра) </summary>
+        /// <summary> Задний мост (точка центра) </summary>
         private Vector4 _rearAxle;
-        /// <summary> Передний мост (точка центра) </summary>
+        /// <summary> Задний мост (точка центра) </summary>
         public Vector4 RearAxle { get => _rearAxle; set => _rearAxle = value; }
-
-
+        
         private float scale = 10.0f;
 
         /// <summary> Радиус колеса </summary>
         private float _wheelRadius;
 
+        /// <summary> Повернуты ли передние колеса</summary>
         private bool _isWheelsTirned;
+        /// <summary> Повернуты ли передние колеса</summary>
         public bool IsWheelsTirned
         {
             get
@@ -53,6 +62,13 @@ namespace Template
         public int turnCount = 0;
         int itrs = 54;
 
+        /// <summary> The oriented bounding box </summary>
+        public OrientedBoundingBox boundingBox;
+
+        /// <summary>
+        /// Конструктор машины
+        /// </summary>
+        /// <param name="meshes"></param>
         public Car(List<MeshObject> meshes)
         {
             _meshes = meshes;
@@ -75,6 +91,35 @@ namespace Template
             });
             _wheelRadius = (maxZ - minZ) / 2;
 
+            var body = meshes.Find(m => m.Name.Contains("DELOREAN"));
+            boundingBox = SetOBB(body); // Меши остаются в центре
+            _position = body.Position;
+            boundingBox.Translate((Vector3)_position);
+        }
+
+        /// <summary>
+        /// Задание бокса коллизий
+        /// </summary>
+        /// <param name="mesh"> Меш</param>
+        /// <returns></returns>
+        private OrientedBoundingBox SetOBB(MeshObject mesh)
+        {
+            float minX, maxX, minY, maxY, minZ, maxZ;
+            minX = maxX = minY = maxY = minZ = maxZ = 0;
+
+            mesh.Vertices.ForEach(v =>
+            {
+                if (v.position.X < minX) minX = v.position.X;
+                if (v.position.X > maxX) maxX = v.position.X;
+
+                if (v.position.Y < minY) minY = v.position.Y;
+                if (v.position.Y > maxY) maxY = v.position.Y;
+
+                if (v.position.Z < minZ) minZ = v.position.Z;
+                if (v.position.Z > maxZ) maxZ = v.position.Z;
+            });
+
+            return new OrientedBoundingBox(new Vector3(minX, minY, minZ), new Vector3(maxX, maxY, maxZ));
         }
 
         public MeshObject this[string name]
@@ -175,6 +220,8 @@ namespace Template
         public void MoveBy(float dX, float dY, float dZ)
         {
             _meshes.ForEach(m => m.MoveBy(dX, dY, dZ));
+
+            boundingBox.Translate(new Vector3(dX, dY, dZ));
         }
 
         public void MoveBy(Vector4 v)
@@ -290,6 +337,7 @@ namespace Template
 
             _direction = Vector4.Transform(_direction, Matrix.RotationY(alpha));
             rotFrontAxel(alpha);
+            RotateOBB(alpha); // Поворот баудин бокса
 
             _meshes.ForEach(m =>
             {
@@ -313,6 +361,20 @@ namespace Template
                 else m.YawBy(alpha);
             });
         }
+
+        /// <summary>
+        /// Поворот бокса коллизий
+        /// </summary>
+        /// <param name="angle"> Угол поворота</param>
+        private void RotateOBB(float angle)
+        {
+            Matrix matrix = Matrix.RotationY(angle);
+            Vector3 dv = new Vector3(-_position.X, -_position.Y, -_position.Z);
+            boundingBox.Translate(dv);
+            boundingBox.Transform(matrix);
+            boundingBox.Translate(-dv);
+        }
+
         /// <summary>
         /// Смещение вдоль направления
         /// </summary>
@@ -333,9 +395,10 @@ namespace Template
 
             _frontAxle += direction;
             _rearAxle += direction;
+            _position += direction;
+            boundingBox.Translate((Vector3)direction);
         }
-
-
+        
         /// <summary>
         /// Анимация возврата коле в начальное положение
         /// </summary>
