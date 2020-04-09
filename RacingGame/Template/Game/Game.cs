@@ -98,6 +98,7 @@ namespace Template
         private Character _character;
         private Car car;
         private Box box1, box2;
+        private GameField gameField;
 
         /// <summary>Camera object.</summary>
         private Camera _camera;
@@ -184,6 +185,7 @@ namespace Template
             _textures.Add(loader.LoadTextureFromFile("Resources\\delorean.png", true, _samplerStates.Textured));
             _materials = loader.LoadMaterials("Resources\\materials.txt", _textures);
 
+            gameField = new GameField(_materials[2]);
 
             // 6. Load meshes.
             _meshObjects = new MeshObjects();
@@ -197,13 +199,16 @@ namespace Template
             var road = loader.LoadMeshFromObject("Resources\\road.obj", _materials[7]);
             var cube2 = loader.LoadMeshFromObject("Resources\\box.obj", _materials[0]);
 
+            var checkPointMeshes = loader.LoadMeshesFromObject("Resources\\checkPoints.obj", _materials[1]);
+            gameField.SetCheckPoints(checkPointMeshes);
+
             var carMeshes = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
             carMeshes.ForEach(m => m.MoveBy(-9.0f, 0.0f, 5.0f));
             car = new Car(carMeshes);
+            gameField.SetCar(car);
 
             box1 = new Box(mbox1);
             box1.MoveBy(0.0f, 1.0f, 0.0f); mbox1.Material = _materials[1];
-
             box2 = new Box(mbox2);
             box2.MoveBy(0.0f, 1.0f, 5.0f);
 
@@ -234,6 +239,7 @@ namespace Template
             _meshObjects.Add(plane);
             _meshObjects.Add(road);
             _meshObjects.Add(center);
+            checkPointMeshes.ForEach(m => _meshObjects.Add(m));
             car.AddToMeshes(_meshObjects);
             // 6. Load HUD resources into DirectX 2D object.
             InitHUDResources();
@@ -316,10 +322,10 @@ namespace Template
 
         float ANGLE;
         string screen = "";
-        //bool flag = false;
+        int ct = 1;
         //FileStream fs;
 
-        ContainmentType collied;
+        //ContainmentType collied;
 
         /// <summary>Callback for RenderLoop.Run. Handle input and render scene.</summary>
         public void RenderLoopCallback()
@@ -361,12 +367,12 @@ namespace Template
                 
                 if (_inputController.UpPressed)
                 {
-                    if (car.IsCollied == false)
+                    if (!car.IsCollied)
                         car.MoveProperly(1);
                 }
                 if (_inputController.DownPressed)
                 {
-                    if (car.IsCollied == false)
+                    if (!car.IsCollied)
                         car.MoveProperly(-1);
                 }
 
@@ -384,8 +390,7 @@ namespace Template
                 
                 if (_inputController.Space)
                 {
-                    box1.SetMaterial(_materials[2]);
-                    //line.MoveTo(car.RearAxle);
+                    
                 }
 
                 //if((!_inputController.RightPressed && !_inputController.LeftPressed) && car.IsWheelsTirned)
@@ -441,15 +446,15 @@ namespace Template
 
             // Collision Detection
             {
-                car.CollisionTest(box2);
+                //car.CollisionTest(box2);
 
-                //if (collied == ContainmentType.Intersects)
+                //if (box1.CollisionTest(gameField.checkPoints[0]))
                 //{
-                //    if (box1.moveSign > 0)
-                //        box1.Move(-box1.Direction);
-                //    else if(box1.moveSign < 0)
-                //        box1.Move(box1.Direction);
+                //    box1.MoveBackward();
+                //    //gameField.checkPoints[0].SetMaterial(gameField.material);
                 //}
+                
+                gameField.CheckRaceFinish();
 
                 screen = (car.IsCollied) ? "True" : "False";
             }
@@ -502,6 +507,7 @@ namespace Template
                                 $"Pos: {_character.Position.X,6:f1}, {_character.Position.Y,6:f1}, {_character.Position.Z,6:f1}\n" +
 
                                 $"Angle: {ANGLE}\n" +
+                                $"X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
                                 $"Data: {screen}\n";
 
             if (_displayHelp) text += "\n\n" + _helpString;

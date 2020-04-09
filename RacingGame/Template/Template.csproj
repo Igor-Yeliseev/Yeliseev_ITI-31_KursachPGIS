@@ -155,10 +155,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Animation.cs" />
-    <Compile Include="Game\Box.cs" />
-    <Compile Include="Game\Car.cs" />
-    <Compile Include="Game\GameObject.cs" />
-    <Compile Include="Game\PhysicalObject.cs" />
+    <Compile Include="Game\Entities\Box.cs" />
+    <Compile Include="Game\Entities\Car.cs" />
+    <Compile Include="Game\Entities\CheckPoint.cs" />
+    <Compile Include="Game\Entities\GameField.cs" />
+    <Compile Include="Game\Entities\GameObject.cs" />
+    <Compile Include="Game\Entities\PhysicalObject.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Game\Character.cs" />
     <Compile Include="Graphics\DirectX2DGraphics.cs" />

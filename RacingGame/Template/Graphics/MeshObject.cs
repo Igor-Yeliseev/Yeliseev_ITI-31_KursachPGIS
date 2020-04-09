@@ -19,13 +19,24 @@ namespace Template
     class MeshObject : Game3DObject, IDisposable
     {
         [StructLayout(LayoutKind.Sequential)]
-        public struct VertexDataStruct
+        public struct VertexDataStruct : IComparable<VertexDataStruct>
         {
             public Vector4 position;
             public Vector4 normal;
             public Vector4 color;
             public Vector2 texCoord0;
             public Vector2 texCoord1;
+
+            public int CompareTo(VertexDataStruct other)
+            {
+
+                if (position.X < other.position.X || position.Y < other.position.Y || position.Z < other.position.Z)
+                    return -1;
+                else if (position.X > other.position.X || position.Y > other.position.Y || position.Z > other.position.Z)
+                    return 1;
+                else
+                    return 0;
+            }
         }
 
         private string _name;
