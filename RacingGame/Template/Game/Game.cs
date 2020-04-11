@@ -101,6 +101,9 @@ namespace Template
         private Box box1, box2;
         private GameField gameField;
 
+        /// <summary> Ogbjects animations </summary>
+        Animations anims;
+
         /// <summary>Camera object.</summary>
         private Camera _camera;
 
@@ -140,6 +143,7 @@ namespace Template
         /// </summary>
         public Game()
         {
+
             //_gameState = GameState.BeforeStart;
             _helpString = Resources.HelpString;
 
@@ -224,17 +228,10 @@ namespace Template
             center.MoveTo(0, 0, 0);
             line.MoveTo(carMeshes[5].CenterPosition);
 
-            // Создание вектора направления
-            {
-                float theta = (float)(90 * Math.PI / 180);
-                line.PitchBy(theta);
-                var p1 = Vector4.Transform(line.Position, Matrix.RotationX(-theta));
-                var p2 = Vector4.Transform(line.Center2Position, Matrix.RotationX(-theta));
-                var dir = (p2 - p1); dir.Normalize();
-                car.Direction = -dir;
-                line.PitchBy(-theta);
-            }
             
+
+            anims = new Animations();
+
             // Добавление мешей
             _meshObjects.Add(mbox1);
             _meshObjects.Add(mbox2);
@@ -387,31 +384,38 @@ namespace Template
                 
                 if (_inputController.LeftPressed)
                 {
-                    Animation.IsWheelsAnimate = false;
+                    anims.IsWheelsAnimate = false;
                     car.TurnWheelsLeft(alpha);
                 }
                 if (_inputController.RightPressed)
                 {
-                    Animation.IsWheelsAnimate = false;
+                    anims.IsWheelsAnimate = false;
                     car.TurnWheelsRight(alpha);
                 }
                 
                 if (_inputController.Space)
                 {
-                    
+                    anims.IsEnemyTurned = false;
+                }
+
+
+                // Поворот врага вдоль указанного направления
+                if(!_inputController.Space && !anims.IsEnemyTurned)
+                {
+                    anims.AnimateEnemyToTarget(enemy, alpha);
                 }
 
                 // Анимация возврата колес
                 //if((!_inputController.RightPressed && !_inputController.LeftPressed) && car.IsWheelsTirned)
                 //{
-                //    Animation.IsWheelsAnimate = true;
-                //} Animation.AnimateWheels(car, alpha);
+                //    anims.IsWheelsAnimate = true;
+                //} anims.AnimateWheels(car, alpha);
 
                 // Вражеская машина
                 {
-                    enemy.Move(1);
-                    enemy.TurnCar(-alpha / 2);
-                    //enemy.Direction = Vector4.Transform(enemy.Direction, Matrix.RotationY(alpha / 20));
+                    //enemy.Move(1);
+                    //enemy.TurnCar(-alpha / 2);
+                    
                 }
 
 
@@ -527,6 +531,7 @@ namespace Template
 
                                 $"Angle: {ANGLE}\n" +
                                 $"X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
+                                $"Direction X: {enemy.Direction.X} Y:{enemy.Direction.Y} Z:{enemy.Direction.Z}\n" +
                                 $"Data: {screen}\n";
 
             if (_displayHelp) text += "\n\n" + _helpString;

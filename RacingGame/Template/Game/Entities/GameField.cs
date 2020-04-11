@@ -61,8 +61,7 @@ namespace Template
 
             return (lapIndex == lapsCount - 1) ? true : false;
         }
-
-
+        
 
 
     }
