@@ -64,7 +64,10 @@ namespace Template
             IsDead = false;
         }
         
-
+        public void Move(short sign)
+        {
+            Move(_direction, sign);
+        }
 
         /// <summary>
         /// Столкновение врага с объектом

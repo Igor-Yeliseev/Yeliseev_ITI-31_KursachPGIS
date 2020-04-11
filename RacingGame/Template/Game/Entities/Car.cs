@@ -16,7 +16,7 @@ namespace Template
         private MeshObject wheel2;
 
         /// <summary> Вектор направления движения </summary>
-        private Vector4 _direction;
+        protected Vector4 _direction;
         /// <summary> Вектор направления движения </summary>
         public Vector4 Direction { get => _direction; set => _direction = value; }
 
@@ -61,6 +61,8 @@ namespace Template
         /// <param name="meshes"></param>
         public Car(List<MeshObject> meshes) : base(meshes) 
         {
+            _direction = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
+
             wheel1 = meshes.Find(m => m.Name.Contains("wheel1"));
             wheel2 = meshes.Find(m => m.Name.Contains("wheel2"));
             float x = (wheel1.Position.X + wheel2.Position.X) / 2;
@@ -347,7 +349,7 @@ namespace Template
         /// </summary>
         /// <param name="direction"> Вектор направления</param>
         /// <param name="sign"> Знак (вперед, назад)</param>
-        public void Move(Vector4 direction, short sign)
+        public virtual void Move(Vector4 direction, short sign)
         {
             direction /= scale * sign;
 

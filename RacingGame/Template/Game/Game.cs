@@ -97,6 +97,7 @@ namespace Template
         /// <summary>Character.</summary>
         private Character _character;
         private Car car;
+        private EnemyCar enemy;
         private Box box1, box2;
         private GameField gameField;
 
@@ -149,7 +150,7 @@ namespace Template
             _renderForm.Activated += RenderFormActivatedCallback;
             _renderForm.Deactivate += RenderFormDeactivateCallback;
             // 2. DirectX 3D.
-            _directX3DGraphics = new DirectX3DGraphics(_renderForm);
+            _directX3DGraphics = new DirectX3DGraphics(_renderForm) { RenderMode = DirectX3DGraphics.RenderModes.Wireframe };
             // 3. Renderer.
             _renderer = new Renderer(_directX3DGraphics);
             _renderer.CreateConstantBuffers();
@@ -202,13 +203,13 @@ namespace Template
             var checkPointMeshes = loader.LoadMeshesFromObject("Resources\\checkPoints.obj", _materials[1]);
             gameField.SetCheckPoints(checkPointMeshes);
 
-            var carMeshes = loader.LoadMeshesFromObject("Resources\\enemyCar.obj", _materials[1]);
+            var carMeshes = loader.LoadMeshesFromObject("Resources\\enemyCar.obj", _materials[2]);
             car = new Car(carMeshes);
             car.MoveBy(-9.0f, 0.0f, 5.0f);
             gameField.SetCar(car);
 
             var enemyMeshes = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
-            var enemy = new EnemyCar(enemyMeshes);
+            enemy = new EnemyCar(enemyMeshes);
             enemy.MoveBy(-15.0f, 0.0f, 5.0f);
 
             box1 = new Box(mbox1);
@@ -397,7 +398,7 @@ namespace Template
                 
                 if (_inputController.Space)
                 {
-
+                    
                 }
 
                 // Анимация возврата колес
@@ -406,6 +407,12 @@ namespace Template
                 //    Animation.IsWheelsAnimate = true;
                 //} Animation.AnimateWheels(car, alpha);
 
+                // Вражеская машина
+                {
+                    enemy.Move(1);
+                    enemy.TurnCar(-alpha / 2);
+                    //enemy.Direction = Vector4.Transform(enemy.Direction, Matrix.RotationY(alpha / 20));
+                }
 
 
                 if (_inputController.Num4Pressed)
