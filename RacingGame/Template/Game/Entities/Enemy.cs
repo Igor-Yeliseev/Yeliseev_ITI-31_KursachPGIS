@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace Template
 {
-    class Enemy : PhysicalObject
+    class EnemyCar : Car
     {
-        private Car enemyCar;
+        //private Car car;
 
-        /// <summary> Вектор направления </summary>
-        private Vector4 _direction;
-        /// <summary> Вектор направления </summary>
-        public Vector4 Direction
-        {
-            get
-            {
-                return _direction;
-            }
-            set
-            {
-                _direction = value;
-            }
-        }
+        ///// <summary> Вектор направления </summary>
+        //private Vector4 _direction;
+        ///// <summary> Вектор направления </summary>
+        //public Vector4 Direction
+        //{
+        //    get
+        //    {
+        //        return _direction;
+        //    }
+        //    set
+        //    {
+        //        _direction = value;
+        //    }
+        //}
 
         /// <summary> Мертв ли враг </summary>
         public bool IsDead { get; set; }
@@ -54,18 +54,17 @@ namespace Template
         /// <summary> Лучи сенсоров для ИИ </summary>
         Ray[] sensors = new Ray[5];
 
-        public Enemy(MeshObject mesh) : base(mesh)
+        //public EnemyCar(MeshObject mesh) : base(mesh)
+        //{
+        //    IsDead = false;
+        //}
+
+        public EnemyCar(List<MeshObject> meshes) :base(meshes)
         {
             IsDead = false;
-        }
-
-        public Enemy(List<MeshObject> meshes) : base(meshes)
-        {
-            IsDead = false;
-
-            enemyCar = new Car(meshes);
         }
         
+
 
         /// <summary>
         /// Столкновение врага с объектом

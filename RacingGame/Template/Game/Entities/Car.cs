@@ -61,7 +61,7 @@ namespace Template
         /// <param name="meshes"></param>
         public Car(List<MeshObject> meshes) : base(meshes) 
         {
-            wheel1 = meshes.Find(m => m.Name.Contains("wheel"));
+            wheel1 = meshes.Find(m => m.Name.Contains("wheel1"));
             wheel2 = meshes.Find(m => m.Name.Contains("wheel2"));
             float x = (wheel1.Position.X + wheel2.Position.X) / 2;
             _frontAxle = new Vector4(x, wheel1.Position.Y, wheel1.Position.Z, 0.0f);
@@ -79,7 +79,7 @@ namespace Template
             });
             _wheelRadius = (maxZ - minZ) / 2;
 
-            var body = meshes.Find(m => m.Name.Contains("DELOREAN"));
+            var body = meshes.Find(m => m.Name.Contains("Body"));
             boundingBox = SetOBB(body);
             _position = body.Position;
             boundingBox.Translate((Vector3)_position);
@@ -282,24 +282,24 @@ namespace Template
             if (sign > 0) // Двигаюсь вперед
             {
                 if (MyVector.CosProduct(v1, v2) < 0)
-                    turnCar(angle);
+                    TurnCar(angle);
                 else
-                    turnCar(-angle);
+                    TurnCar(-angle);
 
-                moveCar(v1, sign);
+                Move(v1, sign);
             }
             else // Двигаюсь назад
             {
                 if (MyVector.CosProduct(v1, v2) < 0)
-                    turnCar(-angle);
+                    TurnCar(-angle);
                 else
-                    turnCar(angle);
+                    TurnCar(angle);
 
                 v1 = _frontAxle - _rearAxle; v1.Normalize();
                 projDir = MyVector.DotProduct(v1, _direction) / v1.Length(); 
                 v1.X *= projDir; v1.Y *= projDir; v1.Z *= projDir;
 
-                moveCar(v1, sign);
+                Move(v1, sign);
             }
             
         }
@@ -308,10 +308,12 @@ namespace Template
         /// Поворот машины
         /// </summary>
         /// <param name="alpha"> Угол поворота</param>
-        private void turnCar(float alpha)
+        public void TurnCar(float alpha)
         {
             if (alpha == 0)
                 return;
+
+            Vector4 oldCenterPos, c2_pos;
 
             _direction = Vector4.Transform(_direction, Matrix.RotationY(alpha));
             rotFrontAxel(alpha);
@@ -321,32 +323,31 @@ namespace Template
             {
                 if (m.Name.Contains("wheel"))
                 {
-                    var oldCenterPos = m.Center2Position;
+                    oldCenterPos = m.Center2Position;
                     m.MoveTo(0, 0, 0);
                     m.YawBy(alpha);
 
-                    var c2_pos = m.Position;
+                    c2_pos = m.Position;
                     m.Position = -m.Center2Position;
                     m.Center2Position = c2_pos;
 
                     m.Position = Vector4.Transform(m.Position, Matrix.RotationY(alpha));
 
-                    var vect = m.Position - m.Center2Position;
+                    //var vect = m.Position - m.Center2Position;
                     m.MoveTo(oldCenterPos);
-                    m.Position += vect;
+                    m.Position += (m.Position - m.Center2Position);
                     m.Center2Position = oldCenterPos;
                 }
                 else m.YawBy(alpha);
             });
         }
         
-
         /// <summary>
         /// Смещение вдоль направления
         /// </summary>
         /// <param name="direction"> Вектор направления</param>
         /// <param name="sign"> Знак (вперед, назад)</param>
-        private void moveCar(Vector4 direction, short sign)
+        public void Move(Vector4 direction, short sign)
         {
             direction /= scale * sign;
 
@@ -425,36 +426,6 @@ namespace Template
             return (boundingBox.Contains(ref chpt.boundingBox) == ContainmentType.Intersects)? true : false;
         }
 
-        /// <summary>
-        /// Вращать машину
-        /// </summary>
-        public void RotateCar(float angle)
-        {
-            if (angle == 0) return;
-
-            rotFrontAxel(angle);
-            RotateOBB(angle);
-
-            _meshes.ForEach(m =>
-            {
-                if (m.Name.Contains("wheel"))
-                {
-                    var oldCenterPos = m.Center2Position;
-                    m.MoveTo(0, 0, 0);
-                    m.YawBy(angle);
-
-                    var c2_pos = m.Position;
-                    m.Position = -m.Center2Position;
-                    m.Center2Position = c2_pos;
-
-                    m.Position = Vector4.Transform(m.Position, Matrix.RotationY(angle));
-                    
-                    m.MoveTo(oldCenterPos);
-                    m.Position += (m.Position - m.Center2Position);
-                    m.Center2Position = oldCenterPos;
-                }
-                else m.YawBy(angle);
-            });
-        }
+        
     }
 }

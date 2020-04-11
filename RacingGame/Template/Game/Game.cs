@@ -202,10 +202,14 @@ namespace Template
             var checkPointMeshes = loader.LoadMeshesFromObject("Resources\\checkPoints.obj", _materials[1]);
             gameField.SetCheckPoints(checkPointMeshes);
 
-            var carMeshes = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
-            carMeshes.ForEach(m => m.MoveBy(-9.0f, 0.0f, 5.0f));
+            var carMeshes = loader.LoadMeshesFromObject("Resources\\enemyCar.obj", _materials[1]);
             car = new Car(carMeshes);
+            car.MoveBy(-9.0f, 0.0f, 5.0f);
             gameField.SetCar(car);
+
+            var enemyMeshes = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
+            var enemy = new EnemyCar(enemyMeshes);
+            enemy.MoveBy(-15.0f, 0.0f, 5.0f);
 
             box1 = new Box(mbox1);
             box1.MoveBy(0.0f, 1.0f, 0.0f); mbox1.Material = _materials[1];
@@ -239,6 +243,7 @@ namespace Template
             _meshObjects.Add(plane);
             _meshObjects.Add(road);
             _meshObjects.Add(center);
+            enemyMeshes.ForEach(m => _meshObjects.Add(m));
             checkPointMeshes.ForEach(m => _meshObjects.Add(m));
             car.AddToMeshes(_meshObjects);
             // 6. Load HUD resources into DirectX 2D object.
@@ -437,11 +442,11 @@ namespace Template
 
                 if (_inputController.Num1Pressed)
                 {
-                    car.RotateCar(-alpha);
+
                 }
                 if (_inputController.Num2Pressed)
                 {
-                    car.RotateCar(alpha);
+
                 }
 
                 if (_inputController.Esc) { _renderForm.Close(); }                               // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
