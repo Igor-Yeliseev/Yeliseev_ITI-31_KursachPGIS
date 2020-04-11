@@ -38,6 +38,24 @@ namespace Template
         }
 
         /// <summary>
+        /// Угол между двумя векторами
+        /// </summary>
+        /// <param name="v1"> Первый вектор</param>
+        /// <param name="v2"> Второй вектор</param>
+        /// <returns></returns>
+        public static float GetAngle(Vector3 v1, Vector3 v2)
+        {
+            float x = Vector3.Dot(v1, v2) / (v1.Length() * v2.Length());
+
+            if (x > 1)
+                return 0;
+            else if (x < -1)
+                return (float)Math.Acos(-1.0);
+            else
+                return (float)Math.Acos(x);
+        }
+
+        /// <summary>
         /// Получить проекцию вектора v1 на вектор v2
         /// </summary>
         /// <param name="v1"> Первый вектор</param>
@@ -53,9 +71,10 @@ namespace Template
             return (v1.X * v2.Z - v2.X * v1.Z);
         }
 
-        //public static Vector4 GetNormal(Vector4 v)
-        //{
-
-        //}
+        public static float CosProduct(Vector3 v1, Vector3 v2)
+        {
+            return (v1.X * v2.Z - v2.X * v1.Z);
+        }
+        
     }
 }

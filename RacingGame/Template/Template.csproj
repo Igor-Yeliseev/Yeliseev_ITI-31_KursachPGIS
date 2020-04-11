@@ -158,6 +158,7 @@
     <Compile Include="Game\Entities\Box.cs" />
     <Compile Include="Game\Entities\Car.cs" />
     <Compile Include="Game\Entities\CheckPoint.cs" />
+    <Compile Include="Game\Entities\Enemy.cs" />
     <Compile Include="Game\Entities\GameField.cs" />
     <Compile Include="Game\Entities\GameObject.cs" />
     <Compile Include="Game\Entities\PhysicalObject.cs" />

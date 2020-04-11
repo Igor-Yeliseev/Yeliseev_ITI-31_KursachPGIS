@@ -52,7 +52,7 @@ namespace Template
         /// <returns></returns>
         public bool CheckRaceFinish()
         {
-            if (lapIndex < checkPoints.Length && (car.CollisionCheckPt(checkPoints[lapIndex])))
+            if (lapIndex < checkPoints.Length && (car.CollisionCheckPoint(checkPoints[lapIndex])))
             {
                 checkPoints[lapIndex].SetMaterial(material);
 

@@ -369,11 +369,13 @@ namespace Template
                 {
                     if (!car.IsCollied)
                         car.MoveProperly(1);
+                    //line.MoveTo((Vector4)car.boundingBox.GetCorners()[7]);
                 }
                 if (_inputController.DownPressed)
                 {
                     if (!car.IsCollied)
                         car.MoveProperly(-1);
+                    //line.MoveTo((Vector4)car.boundingBox.GetCorners()[7]);
                 }
 
                 
@@ -390,9 +392,10 @@ namespace Template
                 
                 if (_inputController.Space)
                 {
-                    
+
                 }
 
+                // Анимация возврата колес
                 //if((!_inputController.RightPressed && !_inputController.LeftPressed) && car.IsWheelsTirned)
                 //{
                 //    Animation.IsWheelsAnimate = true;
@@ -432,6 +435,15 @@ namespace Template
                     box1.Position = p;                    
                 }
 
+                if (_inputController.Num1Pressed)
+                {
+                    car.RotateCar(-alpha);
+                }
+                if (_inputController.Num2Pressed)
+                {
+                    car.RotateCar(alpha);
+                }
+
                 if (_inputController.Esc) { _renderForm.Close(); }                               // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 // Toggle help by F1.
                 if (_inputController.Func[0]) _displayHelp = !_displayHelp;
@@ -447,16 +459,11 @@ namespace Template
             // Collision Detection
             {
                 //car.CollisionTest(box2);
-
-                //if (box1.CollisionTest(gameField.checkPoints[0]))
-                //{
-                //    box1.MoveBackward();
-                //    //gameField.checkPoints[0].SetMaterial(gameField.material);
-                //}
                 
                 gameField.CheckRaceFinish();
 
                 screen = (car.IsCollied) ? "True" : "False";
+                
             }
 
 

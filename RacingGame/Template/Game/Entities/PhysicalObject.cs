@@ -32,7 +32,7 @@ namespace Template
         /// </summary>
         /// <param name="mesh"> Меш</param>
         /// <returns></returns>
-        protected OrientedBoundingBox SetOBB(MeshObject mesh)
+        protected virtual  OrientedBoundingBox SetOBB(MeshObject mesh)
         {
             float minX, minY, minZ, maxX, maxY, maxZ;
             var vertex = mesh.Vertices[0].position;
@@ -57,27 +57,18 @@ namespace Template
 
             var min = new Vector3(minX, minY, minZ);
             var max = new Vector3(maxX, maxY, maxZ);
-
+            
             return new OrientedBoundingBox(min, max);
-
-
-            //var MIN = mesh.Vertices.Min();
-            //var MAX = mesh.Vertices.Max();
-
-            //Vector3 vmin = new Vector3(MIN.position.X, MIN.position.Y, MIN.position.Z);
-            //Vector3 vmax = new Vector3(MAX.position.X, MAX.position.Y, MAX.position.Z);
-
-            //return new OrientedBoundingBox(vmin, vmax);
         }
-
+        
         public PhysicalObject(List<MeshObject> meshes, Vector4 position) : base(meshes, position)
         {
-            
+            boundingBox = new OrientedBoundingBox();
         }
 
         public PhysicalObject(List<MeshObject> meshes) : base(meshes)
         {
-
+            boundingBox = new OrientedBoundingBox();
         }
 
         /// <summary>
@@ -86,6 +77,8 @@ namespace Template
         /// <param name="angle"> Угол поворота</param>
         protected virtual void RotateOBB(float angle)
         {
+            if (angle == 0) return;
+
             Matrix matrix = Matrix.RotationY(angle);
             Vector3 dv = new Vector3(-_position.X, -_position.Y, -_position.Z);
             boundingBox.Translate(dv);

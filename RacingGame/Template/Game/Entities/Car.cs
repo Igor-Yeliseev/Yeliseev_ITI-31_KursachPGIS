@@ -61,13 +61,12 @@ namespace Template
         /// <param name="meshes"></param>
         public Car(List<MeshObject> meshes) : base(meshes) 
         {
-
             wheel1 = meshes.Find(m => m.Name.Contains("wheel"));
             wheel2 = meshes.Find(m => m.Name.Contains("wheel2"));
             float x = (wheel1.Position.X + wheel2.Position.X) / 2;
             _frontAxle = new Vector4(x, wheel1.Position.Y, wheel1.Position.Z, 0.0f);
             var vr = meshes[5].Position;
-            _rearAxle = new Vector4(vr.X, wheel1.Position.Y, vr.Z, 0.0f); // Потом изменить на центр между задними колесами (переместить в 3ds Max)
+            _rearAxle = new Vector4(vr.X, wheel1.Position.Y, vr.Z, 0.0f);
 
             float minZ = wheel1.Vertices[0].position.Z;
             float maxZ = wheel1.Vertices[0].position.Z;
@@ -421,9 +420,41 @@ namespace Template
             else return false;
         }
 
-        public bool CollisionCheckPt(CheckPoint chpt)
+        public bool CollisionCheckPoint(CheckPoint chpt)
         {
             return (boundingBox.Contains(ref chpt.boundingBox) == ContainmentType.Intersects)? true : false;
+        }
+
+        /// <summary>
+        /// Вращать машину
+        /// </summary>
+        public void RotateCar(float angle)
+        {
+            if (angle == 0) return;
+
+            rotFrontAxel(angle);
+            RotateOBB(angle);
+
+            _meshes.ForEach(m =>
+            {
+                if (m.Name.Contains("wheel"))
+                {
+                    var oldCenterPos = m.Center2Position;
+                    m.MoveTo(0, 0, 0);
+                    m.YawBy(angle);
+
+                    var c2_pos = m.Position;
+                    m.Position = -m.Center2Position;
+                    m.Center2Position = c2_pos;
+
+                    m.Position = Vector4.Transform(m.Position, Matrix.RotationY(angle));
+                    
+                    m.MoveTo(oldCenterPos);
+                    m.Position += (m.Position - m.Center2Position);
+                    m.Center2Position = oldCenterPos;
+                }
+                else m.YawBy(angle);
+            });
         }
     }
 }
