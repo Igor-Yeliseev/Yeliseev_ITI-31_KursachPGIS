@@ -52,7 +52,21 @@ namespace Template
         }
         /// <summary> Масштаб изменения скорости </summary>
         private float scale = 0.1f;
-        
+
+        protected ContainmentType colliedCheckPts;
+        /// <summary> Столкнулся ли объект с чекпоинтом </summary>
+        public bool IsColliedCheckPts
+        {
+            get
+            {
+                return (colliedCheckPts == ContainmentType.Intersects) ? true : false;
+            }
+            set
+            {
+                colliedCheckPts = (value == true) ? ContainmentType.Intersects : ContainmentType.Disjoint;
+            }
+        }
+
         /// <summary> Радиус колеса </summary>
         private float _wheelRadius;
 
@@ -471,7 +485,8 @@ namespace Template
 
         public bool CollisionCheckPoint(CheckPoint chpt)
         {
-            return (boundingBox.Contains(ref chpt.boundingBox) == ContainmentType.Intersects)? true : false;
+            colliedCheckPts = boundingBox.Contains(ref chpt.boundingBox);
+            return (colliedCheckPts == ContainmentType.Intersects)? true : false;
         }
 
         

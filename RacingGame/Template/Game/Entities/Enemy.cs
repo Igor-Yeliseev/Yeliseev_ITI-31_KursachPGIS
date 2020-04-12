@@ -75,8 +75,11 @@ namespace Template
         /// </summary>
         /// <param name="angle"></param>
         /// <returns></returns>
-        public bool TurnToTarget(float angle)
+        public void TurnToTarget(float angle)
         {
+            if (onTarget)
+                return;
+
             float cosProd = MyVector.CosProduct(_direction, _target);
 
             if (cosProd != 0 && signCos == Math.Sign(cosProd))
@@ -88,7 +91,6 @@ namespace Template
 
                 signCos = Math.Sign(cosProd);
                 onTarget = false;
-                return false;
             }
             else if(signCos != 0)
             {
@@ -106,12 +108,9 @@ namespace Template
                 //if (Math.Abs(Target.Z) < 0.000001) Target.Z = 0;
                 signCos = 0;
                 onTarget = true;
-                return true;
             }
-            else if(!onTarget)
+            else
                 signCos = Math.Sign(cosProd);
-
-            return false;
         }
 
         /// <summary>

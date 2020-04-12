@@ -1,4 +1,5 @@
 ﻿using SharpDX;
+using System;
 using System.Collections.Generic;
 using Template.Graphics;
 
@@ -25,11 +26,13 @@ namespace Template
 
         private int lapIndex = 0;
 
+        private TimeHelper timeHelper;
         private Car car;
         private EnemyCar enemy;
 
-        public GameField(Material material)
+        public GameField(TimeHelper timeHelper, Material material)
         {
+            this.timeHelper = timeHelper;
             this.material = material;
         }
 
@@ -68,33 +71,65 @@ namespace Template
             if (lapIndex < checkPoints.Length && (car.CollisionCheckPoint(checkPoints[lapIndex])))
             {
                 checkPoints[lapIndex].SetMaterial(material);
-
                 lapIndex++;
             }
 
             return (lapIndex == lapsCount - 1) ? true : false;
         }
-        
+
 
         /// <summary>
         /// Поворот врага к цели
         /// </summary>
         /// <param name="angle"></param>
-        public void RotateEnemyToTarget(float angle)
+        private void RotateEnemyToTarget(float angle)
         {
             enemy.TurnToTarget(angle);
 
-            if(trgIndex < targetPts.Length && enemy.IsOnTarget)
+            if (enemy.IsColliedCheckPts && enemy.IsOnTarget)
             {
+                enemy.IsColliedCheckPts = false;
                 trgIndex++;
-                
-                if (trgIndex < targetPts.Length)
+
+                if (trgIndex == targetPts.Length)
                 {
-                    enemy.Target = targetPts[trgIndex];
-                    trgIndex += 0;
+                    trgIndex = 0;
+                }
+
+                enemy.Target = targetPts[trgIndex];
+            }
+
+            //if(trgIndex < targetPts.Length && enemy.IsOnTarget)
+            //{
+            //    trgIndex++;
+
+            //    if (trgIndex < targetPts.Length)
+            //    {
+            //        enemy.Target = targetPts[trgIndex];
+            //    }
+            //}
+        }
+
+        /// <summary> Двигать врага к цели </summary>
+        private void GoToTarget()
+        {
+            if (enemy.IsOnTarget) // Враг повернут в сторону цели
+            {
+                if (!enemy.CollisionCheckPoint(checkPoints[trgIndex])) // Двингать врага к цели пока не столкнется
+                {
+                    enemy.Speed = 8;
+                    enemy.Move();
                 }
             }
         }
 
+        public void MoveEnemy()
+        {
+            float alpha = 2.0f * (float)Math.PI * 0.25f * timeHelper.DeltaT;
+
+            RotateEnemyToTarget(alpha / 2);
+
+            GoToTarget();
+        }
     }
 }

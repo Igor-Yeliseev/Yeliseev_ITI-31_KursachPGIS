@@ -27,7 +27,8 @@ namespace Template
 
         public void AnimateEnemyToTarget(EnemyCar enemy, float alpha)
         {
-            IsEnemyTurned = enemy.TurnToTarget(alpha);
+            enemy.TurnToTarget(alpha);
+            IsEnemyTurned = enemy.IsOnTarget;
         }
     }
 }

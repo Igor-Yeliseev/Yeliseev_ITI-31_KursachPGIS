@@ -155,6 +155,10 @@ namespace Template
             _renderForm.UserResized += RenderFormResizedCallback;
             _renderForm.Activated += RenderFormActivatedCallback;
             _renderForm.Deactivate += RenderFormDeactivateCallback;
+            // Input controller and time helper.
+            _inputController = new InputController(_renderForm);
+            _timeHelper = new TimeHelper();
+            _random = new Random();
             // 2. DirectX 3D.
             _directX3DGraphics = new DirectX3DGraphics(_renderForm) { RenderMode = DirectX3DGraphics.RenderModes.Wireframe };
             // 3. Renderer.
@@ -192,7 +196,7 @@ namespace Template
             _textures.Add(loader.LoadTextureFromFile("Resources\\delorean.png", true, _samplerStates.Textured));
             _materials = loader.LoadMaterials("Resources\\materials.txt", _textures);
 
-            gameField = new GameField(_materials[2]);
+            gameField = new GameField(_timeHelper, _materials[2]);
 
             // 6. Load meshes.
             _meshObjects = new MeshObjects();
@@ -294,10 +298,7 @@ namespace Template
             _camera = new Camera(new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
             _camera.AttachToObject(_character);
 
-            // Input controller and time helper.
-            _inputController = new InputController(_renderForm);
-            _timeHelper = new TimeHelper();
-            _random = new Random();
+            
         }
 
         /// <summary>Render form activated callback. Hide cursor.</summary>
@@ -400,12 +401,11 @@ namespace Template
                 if (_inputController.Space)
                 {
                     //anims.IsEnemyTurned = false;
-                    enemy.Speed = -3;
+                    enemy.Speed = 3;
                 }
 
                 // Вражеская машина
-                enemy.Move();
-                //enemy.TurnCar(-alpha / 2);
+                //enemy.Move();
 
 
 
@@ -426,7 +426,7 @@ namespace Template
 
 
                 // Игровое поле
-                //gameField.RotateEnemyToTarget(alpha / 2);
+                gameField.MoveEnemy();
 
 
                 if (_inputController.Num1Pressed)
