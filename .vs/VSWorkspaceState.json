@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\RacingGame",
+    "\\RacingGame\\Template",
+    "\\RacingGame\\Template\\Game",
+    "\\RacingGame\\Template\\Graphics"
   ],
+  "SelectedNode": "\\RacingGame\\Template\\Game",
   "PreviewInSolutionExplorer": false
 }
