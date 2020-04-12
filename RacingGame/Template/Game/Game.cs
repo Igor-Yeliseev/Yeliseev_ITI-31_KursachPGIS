@@ -203,19 +203,21 @@ namespace Template
             var plane = loader.LoadMeshFromObject("Resources\\plane.obj", _materials[0]);
             var road = loader.LoadMeshFromObject("Resources\\road.obj", _materials[7]);
             var cube2 = loader.LoadMeshFromObject("Resources\\box.obj", _materials[0]);
-
+            // Чекпоинты
             var checkPointMeshes = loader.LoadMeshesFromObject("Resources\\checkPoints.obj", _materials[1]);
             gameField.SetCheckPoints(checkPointMeshes);
-
+            // Машина игрока
             var carMeshes = loader.LoadMeshesFromObject("Resources\\enemyCar.obj", _materials[2]);
             car = new Car(carMeshes);
             car.MoveBy(-9.0f, 0.0f, 5.0f);
             gameField.SetCar(car);
-
+            // Машина соперника
             var enemyMeshes = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
             enemy = new EnemyCar(enemyMeshes);
             enemy.MoveBy(-15.0f, 0.0f, 5.0f);
+            gameField.SetEnemy(enemy);
 
+            // Кубы для тестов
             box1 = new Box(mbox1);
             box1.MoveBy(0.0f, 1.0f, 0.0f); mbox1.Material = _materials[1];
             box2 = new Box(mbox2);
@@ -396,14 +398,22 @@ namespace Template
                 if (_inputController.Space)
                 {
                     anims.IsEnemyTurned = false;
+
+                    //enemy.Target = Vector4.Transform(enemy.Target, Matrix.RotationY(((float)Math.PI / 2)));
+                    //if (Math.Abs(enemy.Target.X) < 0.000001) enemy.Target = new Vector4(0, enemy.Target.Y, enemy.Target.Z, 0);
+                    //if (Math.Abs(enemy.Target.Z) < 0.000001) enemy.Target = new Vector4(enemy.Target.X, enemy.Target.Y, 0, 0);
                 }
+
+
+                gameField.RotateEnemyToTarget(alpha / 2);
 
 
                 // Поворот врага вдоль указанного направления
-                if(!_inputController.Space && !anims.IsEnemyTurned)
-                {
-                    anims.AnimateEnemyToTarget(enemy, alpha);
-                }
+                //if (!_inputController.Space && !anims.IsEnemyTurned)
+                //{
+                //    anims.AnimateEnemyToTarget(enemy, alpha);
+                //}
+                
 
                 // Анимация возврата колес
                 //if((!_inputController.RightPressed && !_inputController.LeftPressed) && car.IsWheelsTirned)
@@ -476,7 +486,7 @@ namespace Template
             {
                 //car.CollisionTest(box2);
                 
-                gameField.CheckRaceFinish();
+                //gameField.CheckRaceFinish();
 
                 screen = (car.IsCollied) ? "True" : "False";
                 

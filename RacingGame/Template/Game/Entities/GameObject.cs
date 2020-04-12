@@ -50,11 +50,11 @@ namespace Template
 
         public virtual void MoveTo(float x, float y, float z)
         {
+            _meshes.ForEach(m => m.MoveBy(x - _position.X, y - _position.Y, z - _position.Z));
+
             _position.X = x;
             _position.Y = y;
-            _position.Z = z;
-
-            _meshes.ForEach(m => m.MoveTo(x, y, z));
+            _position.Z = z;   
         }
 
         public virtual void MoveTo(Vector4 v)

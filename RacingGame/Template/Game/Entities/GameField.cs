@@ -9,13 +9,16 @@ namespace Template
         private Material material;
 
         public CheckPoint[] checkPoints;
+        private Vector4[] targetPts;
+        private int tarIndex = 0;
+
         private int lapsCount = 3;
         public int LapCount
         {
             get => lapsCount;
             set
             {
-                if(value >= 0)
+                if (value >= 0)
                     lapsCount = value;
             }
         }
@@ -23,6 +26,7 @@ namespace Template
         private int lapIndex = 0;
 
         private Car car;
+        private EnemyCar enemy;
 
         public GameField(Material material)
         {
@@ -32,10 +36,13 @@ namespace Template
         public void SetCheckPoints(List<MeshObject> meshes)
         {
             checkPoints = new CheckPoint[meshes.Count];
-            
+            targetPts = new Vector4[meshes.Count];
+
             for (int i = 0; i < checkPoints.Length; i++)
             {
                 checkPoints[i] = new CheckPoint(meshes[i]);
+                var v = meshes[i].CenterPosition;
+                targetPts[i] = new Vector4(v.X, 0, v.Z, 0);
             }
 
             System.Array.Sort(checkPoints);
@@ -44,6 +51,12 @@ namespace Template
         public void SetCar(Car car)
         {
             this.car = car;
+        }
+
+        public void SetEnemy(EnemyCar enemy)
+        {
+            this.enemy = enemy;
+            this.enemy.Target = targetPts[0];
         }
 
         /// <summary>
@@ -63,6 +76,25 @@ namespace Template
         }
         
 
+        /// <summary>
+        /// Поворот врага к цели
+        /// </summary>
+        /// <param name="angle"></param>
+        public void RotateEnemyToTarget(float angle)
+        {
+            enemy.TurnToTarget(angle);
+
+            if(tarIndex < targetPts.Length && enemy.IsOnTarget)
+            {
+                tarIndex++;
+                
+                if (tarIndex < targetPts.Length)
+                {
+                    enemy.Target = targetPts[tarIndex];
+                    tarIndex += 0;
+                }
+            }
+        }
 
     }
 }

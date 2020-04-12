@@ -10,9 +10,18 @@ namespace Template
     class EnemyCar : Car
     {
 
-        public Vector4 Target;
+        private Vector4 _target;
+        /// <summary> Вектор от центра заднего моста к точки цели </summary>
+        public Vector4 Target
+        {
+            get => _target;
+            set
+            {
+                _target = new Vector4(value.X - _rearAxle.X, 0.0f, value.Z - _rearAxle.Z, 0.0f);
+                onTarget = false;
+            }
+        }
         
-
         /// <summary> Мертв ли враг </summary>
         public bool IsDead { get; set; }
 
@@ -40,17 +49,13 @@ namespace Template
         
         /// <summary> Лучи сенсоров для ИИ </summary>
         Ray[] sensors = new Ray[5];
-
-        //public EnemyCar(MeshObject mesh) : base(mesh)
-        //{
-        //    IsDead = false;
-        //}
-
-        public EnemyCar(List<MeshObject> meshes) :base(meshes)
+        
+        public EnemyCar(List<MeshObject> meshes) : base(meshes)
         {
             IsDead = false;
-
-            Target = new Vector4(1.0f, 0.0f, 0.0f, 0.0f);
+            
+            //Target = new Vector4(0.1f, 0.0f, -0.9f, 0.0f);
+            //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
         }
         
         public void Move(short sign)
@@ -60,6 +65,9 @@ namespace Template
 
 
         private int signCos = 0;
+        private bool onTarget = false;
+        /// <summary> Направлен ли вектор Direction в точку Target </summary>
+        public bool IsOnTarget { get => onTarget; }
 
         /// <summary>
         /// Поворачивать машину на угол в сторону заданного направления
@@ -68,35 +76,42 @@ namespace Template
         /// <returns></returns>
         public bool TurnToTarget(float angle)
         {
-            float cosProd = MyVector.CosProduct(_direction, Target);
+            float cosProd = MyVector.CosProduct(_direction, _target);
+
+            float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
 
             if (cosProd != 0 && signCos == Math.Sign(cosProd))
             {
                 if (cosProd < 0)
-                    TurnCar(-angle);
-                else
                     TurnCar(angle);
+                else
+                    TurnCar(-angle);
 
                 signCos = Math.Sign(cosProd);
-
+                onTarget = false;
                 return false;
             }
             else if(signCos != 0)
             {
-                if (MyVector.CosProduct(_direction, Target) < 0)
-                    TurnCar(-angle);
+                float ang = /*(float)Math.PI -*/ MyVector.GetAngle(_direction, _target);
+
+                if (MyVector.CosProduct(_direction, _target) < 0)
+                    TurnCar(ang);
                 else
-                    TurnCar(angle);
-                
-                _direction = Target;
-                
-                Target = Vector4.Transform(Target, Matrix.RotationY(((float)Math.PI / 2)));
+                    TurnCar(-ang);
+
+                //_direction = Target;
+
+                //Target = Vector4.Transform(Target, Matrix.RotationY(((float)Math.PI / 2)));
                 //if (Math.Abs(Target.X) < 0.000001) Target.X = 0;
                 //if (Math.Abs(Target.Z) < 0.000001) Target.Z = 0;
+                signCos = 0;
+                onTarget = true;
                 return true;
             }
-            else
+            else if(!onTarget)
                 signCos = Math.Sign(cosProd);
+
             return false;
         }
 

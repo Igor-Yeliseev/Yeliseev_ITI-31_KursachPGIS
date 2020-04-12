@@ -21,12 +21,12 @@ namespace Template
         public Vector4 Direction { get => _direction; set => _direction = value; }
 
         /// <summary> Передний мост (точка центра) </summary>
-        private Vector4 _frontAxle;
+        protected Vector4 _frontAxle;
         /// <summary> Передний мост (точка центра) </summary>
         public Vector4 FrontAxle { get => _frontAxle; set => _frontAxle = value; }
 
         /// <summary> Задний мост (точка центра) </summary>
-        private Vector4 _rearAxle;
+        protected Vector4 _rearAxle;
         /// <summary> Задний мост (точка центра) </summary>
         public Vector4 RearAxle { get => _rearAxle; set => _rearAxle = value; }
         
@@ -67,8 +67,9 @@ namespace Template
             wheel2 = meshes.Find(m => m.Name.Contains("wheel2"));
             float x = (wheel1.Position.X + wheel2.Position.X) / 2;
             _frontAxle = new Vector4(x, wheel1.Position.Y, wheel1.Position.Z, 0.0f);
-            var vr = meshes[5].Position;
-            _rearAxle = new Vector4(vr.X, wheel1.Position.Y, vr.Z, 0.0f);
+            //var vr = meshes[5].Position;
+            //_rearAxle = new Vector4(vr.X, wheel1.Position.Y, vr.Z, 0.0f);
+            _rearAxle = new Vector4(0.0f, wheel1.Position.Y, 0.0f, 0.0f);
 
             float minZ = wheel1.Vertices[0].position.Z;
             float maxZ = wheel1.Vertices[0].position.Z;
@@ -217,17 +218,21 @@ namespace Template
             float X = x - _position.X;
             float Y = y - _position.Y;
             float Z = z - _position.Z;
-            
-            _position.X = x;
-            _position.Y = y;
-            _position.Z = z;
+
+            base.MoveTo(x, y, z);
 
             var dir = new Vector4(X, Y, Z, 0.0f);
 
             _frontAxle += dir;
             _rearAxle += dir;
-            _meshes.ForEach(m => m.MoveBy(dir));
-            boundingBox.Translate(new Vector3(X, Y, Z));
+        }
+
+        public override void MoveBy(float dX, float dY, float dZ)
+        {
+            base.MoveBy(dX, dY, dZ);
+
+            _frontAxle += new Vector4(dX, dY, dZ, 0.0f);
+            _rearAxle += new Vector4(dX, dY, dZ, 0.0f);
         }
 
         private float GetRotateAngle(float offset)
