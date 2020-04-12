@@ -10,7 +10,7 @@ namespace Template
 
         public CheckPoint[] checkPoints;
         private Vector4[] targetPts;
-        private int tarIndex = 0;
+        private int trgIndex = 0;
 
         private int lapsCount = 3;
         public int LapCount
@@ -84,14 +84,14 @@ namespace Template
         {
             enemy.TurnToTarget(angle);
 
-            if(tarIndex < targetPts.Length && enemy.IsOnTarget)
+            if(trgIndex < targetPts.Length && enemy.IsOnTarget)
             {
-                tarIndex++;
+                trgIndex++;
                 
-                if (tarIndex < targetPts.Length)
+                if (trgIndex < targetPts.Length)
                 {
-                    enemy.Target = targetPts[tarIndex];
-                    tarIndex += 0;
+                    enemy.Target = targetPts[trgIndex];
+                    trgIndex += 0;
                 }
             }
         }

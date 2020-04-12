@@ -134,7 +134,9 @@ namespace Template
             _HUDResources.textFPSTextFormatIndex = _directX2DGraphics.NewTextFormat("Input", SharpDX.DirectWrite.FontWeight.Normal,
                 SharpDX.DirectWrite.FontStyle.Normal, SharpDX.DirectWrite.FontStretch.Normal, 12,
                 SharpDX.DirectWrite.TextAlignment.Leading, SharpDX.DirectWrite.ParagraphAlignment.Near);
-            _HUDResources.textFPSBrushIndex = _directX2DGraphics.NewSolidColorBrush(new SharpDX.Mathematics.Interop.RawColor4(1.0f, 1.0f, 0.0f, 1.0f));
+            _HUDResources.textFPSBrushIndex = _directX2DGraphics.NewSolidColorBrush(new SharpDX.Mathematics.Interop.RawColor4(1.0f, 1.0f, 0.0f, 1.0f)); // Желтый цвет
+            _directX2DGraphics.NewSolidColorBrush(new SharpDX.Mathematics.Interop.RawColor4(1.0f, 0.0f, 0.0f, 1.0f)); // Красный цвет
+            _directX2DGraphics.NewSolidColorBrush(new SharpDX.Mathematics.Interop.RawColor4(0.0f, 0.0f, 0.0f, 1.0f)); // Черный цвет
             _HUDResources.armorIconIndex = _directX2DGraphics.LoadBitmapFromFile("Resources\\armor.bmp");  // Don't use before Resizing. Bitmaps loaded, but not created.
         }
 
@@ -327,7 +329,7 @@ namespace Template
 
         float ANGLE;
         string screen = "";
-        int ct = 1;
+        int ct = 0;
         //FileStream fs;
 
         //ContainmentType collied;
@@ -373,17 +375,17 @@ namespace Template
                 if (_inputController.UpPressed)
                 {
                     if (!car.IsCollied)
-                        car.MoveProperly(1);
-                    //line.MoveTo((Vector4)car.boundingBox.GetCorners()[7]);
+                        car.Speed = 6;
                 }
-                if (_inputController.DownPressed)
+                else if (_inputController.DownPressed)
                 {
                     if (!car.IsCollied)
-                        car.MoveProperly(-1);
-                    //line.MoveTo((Vector4)car.boundingBox.GetCorners()[7]);
+                        car.Speed = -6;
                 }
-
+                else car.Speed = 0;
+                car.MoveProperly();
                 
+
                 if (_inputController.LeftPressed)
                 {
                     anims.IsWheelsAnimate = false;
@@ -397,35 +399,43 @@ namespace Template
                 
                 if (_inputController.Space)
                 {
-                    anims.IsEnemyTurned = false;
-
-                    //enemy.Target = Vector4.Transform(enemy.Target, Matrix.RotationY(((float)Math.PI / 2)));
-                    //if (Math.Abs(enemy.Target.X) < 0.000001) enemy.Target = new Vector4(0, enemy.Target.Y, enemy.Target.Z, 0);
-                    //if (Math.Abs(enemy.Target.Z) < 0.000001) enemy.Target = new Vector4(enemy.Target.X, enemy.Target.Y, 0, 0);
+                    //anims.IsEnemyTurned = false;
+                    enemy.Speed = -3;
                 }
 
+                // Вражеская машина
+                enemy.Move();
+                //enemy.TurnCar(-alpha / 2);
 
-                gameField.RotateEnemyToTarget(alpha / 2);
 
 
+
+                // АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ
                 // Поворот врага вдоль указанного направления
                 //if (!_inputController.Space && !anims.IsEnemyTurned)
                 //{
                 //    anims.AnimateEnemyToTarget(enemy, alpha);
                 //}
-                
 
                 // Анимация возврата колес
                 //if((!_inputController.RightPressed && !_inputController.LeftPressed) && car.IsWheelsTirned)
                 //{
                 //    anims.IsWheelsAnimate = true;
                 //} anims.AnimateWheels(car, alpha);
+                // --------------------------------------------------------------------------------------------------------------------------------
 
-                // Вражеская машина
+
+                // Игровое поле
+                //gameField.RotateEnemyToTarget(alpha / 2);
+
+
+                if (_inputController.Num1Pressed)
                 {
-                    //enemy.Move(1);
-                    //enemy.TurnCar(-alpha / 2);
-                    
+                    enemy.TurnCar(-alpha / 2);
+                }
+                if (_inputController.Num2Pressed)
+                {
+                    enemy.TurnCar(alpha / 2);
                 }
 
 
@@ -450,25 +460,17 @@ namespace Template
 
                 if (_inputController.Num7Pressed)
                 {
-                    var p = box1.Position;
-                    p.X -= alpha;
-                    box1.Position = p;
+                    //var p = box1.Position;
+                    //p.X -= alpha;
+                    //box1.Position = p;
                 }
                 if (_inputController.Num9Pressed)
                 {
-                    var p = box1.Position;
-                    p.X += alpha;
-                    box1.Position = p;                    
+                    //var p = box1.Position;
+                    //p.X += alpha;
+                    //box1.Position = p;                    
                 }
-
-                if (_inputController.Num1Pressed)
-                {
-
-                }
-                if (_inputController.Num2Pressed)
-                {
-
-                }
+                
 
                 if (_inputController.Esc) { _renderForm.Close(); }                               // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 // Toggle help by F1.
@@ -541,7 +543,9 @@ namespace Template
 
                                 $"Angle: {ANGLE}\n" +
                                 $"X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
-                                $"Direction X: {enemy.Direction.X} Y:{enemy.Direction.Y} Z:{enemy.Direction.Z}\n" +
+                                $"enemy Position   X: {enemy.Position.X} Y:{enemy.Position.Y} Z:{enemy.Position.Z}\n" +
+                                $"enemy Direction   X: {enemy.Direction.X} Y:{enemy.Direction.Y} Z:{enemy.Direction.Z}\n" +
+                                $"enemy Speed: {enemy.Speed} ups\n" +
                                 $"Data: {screen}\n";
 
             if (_displayHelp) text += "\n\n" + _helpString;
@@ -550,7 +554,7 @@ namespace Template
             Matrix3x2 armorTransformMatrix = Matrix3x2.Translation(new Vector2(_directX2DGraphics.RenderTargetClientRectangle.Right - armorWidthInDIP - 1, 1));
             _directX2DGraphics.BeginDraw();
             _directX2DGraphics.DrawText(text, _HUDResources.textFPSTextFormatIndex,
-                _directX2DGraphics.RenderTargetClientRectangle, _HUDResources.textFPSBrushIndex);
+                _directX2DGraphics.RenderTargetClientRectangle, _HUDResources.textFPSBrushIndex + 1); // 0 - Желтый, 1 - Красный, 2 - Черный
             _directX2DGraphics.DrawBitmap(_HUDResources.armorIconIndex, armorTransformMatrix, 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
             _directX2DGraphics.EndDraw();
         }

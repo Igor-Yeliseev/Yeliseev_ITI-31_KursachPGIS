@@ -58,9 +58,10 @@ namespace Template
             //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
         }
         
-        public void Move(short sign)
+        /// <summary> Перемещать машину вдоль направления в соответствии с ее скоростью </summary>
+        public void Move()
         {
-            Move(_direction, sign);
+            Move(_direction, Sign(_speed));
         }
 
 
@@ -77,8 +78,6 @@ namespace Template
         public bool TurnToTarget(float angle)
         {
             float cosProd = MyVector.CosProduct(_direction, _target);
-
-            float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
 
             if (cosProd != 0 && signCos == Math.Sign(cosProd))
             {

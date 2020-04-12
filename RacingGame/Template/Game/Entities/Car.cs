@@ -29,9 +29,30 @@ namespace Template
         protected Vector4 _rearAxle;
         /// <summary> Задний мост (точка центра) </summary>
         public Vector4 RearAxle { get => _rearAxle; set => _rearAxle = value; }
-        
-        private float scale = 10.0f;
 
+        protected float _speed;
+        /// <summary>
+        /// Величина скорости автомобиля (ед. в секунду)
+        /// </summary>
+        public float Speed
+        {
+            get
+            {
+                return _speed; // scale * 60;
+            }
+            set
+            {
+                if (value == 0)
+                    scale = 1.0f;
+                else
+                    scale = Math.Abs(scale * (value / (scale * 60)));
+
+                _speed = value;
+            }
+        }
+        /// <summary> Масштаб изменения скорости </summary>
+        private float scale = 0.1f;
+        
         /// <summary> Радиус колеса </summary>
         private float _wheelRadius;
 
@@ -62,6 +83,7 @@ namespace Template
         public Car(List<MeshObject> meshes) : base(meshes) 
         {
             _direction = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
+            _speed = 0;
 
             wheel1 = meshes.Find(m => m.Name.Contains("wheel1"));
             wheel2 = meshes.Find(m => m.Name.Contains("wheel2"));
@@ -268,20 +290,36 @@ namespace Template
             turnCount = 0;
         }
 
-        public short moveSign = 0;
+        //public short moveSign = 0;
+
+        /// <summary>
+        /// Двигать автомобиль в соответствии с физикой
+        /// </summary>
+        public void MoveProperly()
+        {
+            int sign = Sign(_speed) ; //moveSign = sign;
+            if (_speed == 0) return;
+
+            MoveProperly(sign);
+        }
+
+        protected int Sign(float x)
+        {
+            if (x > 0) return 1;
+            else if (x < 0) return -1;
+            else return 0;
+        }
 
         /// <summary>
         /// Двигать автомобиль, sign - направление движения (1 - вперед, -1 - назад)
         /// </summary>
         /// <param name="sign"> Направление движения (1 - вперед, -1 - назад)</param>
-        public void MoveProperly(short sign)
+        private void MoveProperly(int sign)
         {
-            moveSign = sign;
-
             var point = _frontAxle + _direction;
             var v1 = _frontAxle - _rearAxle; v1.Normalize();
             var v2 = point - _rearAxle;
-            float angle = MyVector.GetAngle(v1, v2) / scale; // Угол поворота машины
+            float angle = MyVector.GetAngle(v1, v2) * scale; // Угол поворота машины
 
             float projDir = MyVector.DotProduct(v1, _direction) / v1.Length(); // Смещение вдоль направления
             v1.X *= projDir; v1.Y *= projDir; v1.Z *= projDir; // Получаем проекцию вектора направления
@@ -295,7 +333,7 @@ namespace Template
 
                 Move(v1, sign);
             }
-            else // Двигаюсь назад
+            else if (sign < 0) // Двигаюсь назад
             {
                 if (MyVector.CosProduct(v1, v2) < 0)
                     TurnCar(-angle);
@@ -303,13 +341,13 @@ namespace Template
                     TurnCar(angle);
 
                 v1 = _frontAxle - _rearAxle; v1.Normalize();
-                projDir = MyVector.DotProduct(v1, _direction) / v1.Length(); 
+                projDir = MyVector.DotProduct(v1, _direction) / v1.Length();
                 v1.X *= projDir; v1.Y *= projDir; v1.Z *= projDir;
 
                 Move(v1, sign);
             }
-            
         }
+        
 
         /// <summary>
         /// Поворот машины
@@ -354,9 +392,12 @@ namespace Template
         /// </summary>
         /// <param name="direction"> Вектор направления</param>
         /// <param name="sign"> Знак (вперед, назад)</param>
-        public virtual void Move(Vector4 direction, short sign)
+        public virtual void Move(Vector4 direction, int sign)
         {
-            direction /= scale * sign;
+            if (sign == 0)
+                return;
+
+            direction *= scale * sign;
 
             _meshes.ForEach(m =>
             {
@@ -413,7 +454,7 @@ namespace Template
 
             if (collied == ContainmentType.Intersects)
             {
-                if (moveSign > 0)
+                if (_speed > 0)
                 {
                     while (boundingBox.Contains(ref obj.boundingBox) == ContainmentType.Intersects)
                         MoveProperly(-1);
