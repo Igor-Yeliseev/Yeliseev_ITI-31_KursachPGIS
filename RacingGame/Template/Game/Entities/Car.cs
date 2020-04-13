@@ -88,7 +88,7 @@ namespace Template
         /// <summary> Повернуты ли передние колеса</summary>
         private bool _isWheelsTirned;
         /// <summary> Повернуты ли передние колеса</summary>
-        public bool IsWheelsTirned
+        public bool IsWheelsTurned
         {
             get
             {

@@ -53,7 +53,9 @@ namespace Template
         public EnemyCar(List<MeshObject> meshes) : base(meshes)
         {
             IsDead = false;
-            
+
+            wheelsDirection = _direction;
+
             //Target = new Vector4(0.1f, 0.0f, -0.9f, 0.0f);
             //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
         }
@@ -61,24 +63,80 @@ namespace Template
         
         public override void TurnWheelsLeft(float alpha)
         {
-            if (turnCount >= -itrs)
-            {
-                wheel1.YawBy(-alpha);
-                wheel2.YawBy(-alpha);
-                turnCount -= 2;
-            }
+            wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(-alpha));
+            wheel1.YawBy(-alpha);
+            wheel2.YawBy(-alpha);
+
+            //if (turnCount >= -itrs)
+            //{
+            //    wheel1.YawBy(-alpha);
+            //    wheel2.YawBy(-alpha);
+            //    turnCount -= 2;
+            //}
             
         }
 
         public override void TurnWheelsRight(float alpha)
         {
-            if (turnCount <= itrs)
-            {
-                wheel1.YawBy(alpha);
-                wheel2.YawBy(alpha);
-                turnCount += 2;
-            }
+            wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(alpha));
+            wheel1.YawBy(alpha);
+            wheel2.YawBy(alpha);
+
+            //if (turnCount <= itrs)
+            //{
+            //    wheel1.YawBy(alpha);
+            //    wheel2.YawBy(alpha);
+            //    turnCount += 2;
+            //}
             
+        }
+
+        private int signCosW = 0;
+        private bool wheelsOnTarget = false;
+        /// <summary> Повернуты ли колеса в точку Target </summary>
+        public bool IsWheelsOnTarget { get => wheelsOnTarget; }
+
+        public Vector4 wheelsDirection;
+        /// <summary>
+        /// Поворачивать колеса к цели на угол angle
+        /// </summary>
+        /// <param name="angle"> Угол поворота</param>
+        public void TurnWheelsToTarget(float angle)
+        {
+            if (wheelsOnTarget)
+                return;
+
+            float cosProd = MyVector.CosProduct(wheelsDirection, _target);
+
+            if (cosProd != 0 && signCosW == Math.Sign(cosProd))
+            {
+                if (cosProd < 0)
+                    TurnWheelsRight(angle);
+                else
+                    TurnWheelsLeft(angle);
+
+                signCosW = Math.Sign(cosProd);
+                wheelsOnTarget = false;
+            }
+            else if (signCosW != 0)
+            {
+                float ang = MyVector.GetAngle(wheelsDirection, _target);
+
+                if (MyVector.CosProduct(wheelsDirection, _target) < 0)
+                    TurnWheelsRight(angle);
+                else
+                    TurnWheelsLeft(angle);
+
+                signCosW = 0;
+                wheelsOnTarget = true;
+
+                //_direction = Target;
+                //Target = Vector4.Transform(Target, Matrix.RotationY(((float)Math.PI / 2)));
+                //if (Math.Abs(Target.X) < 0.000001) Target.X = 0;
+                //if (Math.Abs(Target.Z) < 0.000001) Target.Z = 0;
+            }
+            else
+                signCosW = Math.Sign(cosProd);
         }
 
         /// <summary> Перемещать машину вдоль направления в соответствии с ее скоростью </summary>
@@ -87,14 +145,13 @@ namespace Template
             Move(_direction, Math.Sign(_speed));
         }
 
-
         private int signCos = 0;
         private bool onTarget = false;
         /// <summary> Направлен ли вектор Direction в точку Target </summary>
         public bool IsOnTarget { get => onTarget; }
 
         /// <summary>
-        /// Поворачивать машину на угол в сторону заданного направления
+        /// Поворачивать машину в сторону заданного направления на угол angle
         /// </summary>
         /// <param name="angle"></param>
         /// <returns></returns>
@@ -103,7 +160,6 @@ namespace Template
             if (onTarget)
                 return;
             
-
             float cosProd = MyVector.CosProduct(_direction, _target);
 
             if (cosProd != 0 && signCos == Math.Sign(cosProd))
@@ -118,18 +174,13 @@ namespace Template
             }
             else if(signCos != 0)
             {
-                float ang = /*(float)Math.PI -*/ MyVector.GetAngle(_direction, _target);
+                angle = MyVector.GetAngle(_direction, _target);
 
                 if (MyVector.CosProduct(_direction, _target) < 0)
-                    TurnCar(ang);
+                    TurnCar(angle);
                 else
-                    TurnCar(-ang);
+                    TurnCar(-angle);
 
-                //_direction = Target;
-
-                //Target = Vector4.Transform(Target, Matrix.RotationY(((float)Math.PI / 2)));
-                //if (Math.Abs(Target.X) < 0.000001) Target.X = 0;
-                //if (Math.Abs(Target.Z) < 0.000001) Target.Z = 0;
                 signCos = 0;
                 onTarget = true;
             }

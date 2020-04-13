@@ -411,9 +411,9 @@ namespace Template
                     //enemy.Speed = 9;
                     ct = 1;
 
-                    gameField.TurnEnemyWheelsToTarget();
                 }
 
+                enemy.TurnWheelsToTarget(alpha);
 
                 // Вражеская машина
                 //enemy.Move();
@@ -436,7 +436,7 @@ namespace Template
 
                 // Игровое поле
                 //gameField.MoveEnemyToTargets();
-                
+
 
 
                 if (_inputController.Num1Pressed)

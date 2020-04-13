@@ -59,7 +59,7 @@ namespace Template
         public void SetEnemy(EnemyCar enemy)
         {
             this.enemy = enemy;
-            this.enemy.Target = targetPts[0];
+            this.enemy.Target = targetPts[1];
         }
 
         /// <summary>
@@ -76,8 +76,7 @@ namespace Template
 
             return (lapIndex == lapsCount - 1) ? true : false;
         }
-
-
+        
         /// <summary>
         /// Поворот врага к цели
         /// </summary>
@@ -135,13 +134,9 @@ namespace Template
             enemy.Speed = MyMath.Lerp(enemy.Speed, 0, 0.6f, 0.2f);
         }                                          
         
-        public void TurnEnemyWheelsToTarget()
+        public void TurnEnemyWheelsToTarget(float angle)
         {
-            float angle = MyVector.GetAngle(enemy.Target - enemy.Direction, enemy.Direction);
-
-            //angle = angle * 180 / (float)Math.PI;
-
-            enemy.TurnWheelsRight(angle);
+            enemy.TurnWheelsToTarget(angle);
         }
     }
 }
