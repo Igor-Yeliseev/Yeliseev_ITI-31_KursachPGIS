@@ -121,19 +121,27 @@ namespace Template
             }
         }
 
-        public void MoveEnemy()
+        public void MoveEnemyToTargets()
         {
             float alpha = 2.0f * (float)Math.PI * 0.25f * timeHelper.DeltaT;
 
             RotateEnemyToTarget(alpha / 2);
-
+            
             GoToTarget();
         }
 
         public void StopEnemy()
-        {                                          
-            enemy.Speed = MyMath.Lerp(enemy.Speed, 8, 0.6f / 60);
+        {
+            enemy.Speed = MyMath.Lerp(enemy.Speed, 0, 0.6f, 0.2f);
         }                                          
         
+        public void TurnEnemyWheelsToTarget()
+        {
+            float angle = MyVector.GetAngle(enemy.Target - enemy.Direction, enemy.Direction);
+
+            //angle = angle * 180 / (float)Math.PI;
+
+            enemy.TurnWheelsRight(angle);
+        }
     }
 }

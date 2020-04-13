@@ -11,9 +11,9 @@ namespace Template
     class Car : PhysicalObject
     {
         /// <summary> Переднее левое колесо </summary>
-        private MeshObject wheel1;
+        protected MeshObject wheel1;
         /// <summary> Переднее правое колесо </summary>
-        private MeshObject wheel2;
+        protected MeshObject wheel2;
 
         /// <summary> Вектор направления движения </summary>
         protected Vector4 _direction;
@@ -48,9 +48,16 @@ namespace Template
                 else
                     scale = Math.Abs(scale * (value / (scale * 60)));
 
+                Acceleration = value - _speed;
                 _speed = value;
             }
         }
+
+        /// <summary>
+        /// Величина ускорения
+        /// </summary>
+        public float Acceleration { get; set; }
+
         /// <summary>
         /// Максимальная скорость автомобиля
         /// </summary>
@@ -94,8 +101,8 @@ namespace Template
             }
         }
 
-        public int turnCount = 0;
-        int itrs = 54;
+        protected int turnCount = 0;
+        protected int itrs = 54;
         
 
         /// <summary>
@@ -204,7 +211,7 @@ namespace Template
             //});
         }
         
-        public void TurnWheelsLeft(float alpha)
+        public virtual void TurnWheelsLeft(float alpha)
         {
             if (turnCount >= -itrs)
             {
@@ -213,10 +220,9 @@ namespace Template
                 wheel2.YawBy(-alpha);
                 turnCount -= 2;
             }
-
         }
 
-        public void TurnWheelsRight(float alpha)
+        public virtual void TurnWheelsRight(float alpha)
         {
             if (turnCount <= itrs)
             {
@@ -317,7 +323,8 @@ namespace Template
         /// </summary>
         public void MoveProperly()
         {
-            int sign = Sign(_speed) ;
+            //int sign = Sign(_speed) ;
+            int sign = Math.Sign(_speed);
             if (_speed == 0) return;
 
             MoveProperly(sign);

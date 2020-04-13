@@ -57,11 +57,34 @@ namespace Template
             //Target = new Vector4(0.1f, 0.0f, -0.9f, 0.0f);
             //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
         }
+
         
+        public override void TurnWheelsLeft(float alpha)
+        {
+            if (turnCount >= -itrs)
+            {
+                wheel1.YawBy(-alpha);
+                wheel2.YawBy(-alpha);
+                turnCount -= 2;
+            }
+            
+        }
+
+        public override void TurnWheelsRight(float alpha)
+        {
+            if (turnCount <= itrs)
+            {
+                wheel1.YawBy(alpha);
+                wheel2.YawBy(alpha);
+                turnCount += 2;
+            }
+            
+        }
+
         /// <summary> Перемещать машину вдоль направления в соответствии с ее скоростью </summary>
         public void Move()
         {
-            Move(_direction, Sign(_speed));
+            Move(_direction, Math.Sign(_speed));
         }
 
 
@@ -79,6 +102,7 @@ namespace Template
         {
             if (onTarget)
                 return;
+            
 
             float cosProd = MyVector.CosProduct(_direction, _target);
 

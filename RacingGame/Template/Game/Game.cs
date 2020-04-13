@@ -329,6 +329,7 @@ namespace Template
         }
 
         float ANGLE;
+        float alpha;
         string screen = "";
         int ct = 0;
         //FileStream fs;
@@ -338,12 +339,6 @@ namespace Template
         /// <summary>Callback for RenderLoop.Run. Handle input and render scene.</summary>
         public void RenderLoopCallback()
         {
-            if (_firstRun)
-            {
-                RenderFormResizedCallback(this, new EventArgs());
-                _firstRun = false;
-                //fs = new FileStream("D:/difs.txt", FileMode.OpenOrCreate);
-            }
 
             _timeHelper.Update();
             _inputController.UpdateKeyboardState();
@@ -354,12 +349,23 @@ namespace Template
                 _character.YawBy(_inputController.MouseRelativePositionX * _angularCameraRotationStep); // вправо влево
             }
 
-            float alpha = 2.0f * (float)Math.PI * 0.25f * _timeHelper.DeltaT;
+            alpha = 2.0f * (float)Math.PI * 0.25f * _timeHelper.DeltaT;
+
+            if (_firstRun)
+            {
+                _firstRun = false; alpha = 0;
+                RenderFormResizedCallback(this, new EventArgs());
+                //fs = new FileStream("D:/difs.txt", FileMode.OpenOrCreate);
+
+                _character.Position = new Vector4(-22.1f, 6.0f, 7.4f, 0.0f);
+                _character.Yaw = -2.3600119f;
+                _character.Pitch = -0.7657637f;
+            }
 
             if (_inputController.KeyboardUpdated)
             {
-                ANGLE = car.turnCount;
-
+                ANGLE = 0;
+                
                 if (_inputController.WPressed)
                 {
                     _character.MoveForwardBy(_timeHelper.DeltaT * _character.Speed);
@@ -376,17 +382,15 @@ namespace Template
                 if (_inputController.UpPressed)
                 {
                     if (!car.IsCollied)
-                        //car.Speed = 6;
-                        car.Accelerate();
+                        car.Accelerate(); //car.Speed = 6;
                 }
                 else if (_inputController.DownPressed)
                 {
                     if (!car.IsCollied)
-                        //car.Speed = -6;
-                        car.Brake();
+                        car.Brake(); //car.Speed = -6;
                 }
-                else //car.Speed = 0;
-                    car.MoveInertia();
+                else
+                    car.MoveInertia(); //car.Speed = 0;
                 car.MoveProperly();
                 
 
@@ -404,14 +408,16 @@ namespace Template
                 if (_inputController.Space)
                 {
                     //anims.IsEnemyTurned = false;
-                    enemy.Speed = 9;
+                    //enemy.Speed = 9;
+                    ct = 1;
+
+                    gameField.TurnEnemyWheelsToTarget();
                 }
+
 
                 // Вражеская машина
                 //enemy.Move();
-
-                //gameField.StopEnemy();
-
+                //enemy.TurnWheelsRight(alpha);
 
                 // АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ
                 // Поворот врага вдоль указанного направления
@@ -429,16 +435,17 @@ namespace Template
 
 
                 // Игровое поле
-                //gameField.MoveEnemy();
+                //gameField.MoveEnemyToTargets();
+                
 
 
                 if (_inputController.Num1Pressed)
                 {
-                    enemy.TurnCar(-alpha / 2);
+                    enemy.TurnWheelsLeft(alpha);
                 }
                 if (_inputController.Num2Pressed)
                 {
-                    enemy.TurnCar(alpha / 2);
+                    enemy.TurnWheelsRight(alpha);
                 }
 
 
@@ -509,8 +516,8 @@ namespace Template
             _renderer.UpdateIlluminationProperties(_illumination);
 
             _renderer.SetPerObjectConstants(_timeHelper.Time, 0);
-            float angle = _timeHelper.Time * 2.0f * (float)Math.PI * 0.25f; // Frequency = 0.25 Hz
-            _cube.Pitch = angle;
+            //float angle = _timeHelper.Time * 2.0f * (float)Math.PI * 0.25f; // Frequency = 0.25 Hz
+            //_cube.Pitch = angle;
 
             //Matrix worldMatrix;
 
@@ -534,6 +541,7 @@ namespace Template
             RenderHUD();
 
             _renderer.EndRender();
+            
         }
 
         /// <summary>Render HUD.</summary>
@@ -543,6 +551,7 @@ namespace Template
                                 $"MX: {_inputController.MouseRelativePositionX,3:d2} MY: {_inputController.MouseRelativePositionY,3:d2} MZ: {_inputController.MouseRelativePositionZ,4:d3}\n" +
                                 $"LB: {(_inputController.MouseButtons[0] ? 1 : 0)} MB: {(_inputController.MouseButtons[2] ? 1 : 0)} RB: {(_inputController.MouseButtons[1] ? 1 : 0)}\n" +
                                 $"Pos: {_character.Position.X,6:f1}, {_character.Position.Y,6:f1}, {_character.Position.Z,6:f1}\n" +
+                                $"Yaw: {_character.Yaw}, Pitch: {_character.Pitch}, Roll: {_character.Roll}\n" +
 
                                 $"Angle: {ANGLE}\n" +
                                 $"car Position X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
@@ -550,6 +559,7 @@ namespace Template
                                 $"enemy Position   X: {enemy.Position.X} Y:{enemy.Position.Y} Z:{enemy.Position.Z}\n" +
                                 $"enemy Direction   X: {enemy.Direction.X} Y:{enemy.Direction.Y} Z:{enemy.Direction.Z}\n" +
                                 $"enemy Speed: {enemy.Speed} ups\n" +
+                                $"enemy Acceleration: {enemy.Acceleration} ups\n" +
                                 $"Data: {screen}\n";
 
             if (_displayHelp) text += "\n\n" + _helpString;
