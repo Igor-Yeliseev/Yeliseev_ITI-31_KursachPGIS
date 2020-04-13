@@ -59,7 +59,7 @@ namespace Template
         public void SetEnemy(EnemyCar enemy)
         {
             this.enemy = enemy;
-            this.enemy.Target = targetPts[1];
+            this.enemy.Target = targetPts[0];
         }
 
         /// <summary>
@@ -124,8 +124,9 @@ namespace Template
         {
             float alpha = 2.0f * (float)Math.PI * 0.25f * timeHelper.DeltaT;
 
-            RotateEnemyToTarget(alpha / 2);
-            
+            RotateEnemyToTarget(alpha / 10);
+            TurnEnemyWheelsToTarget(alpha);
+
             GoToTarget();
         }
 
@@ -134,9 +135,19 @@ namespace Template
             enemy.Speed = MyMath.Lerp(enemy.Speed, 0, 0.6f, 0.2f);
         }                                          
         
-        public void TurnEnemyWheelsToTarget(float angle)
+        private void TurnEnemyWheelsToTarget(float angle)
         {
             enemy.TurnWheelsToTarget(angle);
+
+            //if (enemy.IsWheelsOnTarget)
+            //{
+            //    trgIndex++;
+
+            //    if (trgIndex == targetPts.Length)
+            //        trgIndex = 0;
+
+            //    enemy.Target = targetPts[trgIndex];
+            //}
         }
     }
 }

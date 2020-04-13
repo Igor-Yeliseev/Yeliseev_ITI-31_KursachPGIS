@@ -66,11 +66,23 @@ namespace Template
             return DotProduct(v2, v1) / v2.Length();
         }
 
+        /// <summary>
+        /// Косое произведение векторов
+        /// </summary>
+        /// <param name="v1"> Первый вектор</param>
+        /// <param name="v2"> Второй вектор</param>
+        /// <returns></returns>
         public static float CosProduct(Vector4 v1, Vector4 v2)
         {
             return (v1.X * v2.Z - v2.X * v1.Z);
         }
 
+        /// <summary>
+        /// Косое произведение векторов
+        /// </summary>
+        /// <param name="v1"> Первый вектор</param>
+        /// <param name="v2"> Второй вектор</param>
+        /// <returns></returns>
         public static float CosProduct(Vector3 v1, Vector3 v2)
         {
             return (v1.X * v2.Z - v2.X * v1.Z);

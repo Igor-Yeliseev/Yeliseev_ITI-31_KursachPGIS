@@ -86,18 +86,18 @@ namespace Template
         private float _wheelRadius;
 
         /// <summary> Повернуты ли передние колеса</summary>
-        private bool _isWheelsTirned;
+        private bool _isWheelsTurned;
         /// <summary> Повернуты ли передние колеса</summary>
         public bool IsWheelsTurned
         {
             get
             {
-                _isWheelsTirned = (turnCount != 0) ? true : false;
-                return _isWheelsTirned;
+                _isWheelsTurned = (turnCount != 0) ? true : false;
+                return _isWheelsTurned;
             }
             set
             {
-                _isWheelsTirned = value;
+                _isWheelsTurned = value;
             }
         }
 
@@ -379,7 +379,7 @@ namespace Template
         /// Поворот машины
         /// </summary>
         /// <param name="alpha"> Угол поворота</param>
-        public void TurnCar(float alpha)
+        public virtual void TurnCar(float alpha)
         {
             if (alpha == 0)
                 return;

@@ -19,6 +19,7 @@ namespace Template
             {
                 _target = new Vector4(value.X - _rearAxle.X, 0.0f, value.Z - _rearAxle.Z, 0.0f);
                 onTarget = false;
+                wheelsOnTarget = false;
             }
         }
         
@@ -63,34 +64,44 @@ namespace Template
         
         public override void TurnWheelsLeft(float alpha)
         {
-            wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(-alpha));
-            wheel1.YawBy(-alpha);
-            wheel2.YawBy(-alpha);
+            //wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(-alpha));
+            //wheel1.YawBy(-alpha);
+            //wheel2.YawBy(-alpha);
 
-            //if (turnCount >= -itrs)
-            //{
-            //    wheel1.YawBy(-alpha);
-            //    wheel2.YawBy(-alpha);
-            //    turnCount -= 2;
-            //}
-            
+            if (turnCount >= -itrs)
+            {
+                wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(-alpha));
+                wheel1.YawBy(-alpha);
+                wheel2.YawBy(-alpha);
+                turnCount -= 2;
+            }
+
         }
 
         public override void TurnWheelsRight(float alpha)
         {
-            wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(alpha));
-            wheel1.YawBy(alpha);
-            wheel2.YawBy(alpha);
+            //wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(alpha));
+            //wheel1.YawBy(alpha);
+            //wheel2.YawBy(alpha);
 
-            //if (turnCount <= itrs)
-            //{
-            //    wheel1.YawBy(alpha);
-            //    wheel2.YawBy(alpha);
-            //    turnCount += 2;
-            //}
-            
+            if (turnCount <= itrs)
+            {
+                wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(alpha));
+                wheel1.YawBy(alpha);
+                wheel2.YawBy(alpha);
+                turnCount += 2;
+            }
         }
 
+        public override void TurnCar(float alpha)
+        {
+            base.TurnCar(alpha);
+            wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(alpha));
+        }
+
+        /// <summary>
+        /// Знак косого произведения для колес
+        /// </summary>
         private int signCosW = 0;
         private bool wheelsOnTarget = false;
         /// <summary> Повернуты ли колеса в точку Target </summary>
@@ -103,8 +114,8 @@ namespace Template
         /// <param name="angle"> Угол поворота</param>
         public void TurnWheelsToTarget(float angle)
         {
-            if (wheelsOnTarget)
-                return;
+            //if (wheelsOnTarget)
+            //    return;
 
             float cosProd = MyVector.CosProduct(wheelsDirection, _target);
 

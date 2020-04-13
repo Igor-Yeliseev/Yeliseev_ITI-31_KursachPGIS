@@ -409,15 +409,15 @@ namespace Template
                 {
                     //anims.IsEnemyTurned = false;
                     //enemy.Speed = 9;
-                    ct = 1;
 
                 }
 
-                enemy.TurnWheelsToTarget(alpha);
 
                 // Вражеская машина
                 //enemy.Move();
-                //enemy.TurnWheelsRight(alpha);
+
+
+
 
                 // АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ
                 // Поворот врага вдоль указанного направления
@@ -436,7 +436,8 @@ namespace Template
 
                 // Игровое поле
                 //gameField.MoveEnemyToTargets();
-
+                gameField.MoveEnemyToTargets();
+                
 
 
                 if (_inputController.Num1Pressed)
