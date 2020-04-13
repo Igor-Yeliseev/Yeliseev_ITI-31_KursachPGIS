@@ -376,14 +376,17 @@ namespace Template
                 if (_inputController.UpPressed)
                 {
                     if (!car.IsCollied)
-                        car.Speed = 6;
+                        //car.Speed = 6;
+                        car.Accelerate();
                 }
                 else if (_inputController.DownPressed)
                 {
                     if (!car.IsCollied)
-                        car.Speed = -6;
+                        //car.Speed = -6;
+                        car.Brake();
                 }
-                else car.Speed = 0;
+                else //car.Speed = 0;
+                    car.MoveInertia();
                 car.MoveProperly();
                 
 
@@ -401,13 +404,13 @@ namespace Template
                 if (_inputController.Space)
                 {
                     //anims.IsEnemyTurned = false;
-                    enemy.Speed = 3;
+                    enemy.Speed = 9;
                 }
 
                 // Вражеская машина
                 //enemy.Move();
 
-
+                //gameField.StopEnemy();
 
 
                 // АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ
@@ -426,7 +429,7 @@ namespace Template
 
 
                 // Игровое поле
-                gameField.MoveEnemy();
+                //gameField.MoveEnemy();
 
 
                 if (_inputController.Num1Pressed)
@@ -542,7 +545,8 @@ namespace Template
                                 $"Pos: {_character.Position.X,6:f1}, {_character.Position.Y,6:f1}, {_character.Position.Z,6:f1}\n" +
 
                                 $"Angle: {ANGLE}\n" +
-                                $"X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
+                                $"car Position X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
+                                $"car Speed: {car.Speed} ups\n\n" +
                                 $"enemy Position   X: {enemy.Position.X} Y:{enemy.Position.Y} Z:{enemy.Position.Z}\n" +
                                 $"enemy Direction   X: {enemy.Direction.X} Y:{enemy.Direction.Y} Z:{enemy.Direction.Z}\n" +
                                 $"enemy Speed: {enemy.Speed} ups\n" +

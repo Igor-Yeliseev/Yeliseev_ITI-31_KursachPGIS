@@ -92,9 +92,7 @@ namespace Template
                 trgIndex++;
 
                 if (trgIndex == targetPts.Length)
-                {
                     trgIndex = 0;
-                }
 
                 enemy.Target = targetPts[trgIndex];
             }
@@ -131,5 +129,11 @@ namespace Template
 
             GoToTarget();
         }
+
+        public void StopEnemy()
+        {                                          
+            enemy.Speed = MyMath.Lerp(enemy.Speed, 8, 0.6f / 60);
+        }                                          
+        
     }
 }

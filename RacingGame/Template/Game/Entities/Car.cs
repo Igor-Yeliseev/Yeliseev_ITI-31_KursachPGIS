@@ -30,6 +30,7 @@ namespace Template
         /// <summary> Задний мост (точка центра) </summary>
         public Vector4 RearAxle { get => _rearAxle; set => _rearAxle = value; }
 
+        /// <summary> Величина скорости автомобиля (ед. в секунду) </summary>
         protected float _speed;
         /// <summary>
         /// Величина скорости автомобиля (ед. в секунду)
@@ -50,6 +51,13 @@ namespace Template
                 _speed = value;
             }
         }
+        /// <summary>
+        /// Максимальная скорость автомобиля
+        /// </summary>
+        public virtual float MaxSpeed { get; set; } = 20.0f;
+        /// <summary> Максимальная скорость задним ходом </summary>
+        public float MaxBackSpeed { get; } = -6.0f;
+
         /// <summary> Масштаб изменения скорости </summary>
         private float scale = 0.1f;
 
@@ -304,14 +312,12 @@ namespace Template
             turnCount = 0;
         }
 
-        //public short moveSign = 0;
-
         /// <summary>
         /// Двигать автомобиль в соответствии с физикой
         /// </summary>
         public void MoveProperly()
         {
-            int sign = Sign(_speed) ; //moveSign = sign;
+            int sign = Sign(_speed) ;
             if (_speed == 0) return;
 
             MoveProperly(sign);
@@ -361,7 +367,6 @@ namespace Template
                 Move(v1, sign);
             }
         }
-        
 
         /// <summary>
         /// Поворот машины
@@ -427,7 +432,39 @@ namespace Template
             _position += direction;
             boundingBox.Translate((Vector3)direction);
         }
-        
+
+        /// <summary> Ускорение автомобиля </summary>
+        public void Accelerate()
+        {
+            Speed = MyMath.Lerp(_speed, MaxSpeed, 0.4f, 0.1f);
+        }
+
+        /// <summary> Торможение автомобиля </summary>
+        public void Brake()
+        {
+            if (_speed > MaxSpeed / 2)
+            {
+                Speed = MyMath.Lerp(_speed, 0, 0.7f, 0.1f);
+            }
+            else if (_speed > MaxSpeed / 3)
+            {
+                Speed = MyMath.Lerp(_speed, 0, 1.0f, 0.1f);
+            }
+            else if (_speed > MaxSpeed / 4)
+            {
+                Speed = MyMath.Lerp(_speed, 0, 1.7f, 0.1f);
+            }
+            else
+                Speed = MyMath.Lerp(_speed, MaxBackSpeed, 2.0f, 0.1f);
+        }
+
+        /// <summary> Движение по инерции с затуханием скорости </summary>
+        public void MoveInertia()
+        {
+            Speed = MyMath.Lerp(_speed, 0, 0.3f, 0.2f);
+        }
+
+
         /// <summary>
         /// Анимация возврата коле в начальное положение
         /// </summary>
