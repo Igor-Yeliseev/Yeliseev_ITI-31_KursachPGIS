@@ -82,7 +82,7 @@ namespace Template
         
 
         private MeshObject _cube;
-        private MeshObject line;
+        private MeshObject line1, line2;
         
         /// <summary>List of objects with meshes.</summary>
         private MeshObjects _meshObjects;
@@ -201,11 +201,11 @@ namespace Template
             // 6. Load meshes.
             _meshObjects = new MeshObjects();
             _cube = loader.LoadMeshObject("Resources\\cube.txt", _materials);
-            line = loader.LoadMeshFromObject("Resources\\line.obj", _materials[1]);
+            line1 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[1]);
 
             var mbox1 = loader.LoadMeshObject("Resources\\box.txt", _materials);
             var mbox2 = loader.LoadMeshObject("Resources\\box.txt", _materials);
-            var center = loader.LoadMeshFromObject("Resources\\line.obj", _materials[1]);
+            line2 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[1]);
             var plane = loader.LoadMeshFromObject("Resources\\plane.obj", _materials[0]);
             var road = loader.LoadMeshFromObject("Resources\\road.obj", _materials[7]);
             var cube2 = loader.LoadMeshFromObject("Resources\\box.obj", _materials[0]);
@@ -233,8 +233,8 @@ namespace Template
             _cube.MoveBy(0.0f, 9.0f, 0.0f);
             plane.MoveBy(-45.0f, 0.0f, 5.0f);
             cube2.MoveBy(4.0f, 0.0f, 12.0f);
-            center.MoveTo(0, 0, 0);
-            line.MoveTo(carMeshes[5].CenterPosition);
+            line2.MoveTo(0, 0, 0);
+            line1.MoveTo(carMeshes[5].CenterPosition);
 
             
 
@@ -245,10 +245,10 @@ namespace Template
             _meshObjects.Add(mbox2);
             _meshObjects.Add(_cube);
             _meshObjects.Add(cube2);
-            _meshObjects.Add(line);
+            _meshObjects.Add(line1);
+            _meshObjects.Add(line2);
             _meshObjects.Add(plane);
             _meshObjects.Add(road);
-            _meshObjects.Add(center);
             enemyMeshes.ForEach(m => _meshObjects.Add(m));
             checkPointMeshes.ForEach(m => _meshObjects.Add(m));
             car.AddToMeshes(_meshObjects);
@@ -469,10 +469,10 @@ namespace Template
                     enemy.Speed = -9;
                 }
                 else
-                    enemy.Speed = 0; //box1.moveSign = 0;
+                    //box1.moveSign = 0;
 
-
-                enemy.TestRays(gameField.checkPoints[1].boundingBox, -alpha);
+                enemy.CheckObstacle(gameField.checkPoints[1].boundingBox, alpha);
+                
                 enemy.Move();
 
 

@@ -50,20 +50,24 @@ namespace Template
         
         /// <summary> Лучи сенсоров для ИИ </summary>
         Ray[] sensors = new Ray[5];
-        Ray rayLeft, rayRight, rayCenter;
+        public Ray rayLeft, rayRight, rayCenter;
 
         public EnemyCar(List<MeshObject> meshes) : base(meshes)
         {
             IsDead = false;
             wheelsDirection = _direction;
             
-            var rayLPos = new Vector3(wheel1.Position.X, wheel1.Position.Y, wheel1.Position.Z + 0); // ИЗМЕНИТЬ ПОТОМ !!!
-            var rayRPos = new Vector3(wheel2.Position.X, wheel2.Position.Y, wheel2.Position.Z + 0);
+            var rayRPos = new Vector3(wheel1.Position.X, wheel1.Position.Y, wheel1.Position.Z + 0); // ИЗМЕНИТЬ ПОТОМ !!!
+            var rayLPos = new Vector3(wheel2.Position.X, wheel2.Position.Y, wheel2.Position.Z + 0);
             var rayCenterPos = new Vector3(_frontAxle.X, _frontAxle.Y, _frontAxle.Z + 0);
-            rayLeft = new Ray(rayLPos, _direction);
             rayRight = new Ray(rayRPos, _direction);
+            rayLeft = new Ray(rayLPos, _direction);
             rayCenter = new Ray(rayCenterPos, _direction);
-            
+
+            rayLftToRearAxle = rayLeft.Position - _rearAxle;
+            rayRhtToRearAxle = rayRight.Position - _rearAxle;
+            rayCenToRearAxle = rayCenter.Position - _rearAxle;
+
             //Target = new Vector3(0.1f, 0.0f, -0.9f);
             //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
         }
@@ -101,19 +105,37 @@ namespace Template
 
         public override void TurnCar(float alpha)
         {
+            if (alpha == 0) return;
+
             base.TurnCar(alpha);
             wheelsDirection = Vector3.Transform(wheelsDirection, Matrix3x3.RotationY(alpha));
-            SetRaysDirection();
+            SetRaysDirection(alpha);
         }
+
+        /// <summary> Расстояние от точки вращения до поцизии левого сенсора </summary>
+        Vector3 rayLftToRearAxle;
+        /// <summary> Расстояние от точки вращения до поцизии правого сенсора </summary>
+        Vector3 rayRhtToRearAxle;
+        /// <summary> Расстояние от точки вращения до поцизии центрального сенсора </summary>
+        Vector3 rayCenToRearAxle;
 
         /// <summary>
         /// Пересчитать направление лучей сенсоров
         /// </summary>
-        private void SetRaysDirection()
+        private void SetRaysDirection(float alpha)
         {
-            rayLeft.Direction = _direction;
-            rayRight.Direction = _direction;
-            rayCenter.Direction = _direction;
+            Vector3 dir = Vector3.Transform(rayCenter.Direction, Matrix3x3.RotationY(alpha));
+            rayLeft.Direction = dir;
+            rayRight.Direction = dir;
+            rayCenter.Direction = dir;
+
+            rayLftToRearAxle = Vector3.Transform(rayLftToRearAxle, Matrix3x3.RotationY(alpha));
+            rayRhtToRearAxle = Vector3.Transform(rayRhtToRearAxle, Matrix3x3.RotationY(alpha));
+            rayCenToRearAxle = Vector3.Transform(rayCenToRearAxle, Matrix3x3.RotationY(alpha));
+
+            rayLeft.Position = _rearAxle + rayLftToRearAxle;
+            rayRight.Position = _rearAxle + rayRhtToRearAxle;
+            rayCenter.Position = _rearAxle + rayCenToRearAxle;
         }
 
         /// <summary>
@@ -180,6 +202,18 @@ namespace Template
         {
             base.Move(direction, sign);
             MoveRays(direction, sign);
+        }
+
+        public override void MoveBy(float dX, float dY, float dZ)
+        {
+            base.MoveBy(dX, dY, dZ);
+            MoveByRays(new Vector3(dX, dY, dZ));
+        }
+        private void MoveByRays(Vector3 offset)
+        {
+            rayLeft.Position += offset;
+            rayRight.Position += offset;
+            rayCenter.Position += offset;
         }
 
         /// <summary> Смещение лучей сенсоров вдоль направления </summary>
@@ -249,20 +283,34 @@ namespace Template
             return false;
         }
         
-        private float disntace;
+        private float distance;
         /// <summary> Дистанция до объекта </summary>
-        public float Distance { get => disntace; }
-
-        public void TestRays(OrientedBoundingBox orientedBoundingBox, float alpha)
-        {
-
-            bool intersect = MyMath.RayIntersects(ref rayLeft, orientedBoundingBox, out disntace);
-
-            if (intersect && disntace <= 6)
-            {
-                
-            }
-        }
+        public float Distance { get => distance; }
         
+        public void CheckObstacle(OrientedBoundingBox orientedBoundingBox, float alpha)
+        {
+            float distanceL, distanceR;
+
+            bool interLeft = MyMath.RayIntersects(ref rayLeft, orientedBoundingBox, out distanceL);
+            bool interRight = MyMath.RayIntersects(ref rayRight, orientedBoundingBox, out distanceR);
+            //bool interCenter = MyMath.RayIntersects(ref rayCenter, orientedBoundingBox, out disntaceC);
+
+            if (interLeft && interRight)
+            {
+                //Brake();
+                //Speed = 0;
+            }
+
+            if (interLeft && distanceL <= 5)
+            {
+                TurnCar(alpha); // Поворачиваю направо
+            }
+
+            if(interRight && distanceR <= 5)
+            {
+                TurnCar(-alpha); // Поворачиваю налево
+            }
+            
+        }
     }
 }
