@@ -10,14 +10,14 @@ namespace Template
     class EnemyCar : Car
     {
 
-        private Vector4 _target;
+        private Vector3 _target;
         /// <summary> Вектор от центра заднего моста к точки цели </summary>
-        public Vector4 Target
+        public Vector3 Target
         {
             get => _target;
             set
             {
-                _target = new Vector4(value.X - _rearAxle.X, 0.0f, value.Z - _rearAxle.Z, 0.0f);
+                _target = new Vector3(value.X - _rearAxle.X, 0.0f, value.Z - _rearAxle.Z);
                 onTarget = false;
                 wheelsOnTarget = false;
             }
@@ -56,20 +56,20 @@ namespace Template
             IsDead = false;
             wheelsDirection = _direction;
             
-            //Target = new Vector4(0.1f, 0.0f, -0.9f, 0.0f);
+            //Target = new Vector3(0.1f, 0.0f, -0.9f);
             //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
         }
 
         
         public override void TurnWheelsLeft(float alpha)
         {
-            //wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(-alpha));
+            //wheelsDirection = Vector3.Transform(wheelsDirection, Matrix3x3.RotationY(-alpha));
             //wheel1.YawBy(-alpha);
             //wheel2.YawBy(-alpha);
 
             if (turnCount >= -itrs)
             {
-                wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(-alpha));
+                wheelsDirection = Vector3.Transform(wheelsDirection, Matrix3x3.RotationY(-alpha));
                 wheel1.YawBy(-alpha);
                 wheel2.YawBy(-alpha);
                 turnCount -= 2;
@@ -79,13 +79,13 @@ namespace Template
 
         public override void TurnWheelsRight(float alpha)
         {
-            //wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(alpha));
+            //wheelsDirection = Vector3.Transform(wheelsDirection, Matrix3x3.RotationY(alpha));
             //wheel1.YawBy(alpha);
             //wheel2.YawBy(alpha);
 
             if (turnCount <= itrs)
             {
-                wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(alpha));
+                wheelsDirection = Vector3.Transform(wheelsDirection, Matrix3x3.RotationY(alpha));
                 wheel1.YawBy(alpha);
                 wheel2.YawBy(alpha);
                 turnCount += 2;
@@ -95,7 +95,7 @@ namespace Template
         public override void TurnCar(float alpha)
         {
             base.TurnCar(alpha);
-            wheelsDirection = Vector4.Transform(wheelsDirection, Matrix.RotationY(alpha));
+            wheelsDirection = Vector3.Transform(wheelsDirection, Matrix3x3.RotationY(alpha));
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Template
         /// <summary> Повернуты ли колеса в точку Target </summary>
         public bool IsWheelsOnTarget { get => wheelsOnTarget; }
 
-        public Vector4 wheelsDirection;
+        public Vector3 wheelsDirection;
         /// <summary>
         /// Поворачивать колеса к цели на угол angle
         /// </summary>
@@ -141,7 +141,7 @@ namespace Template
                 wheelsOnTarget = true;
 
                 //_direction = Target;
-                //Target = Vector4.Transform(Target, Matrix.RotationY(((float)Math.PI / 2)));
+                //Target = Vector3.Transform(Target, Matrix3x3.RotationY(((float)Math.PI / 2)));
                 //if (Math.Abs(Target.X) < 0.000001) Target.X = 0;
                 //if (Math.Abs(Target.Z) < 0.000001) Target.Z = 0;
             }
@@ -207,5 +207,14 @@ namespace Template
         {
             return false;
         }
+
+
+        public void TestRays()
+        {
+            Ray ray1 = new Ray(_frontAxle, _direction);
+
+
+        }
+
     }
 }

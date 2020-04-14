@@ -61,7 +61,7 @@ namespace Template
             return new OrientedBoundingBox(min, max);
         }
         
-        public PhysicalObject(List<MeshObject> meshes, Vector4 position) : base(meshes, position)
+        public PhysicalObject(List<MeshObject> meshes, Vector3 position) : base(meshes, position)
         {
             boundingBox = new OrientedBoundingBox();
         }
@@ -78,11 +78,10 @@ namespace Template
         protected virtual void RotateOBB(float angle)
         {
             if (angle == 0) return;
-
-            Matrix matrix = Matrix.RotationY(angle);
+            
             Vector3 dv = new Vector3(-_position.X, -_position.Y, -_position.Z);
             boundingBox.Translate(dv);
-            boundingBox.Transform(matrix);
+            boundingBox.Transform(Matrix.RotationY(angle));
             boundingBox.Translate(-dv);
         }
 
@@ -93,7 +92,7 @@ namespace Template
             boundingBox.Translate(new Vector3(dX, dY, dZ));
         }
 
-        public override void MoveBy(Vector4 v)
+        public override void MoveBy(Vector3 v)
         {
             MoveBy(v.X, v.Y, v.Z);
         }
@@ -109,7 +108,7 @@ namespace Template
             boundingBox.Translate(new Vector3(X, Y, Z));
         }
 
-        public override void MoveTo(Vector4 v)
+        public override void MoveTo(Vector3 v)
         {
             MoveTo(v.X, v.Y, v.Z);
         }

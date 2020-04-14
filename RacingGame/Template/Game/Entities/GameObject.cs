@@ -11,9 +11,9 @@ namespace Template
     {
         protected List<MeshObject> _meshes;
 
-        protected Vector4 _position;
+        protected Vector3 _position;
 
-        public Vector4 Position { get => _position; }
+        public Vector3 Position { get => _position; }
 
         public GameObject(MeshObject mesh)
         {
@@ -22,7 +22,7 @@ namespace Template
             _position = mesh._position;
         }
 
-        public GameObject(List<MeshObject> meshes, Vector4 position)
+        public GameObject(List<MeshObject> meshes, Vector3 position)
         {
             _meshes = meshes;
             _position = position;
@@ -31,7 +31,7 @@ namespace Template
         public GameObject(List<MeshObject> meshes)
         {
             _meshes = meshes;
-            _position = new Vector4(0.0f, 0.0f, 0.0f, 0.0f);
+            _position = new Vector3(0.0f, 0.0f, 0.0f);
         }
 
         public virtual void MoveBy(float dX, float dY, float dZ)
@@ -43,7 +43,7 @@ namespace Template
             _position.Z += dZ;
         }
 
-        public virtual void MoveBy(Vector4 v)
+        public virtual void MoveBy(Vector3 v)
         {
             MoveBy(v.X, v.Y, v.Z);
         }
@@ -57,7 +57,7 @@ namespace Template
             _position.Z = z;   
         }
 
-        public virtual void MoveTo(Vector4 v)
+        public virtual void MoveTo(Vector3 v)
         {
             MoveTo(v.X, v.Y, v.Z);
         }

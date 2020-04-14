@@ -10,7 +10,7 @@ namespace Template
         private Material material;
 
         public CheckPoint[] checkPoints;
-        private Vector4[] targetPts;
+        private Vector3[] targetPts;
         private int trgIndex = 0;
 
         private int lapsCount = 3;
@@ -39,13 +39,13 @@ namespace Template
         public void SetCheckPoints(List<MeshObject> meshes)
         {
             checkPoints = new CheckPoint[meshes.Count];
-            targetPts = new Vector4[meshes.Count];
+            targetPts = new Vector3[meshes.Count];
 
             for (int i = 0; i < checkPoints.Length; i++)
             {
                 checkPoints[i] = new CheckPoint(meshes[i]);
                 var v = meshes[i].CenterPosition;
-                targetPts[i] = new Vector4(v.X, 0, v.Z, 0);
+                targetPts[i] = new Vector3(v.X, 0, v.Z);
             }
 
             System.Array.Sort(checkPoints);

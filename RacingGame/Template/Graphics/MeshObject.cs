@@ -58,7 +58,7 @@ namespace Template
         /// <summary>Array of vertex data.</summary>
         public List<VertexDataStruct> Vertices { get => _vertices.ToList(); }
 
-        public override Vector4 Position
+        public override Vector3 Position
         {
             get => base.Position;
             set
@@ -69,14 +69,14 @@ namespace Template
         }
 
         /// <summary>Center position of the mesh</summary>
-        private Vector4 _centerPosition;
+        private Vector3 _centerPosition;
         /// <summary>Center point of the mesh</summary>
-        public Vector4 CenterPosition { get => _centerPosition; set => _centerPosition = value; }
+        public Vector3 CenterPosition { get => _centerPosition; set => _centerPosition = value; }
 
         /// <summary>Center position of the mesh</summary>
-        private Vector4 _center2Position;
+        private Vector3 _center2Position;
         /// <summary>Center point of the mesh</summary>
-        public Vector4 Center2Position { get => _center2Position; set => _center2Position = value; }
+        public Vector3 Center2Position { get => _center2Position; set => _center2Position = value; }
 
         /// <summary>Vertex buffer DirectX object.</summary>
         private Buffer11 _vertexBufferObject;
@@ -128,7 +128,7 @@ namespace Template
                 s = 0.0f; vrts.ForEach(v => s += v.position.Z);
                 float z = s / vrts.Count;
 
-                _centerPosition = new Vector4(x, y, z, 0.0f); // Определение геометрического центра фигуры
+                _centerPosition = new Vector3(x, y, z); // Определение геометрического центра фигуры
 
                 if (_name.Contains("wheel"))
                 {
@@ -168,7 +168,7 @@ namespace Template
             _center2Position.Z += dZ;
         }
 
-        public void MoveBy(Vector4 dv)
+        public void MoveBy(Vector3 dv)
         {
             MoveBy(dv.X, dv.Y, dv.Z);
         }
@@ -189,7 +189,7 @@ namespace Template
             _center2Position.Z += Z;
         }
 
-        public void MoveTo(Vector4 vector)
+        public void MoveTo(Vector3 vector)
         {
             MoveTo(vector.X, vector.Y, vector.Z);
         }
@@ -199,8 +199,8 @@ namespace Template
             Vector4[] vertices = new Vector4[_verticesCount];
             for (int i = 0; i < vertices.Length; i++)
             {
-                vertices[i] = _vertices[i].position - _centerPosition;
-                _vertices[i].position = _position + vertices[i];
+                vertices[i] = _vertices[i].position - (Vector4)_centerPosition;
+                _vertices[i].position = (Vector4)_position + vertices[i];
             }
         }
 
@@ -209,8 +209,8 @@ namespace Template
             Vector4[] vertices = new Vector4[_verticesCount];
             for (int i = 0; i < vertices.Length; i++)
             {
-                vertices[i] = _vertices[i].position - _position;
-                _vertices[i].position = _centerPosition + vertices[i];
+                vertices[i] = _vertices[i].position - (Vector4)_position;
+                _vertices[i].position = (Vector4)_centerPosition + vertices[i];
             }
         }
 
@@ -230,41 +230,6 @@ namespace Template
         {
             Utilities.Dispose(ref _indexBufferObject);
             Utilities.Dispose(ref _vertexBufferObject);
-        }
-        
-        private void Rotate(Matrix m)
-        {
-            //float sin = (float)Math.Sin(angle);
-            //float cos = (float)Math.Cos(angle);
-            
-
-            for (int v = 0; v < _verticesCount; v++)
-            {
-                float x = _vertices[v].position.X;
-                float y = _vertices[v].position.Y;
-                float z = _vertices[v].position.Z;
-                float w = _vertices[v].position.W;
-
-                //_vertices[v].position.X = m.M11 * x + m.M21 * y + m.M31 * z + m.M41 * w;
-                //_vertices[v].position.Y = m.M12 * x + m.M22 * y + m.M32 * z + m.M42 * w;
-                //_vertices[v].position.Z = m.M13 * x + m.M23 * y + m.M33 * z + m.M43 * w;
-                //_vertices[v].position.W = m.M14 * x + m.M24 * y + m.M34 * z + m.M44 * w;
-
-                _vertices[v].position.X = m.M11 * x + m.M12 * y + m.M13 * z + m.M14 * w;
-                _vertices[v].position.Y = m.M21 * x + m.M22 * y + m.M23 * z + m.M24 * w;
-                _vertices[v].position.Z = m.M31 * x + m.M32 * y + m.M33 * z + m.M34 * w;
-                _vertices[v].position.W = m.M41 * x + m.M42 * y + m.M43 * z + m.M44 * w;
-
-                //v.X = m.M11 * v.X + m.M21 * v.Y + m.M31 * v.Z + m.M41 * v.W;
-                //v.Y = m.M12 * v.X + m.M22 * v.Y + m.M32 * v.Z + m.M42 * v.W;
-                //v.Z = m.M13 * v.X + m.M23 * v.Y + m.M33 * v.Z + m.M43 * v.W;
-                //v.W = m.M14 * v.X + m.M24 * v.Y + m.M34 * v.Z + m.M44 * v.W;
-
-                //v.X = m.M11 * v.X + m.M12 * v.Y + m.M13 * v.Z + m.M14 * v.W;
-                //v.Y = m.M21 * v.X + m.M22 * v.Y + m.M23 * v.Z + m.M24 * v.W;
-                //v.Z = m.M31 * v.X + m.M32 * v.Y + m.M33 * v.Z + m.M34 * v.W;
-                //v.W = m.M41 * v.X + m.M42 * v.Y + m.M43 * v.Z + m.M44 * v.W;
-            }
         }
 
         public override Matrix GetWorldMatrix()

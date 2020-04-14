@@ -14,6 +14,11 @@ namespace Template
             return (float)Math.Sqrt(v.X * v.X + v.Y * v.Y + v.Z * v.Z);
         }
 
+        public static float DotProduct(Vector3 v1, Vector3 v2)
+        {
+            return (v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z);
+        }
+
         public static float DotProduct(Vector4 v1, Vector4 v2)
         {
             return (v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z);

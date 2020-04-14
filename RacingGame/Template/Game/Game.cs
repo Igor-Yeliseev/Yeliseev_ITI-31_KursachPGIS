@@ -357,7 +357,7 @@ namespace Template
                 RenderFormResizedCallback(this, new EventArgs());
                 //fs = new FileStream("D:/difs.txt", FileMode.OpenOrCreate);
 
-                _character.Position = new Vector4(-22.1f, 6.0f, 7.4f, 0.0f);
+                _character.Position = new Vector3(-22.1f, 6.0f, 7.4f);
                 _character.Yaw = -2.3600119f;
                 _character.Pitch = -0.7657637f;
             }
@@ -510,7 +510,7 @@ namespace Template
 
             _renderer.BeginRender();
 
-            _illumination.EyePosition = _camera.Position;
+            _illumination.EyePosition = (Vector4)_camera.Position;
             LightSource light2 = _illumination[2];
             if (RandomUtil.NextFloat(_random, 0.0f, 1.0f) < 0.2f) light2.Enabled = (1 ==light2.Enabled ? 0 : 1);
             _illumination[2] = light2;

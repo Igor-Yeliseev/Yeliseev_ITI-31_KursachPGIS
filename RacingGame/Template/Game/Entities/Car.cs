@@ -16,19 +16,19 @@ namespace Template
         protected MeshObject wheel2;
 
         /// <summary> Вектор направления движения </summary>
-        protected Vector4 _direction;
+        protected Vector3 _direction;
         /// <summary> Вектор направления движения </summary>
-        public Vector4 Direction { get => _direction; set => _direction = value; }
+        public Vector3 Direction { get => _direction; set => _direction = value; }
 
         /// <summary> Передний мост (точка центра) </summary>
-        protected Vector4 _frontAxle;
+        protected Vector3 _frontAxle;
         /// <summary> Передний мост (точка центра) </summary>
-        public Vector4 FrontAxle { get => _frontAxle; set => _frontAxle = value; }
+        public Vector3 FrontAxle { get => _frontAxle; set => _frontAxle = value; }
 
         /// <summary> Задний мост (точка центра) </summary>
-        protected Vector4 _rearAxle;
+        protected Vector3 _rearAxle;
         /// <summary> Задний мост (точка центра) </summary>
-        public Vector4 RearAxle { get => _rearAxle; set => _rearAxle = value; }
+        public Vector3 RearAxle { get => _rearAxle; set => _rearAxle = value; }
 
         /// <summary> Величина скорости автомобиля (ед. в секунду) </summary>
         protected float _speed;
@@ -111,16 +111,16 @@ namespace Template
         /// <param name="meshes"></param>
         public Car(List<MeshObject> meshes) : base(meshes) 
         {
-            _direction = new Vector4(0.0f, 0.0f, 1.0f, 0.0f);
+            _direction = new Vector3(0.0f, 0.0f, 1.0f);
             _speed = 0;
 
             wheel1 = meshes.Find(m => m.Name.Contains("wheel1"));
             wheel2 = meshes.Find(m => m.Name.Contains("wheel2"));
             float x = (wheel1.Position.X + wheel2.Position.X) / 2;
-            _frontAxle = new Vector4(x, wheel1.Position.Y, wheel1.Position.Z, 0.0f);
+            _frontAxle = new Vector3(x, wheel1.Position.Y, wheel1.Position.Z);
             //var vr = meshes[5].Position;
-            //_rearAxle = new Vector4(vr.X, wheel1.Position.Y, vr.Z, 0.0f);
-            _rearAxle = new Vector4(0.0f, wheel1.Position.Y, 0.0f, 0.0f);
+            //_rearAxle = new Vector3(vr.X, wheel1.Position.Y, vr.Z);
+            _rearAxle = new Vector3(0.0f, wheel1.Position.Y, 0.0f);
 
             float minZ = wheel1.Vertices[0].position.Z;
             float maxZ = wheel1.Vertices[0].position.Z;
@@ -136,7 +136,7 @@ namespace Template
             var body = meshes.Find(m => m.Name.Contains("Body"));
             boundingBox = SetOBB(body);
             _position = body.Position;
-            boundingBox.Translate((Vector3)_position);
+            boundingBox.Translate(_position);
         }
         
         public Car(List<MeshObject> meshes, Graphics.Materials _materials) :this(meshes)
@@ -162,7 +162,7 @@ namespace Template
 
         public void TurnLeft(float alpha)
         {
-            //_direction = Vector4.Transform(_direction, Matrix.RotationY(-alpha)); // Поворот вектора направления
+            //_direction = Vector3.Transform(_direction, Matrix.RotationY(-alpha)); // Поворот вектора направления
             //rotFrontAxel(-alpha); // Поворот центра переднего моста
 
             //_meshes.ForEach(m =>
@@ -178,7 +178,7 @@ namespace Template
             //        m.Position = -m.Center2Position;
             //        m.Center2Position = c2_pos;
 
-            //        m.Position = Vector4.Transform(m.Position, Matrix.RotationY(-alpha)); // Поворот вокруг новой оси
+            //        m.Position = Vector3.Transform(m.Position, Matrix3x3.RotationY(-alpha)); // Поворот вокруг новой оси
 
             //        var vect = m.Position - m.Center2Position;
             //        m.MoveTo(oldCenterPos);
@@ -192,7 +192,7 @@ namespace Template
 
         public void TurnRight(float alpha)
         {
-            //_direction = Vector4.Transform(_direction, Matrix.RotationY(alpha));
+            //_direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
             //rotFrontAxel(alpha);
 
             //_meshes.ForEach(m =>
@@ -207,7 +207,7 @@ namespace Template
             //        m.Position = -m.Center2Position;
             //        m.Center2Position = c2_pos;
 
-            //        m.Position = Vector4.Transform(m.Position, Matrix.RotationY(alpha));
+            //        m.Position = Vector3.Transform(m.Position, Matrix3x3.RotationY(alpha));
 
             //        var vect = m.Position - m.Center2Position;
             //        m.MoveTo(oldCenterPos);
@@ -217,12 +217,12 @@ namespace Template
             //    else m.YawBy(alpha);
             //});
         }
-        
+
         public virtual void TurnWheelsLeft(float alpha)
         {
             if (turnCount >= -itrs)
             {
-                _direction = Vector4.Transform(_direction, Matrix.RotationY(-alpha));
+                _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(-alpha));
                 wheel1.YawBy(-alpha);
                 wheel2.YawBy(-alpha);
                 turnCount -= 2;
@@ -233,7 +233,7 @@ namespace Template
         {
             if (turnCount <= itrs)
             {
-                _direction = Vector4.Transform(_direction, Matrix.RotationY(alpha));
+                _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
                 wheel1.YawBy(alpha);
                 wheel2.YawBy(alpha);
                 turnCount += 2;
@@ -278,7 +278,7 @@ namespace Template
 
             base.MoveTo(x, y, z);
 
-            var dir = new Vector4(X, Y, Z, 0.0f);
+            var dir = new Vector3(X, Y, Z);
 
             _frontAxle += dir;
             _rearAxle += dir;
@@ -288,8 +288,8 @@ namespace Template
         {
             base.MoveBy(dX, dY, dZ);
 
-            _frontAxle += new Vector4(dX, dY, dZ, 0.0f);
-            _rearAxle += new Vector4(dX, dY, dZ, 0.0f);
+            _frontAxle += new Vector3(dX, dY, dZ);
+            _rearAxle += new Vector3(dX, dY, dZ);
         }
 
         private float GetRotateAngle(float offset)
@@ -300,7 +300,7 @@ namespace Template
         private void rotFrontAxel(float alpha)
         {
             _frontAxle -= _rearAxle;
-            _frontAxle = Vector4.Transform(_frontAxle, Matrix.RotationY(alpha));
+            _frontAxle = Vector3.Transform(_frontAxle, Matrix3x3.RotationY(alpha));
             _frontAxle += _rearAxle;
         }
 
@@ -315,12 +315,12 @@ namespace Template
             if(MyVector.CosProduct(v1, _direction) < 0)
             {
                 wheel1.YawBy(-angle); wheel2.YawBy(-angle);
-                _direction = Vector4.Transform(_direction, Matrix.RotationY(-angle));
+                _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(-angle));
             }
             else
             {
                 wheel1.YawBy(angle); wheel2.YawBy(angle);
-                _direction = Vector4.Transform(_direction, Matrix.RotationY(angle));
+                _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(angle));
             }
             turnCount = 0;
         }
@@ -391,9 +391,9 @@ namespace Template
             if (alpha == 0)
                 return;
 
-            Vector4 oldCenterPos, c2_pos;
+            Vector3 oldCenterPos, c2_pos;
 
-            _direction = Vector4.Transform(_direction, Matrix.RotationY(alpha));
+            _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
             rotFrontAxel(alpha);
             RotateOBB(alpha); // Поворот баудин бокса
 
@@ -409,7 +409,7 @@ namespace Template
                     m.Position = -m.Center2Position;
                     m.Center2Position = c2_pos;
 
-                    m.Position = Vector4.Transform(m.Position, Matrix.RotationY(alpha));
+                    m.Position = Vector3.Transform(m.Position, Matrix3x3.RotationY(alpha));
 
                     //var vect = m.Position - m.Center2Position;
                     m.MoveTo(oldCenterPos);
@@ -425,7 +425,7 @@ namespace Template
         /// </summary>
         /// <param name="direction"> Вектор направления</param>
         /// <param name="sign"> Знак (вперед, назад)</param>
-        public virtual void Move(Vector4 direction, int sign)
+        public virtual void Move(Vector3 direction, int sign)
         {
             if (sign == 0)
                 return;
@@ -493,13 +493,13 @@ namespace Template
                 if (MyVector.CosProduct(v1, _direction) < 0)
                 {
                     wheel1.YawBy(-alpha); wheel2.YawBy(-alpha);
-                    _direction = Vector4.Transform(_direction, Matrix.RotationY(-alpha));
+                    _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(-alpha));
                     turnCount -= 2;
                 }
                 else
                 {
                     wheel1.YawBy(alpha); wheel2.YawBy(alpha);
-                    _direction = Vector4.Transform(_direction, Matrix.RotationY(alpha));
+                    _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
                     turnCount += 2;
                 }
 

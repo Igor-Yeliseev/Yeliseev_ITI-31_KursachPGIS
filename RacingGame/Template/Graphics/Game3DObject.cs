@@ -17,10 +17,10 @@ namespace Template
         public static float _PI2 = (float)Math.PI / 2.0f;
 
         /// <summary>Position of object in virtual world.</summary>
-        internal Vector4 _position;
+        internal Vector3 _position;
         /// <summary>Position of object in virtual world.</summary>
         /// <value>Position of object in virtual world.</value>
-        public virtual Vector4 Position { get => _position; set => _position = value; }
+        public virtual Vector3 Position { get => _position; set => _position = value; }
 
         /// <summary>Yaw angle - rotation around 0Y axis in DirectX (x - to left, y - to up, z - to back), rad.
         /// Order of applying: 1) Roll, 2) Pitch, 3) Yaw.
@@ -61,7 +61,7 @@ namespace Template
         /// <param name="roll">Initial rotation around 0Z axis (x - to left, y - to up, z - to back), rad.</param>
         public Game3DObject(Vector4 initialPosition, float yaw = 0.0f, float pitch = 0.0f, float roll = 0.0f)
         {
-            _position = initialPosition;
+            _position = (Vector3)initialPosition;
             _yaw = yaw;
             _pitch = pitch;
             _roll = roll;
