@@ -205,7 +205,7 @@ namespace Template
 
             var mbox1 = loader.LoadMeshObject("Resources\\box.txt", _materials);
             var mbox2 = loader.LoadMeshObject("Resources\\box.txt", _materials);
-            line2 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[1]);
+            line2 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[3]);
             var plane = loader.LoadMeshFromObject("Resources\\plane.obj", _materials[0]);
             var road = loader.LoadMeshFromObject("Resources\\road.obj", _materials[7]);
             var cube2 = loader.LoadMeshFromObject("Resources\\box.obj", _materials[0]);
@@ -409,10 +409,43 @@ namespace Template
                 {
                     //anims.IsEnemyTurned = false;
 
+                    var verts = gameField.checkPoints[8].boundingBox.GetCorners();
+
+                    switch (ct)
+                    {
+                        case 0:
+                            line2.MoveTo(verts[0]);
+                            break;
+                        case 1:
+                            line2.MoveTo(verts[1]);
+                            break;
+                        case 2:
+                            line2.MoveTo(verts[2]);
+                            break;
+                        case 3:
+                            line2.MoveTo(verts[3]);
+                            break;
+                        case 4:
+                            line2.MoveTo(verts[4]);
+                            break;
+                        case 5:
+                            line2.MoveTo(verts[5]);
+                            break;
+                        case 6:
+                            line2.MoveTo(verts[6]);
+                            break;
+                        case 7:
+                            line2.MoveTo(verts[7]);
+                            break;
+                    }
+                    ct++;
                 }
 
 
                 // Вражеская машина
+                //enemy.CheckObstacle(gameField.checkPoints[1].boundingBox, alpha);
+                //line1.MoveTo(enemy.raySideRight.Position);
+                //line2.MoveTo(enemy.raySideRight.Position + enemy.raySideRight.Direction * 2);
                 //enemy.Move();
 
 
@@ -435,7 +468,7 @@ namespace Template
 
                 // Игровое поле
                 //gameField.MoveEnemyToTargets();
-                
+
 
 
                 if (_inputController.Num1Pressed)
@@ -470,10 +503,7 @@ namespace Template
                 }
                 else
                     //box1.moveSign = 0;
-
-                enemy.CheckObstacle(gameField.checkPoints[1].boundingBox, alpha);
-                
-                enemy.Move();
+                    
 
 
 

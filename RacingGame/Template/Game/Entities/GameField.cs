@@ -11,7 +11,7 @@ namespace Template
 
         public CheckPoint[] checkPoints;
         private Vector3[] targetPts;
-        private int trgIndex = 0;
+        private int trgIndex = 8;
 
         private int lapsCount = 3;
         public int LapCount
@@ -48,7 +48,7 @@ namespace Template
                 targetPts[i] = new Vector3(v.X, 0, v.Z);
             }
 
-            System.Array.Sort(checkPoints);
+            Array.Sort(checkPoints);
         }
 
         public void SetCar(Car car)
@@ -59,7 +59,7 @@ namespace Template
         public void SetEnemy(EnemyCar enemy)
         {
             this.enemy = enemy;
-            this.enemy.Target = targetPts[0];
+            this.enemy.Target = targetPts[trgIndex];
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Template
             {
                 if (!enemy.CollisionCheckPoint(checkPoints[trgIndex])) // Двингать врага к цели пока не столкнется
                 {
-                    enemy.Speed = 8;
+                    enemy.Speed = 10;
                     enemy.Move();
                 }
             }
@@ -125,9 +125,9 @@ namespace Template
         {
             float alpha = 2.0f * (float)Math.PI * 0.25f * timeHelper.DeltaT;
 
-            RotateEnemyToTarget(alpha / 10);
+            RotateEnemyToTarget(alpha);
 
-            TurnEnemyWheelsToTarget(alpha);
+            //TurnEnemyWheelsToTarget(alpha);
 
             GoToTarget();
         }

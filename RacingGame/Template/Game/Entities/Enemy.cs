@@ -47,26 +47,60 @@ namespace Template
                     _health = 100;
             }
         }
-        
-        /// <summary> Лучи сенсоров для ИИ </summary>
-        Ray[] sensors = new Ray[5];
-        public Ray rayLeft, rayRight, rayCenter;
+
+
+        // Ray[] sensors = new Ray[5];
+
+        /// <summary> Передний левый луч </summary>
+        public Ray rayLeft;
+        /// <summary> Передний правый луч </summary>
+        public Ray rayRight;
+        /// <summary> Передний сентральный луч </summary>
+        public Ray rayCenter;
+        /// <summary> Боковой левый луч </summary>
+        public Ray raySideLeft;
+        /// <summary> Боковой правый луч </summary>
+        public Ray raySideRight;
+
+        /// <summary> Расстояние от точки вращения до поцизии левого сенсора </summary>
+        Vector3 rayLftToRearAxle;
+        /// <summary> Расстояние от точки вращения до поцизии правого сенсора </summary>
+        Vector3 rayRhtToRearAxle;
+        /// <summary> Расстояние от точки вращения до поцизии центрального сенсора </summary>
+        Vector3 rayCenToRearAxle;
+
+        /// <summary> Расстояние от точки вращения до поцизии бокового левого сенсора </summary>
+        Vector3 raySideLftToRearAxle;
+        /// <summary> Расстояние от точки вращения до поцизии правого левого сенсора </summary>
+        Vector3 raySideRhtToRearAxle;
 
         public EnemyCar(List<MeshObject> meshes) : base(meshes)
         {
             IsDead = false;
             wheelsDirection = _direction;
             
-            var rayRPos = new Vector3(wheel1.Position.X, wheel1.Position.Y, wheel1.Position.Z + 0); // ИЗМЕНИТЬ ПОТОМ !!!
+            var Z = boundingBox.Center.Z + boundingBox.Extents.Z; // Машины должны стоять параллельно осям
+
+            var rayRPos = new Vector3(wheel1.Position.X, wheel1.Position.Y, wheel1.Position.Z + 0); // ИЗМЕНИТЬ ПОТОМ Z !!!
             var rayLPos = new Vector3(wheel2.Position.X, wheel2.Position.Y, wheel2.Position.Z + 0);
             var rayCenterPos = new Vector3(_frontAxle.X, _frontAxle.Y, _frontAxle.Z + 0);
+
+            var raySideRPos = new Vector3(wheel1.Position.X + 0, wheel1.Position.Y, Z); // ИЗМЕНИТЬ ПОТОМ X !!!
+            var raySideLPos = new Vector3(wheel2.Position.X - 0, wheel2.Position.Y, Z);
+            
+            // Передние лучи
             rayRight = new Ray(rayRPos, _direction);
             rayLeft = new Ray(rayLPos, _direction);
             rayCenter = new Ray(rayCenterPos, _direction);
-
             rayLftToRearAxle = rayLeft.Position - _rearAxle;
             rayRhtToRearAxle = rayRight.Position - _rearAxle;
             rayCenToRearAxle = rayCenter.Position - _rearAxle;
+
+            // Боковые лучи
+            raySideLftToRearAxle = raySideLPos - _rearAxle;
+            raySideRhtToRearAxle = raySideRPos - _rearAxle;
+            raySideLeft = new Ray(raySideLPos, Vector3.Transform(_direction, Matrix3x3.RotationY(-(float)Math.PI / 2)));
+            raySideRight = new Ray(raySideRPos, Vector3.Transform(_direction, Matrix3x3.RotationY((float)Math.PI / 2)));
 
             //Target = new Vector3(0.1f, 0.0f, -0.9f);
             //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
@@ -111,19 +145,13 @@ namespace Template
             wheelsDirection = Vector3.Transform(wheelsDirection, Matrix3x3.RotationY(alpha));
             SetRaysDirection(alpha);
         }
-
-        /// <summary> Расстояние от точки вращения до поцизии левого сенсора </summary>
-        Vector3 rayLftToRearAxle;
-        /// <summary> Расстояние от точки вращения до поцизии правого сенсора </summary>
-        Vector3 rayRhtToRearAxle;
-        /// <summary> Расстояние от точки вращения до поцизии центрального сенсора </summary>
-        Vector3 rayCenToRearAxle;
-
+        
         /// <summary>
         /// Пересчитать направление лучей сенсоров
         /// </summary>
         private void SetRaysDirection(float alpha)
         {
+            // Передние лучи
             Vector3 dir = Vector3.Transform(rayCenter.Direction, Matrix3x3.RotationY(alpha));
             rayLeft.Direction = dir;
             rayRight.Direction = dir;
@@ -136,6 +164,15 @@ namespace Template
             rayLeft.Position = _rearAxle + rayLftToRearAxle;
             rayRight.Position = _rearAxle + rayRhtToRearAxle;
             rayCenter.Position = _rearAxle + rayCenToRearAxle;
+
+            // Боковые лучи
+            raySideLeft.Direction = Vector3.Transform(raySideLeft.Direction, Matrix3x3.RotationY(alpha));
+            raySideRight.Direction = Vector3.Transform(raySideRight.Direction, Matrix3x3.RotationY(alpha));
+
+            raySideLftToRearAxle = Vector3.Transform(raySideLftToRearAxle, Matrix3x3.RotationY(alpha));
+            raySideRhtToRearAxle = Vector3.Transform(raySideRhtToRearAxle, Matrix3x3.RotationY(alpha));
+            raySideLeft.Position = _rearAxle + raySideLftToRearAxle;
+            raySideRight.Position = _rearAxle + raySideRhtToRearAxle;
         }
 
         /// <summary>
@@ -214,6 +251,9 @@ namespace Template
             rayLeft.Position += offset;
             rayRight.Position += offset;
             rayCenter.Position += offset;
+
+            raySideLeft.Position += offset;
+            raySideRight.Position += offset;
         }
 
         /// <summary> Смещение лучей сенсоров вдоль направления </summary>
@@ -228,6 +268,9 @@ namespace Template
             rayLeft.Position += direction;
             rayRight.Position += direction;
             rayCenter.Position += direction;
+
+            raySideLeft.Position += direction;
+            raySideRight.Position += direction;
         }
 
         private int signCos = 0;
@@ -286,8 +329,19 @@ namespace Template
         private float distance;
         /// <summary> Дистанция до объекта </summary>
         public float Distance { get => distance; }
+
         
         public void CheckObstacle(OrientedBoundingBox orientedBoundingBox, float alpha)
+        {
+            // Передние лучи
+            CheckObstacleFrontRays(orientedBoundingBox, alpha);
+            // Боковые лучи
+            CheckObstacleSideRays(orientedBoundingBox, alpha);
+        }
+
+        /// <summary> Минимальное расстояние до препятствия до принятия решения </summary>
+        private float minFrontDistance = 6;
+        private void CheckObstacleFrontRays(OrientedBoundingBox orientedBoundingBox, float alpha)
         {
             float distanceL, distanceR;
 
@@ -297,20 +351,46 @@ namespace Template
 
             if (interLeft && interRight)
             {
-                //Brake();
-                //Speed = 0;
-            }
+                if (distanceL <= minFrontDistance || distanceR <= minFrontDistance)
+                {
 
-            if (interLeft && distanceL <= 5)
+                    if (distanceL < distanceR)
+                        TurnCar(alpha);
+                    else if (distanceR < distanceL)
+                        TurnCar(-alpha);
+                }
+            }
+            else if (interLeft && distanceL <= minFrontDistance)
             {
                 TurnCar(alpha); // Поворачиваю направо
             }
-
-            if(interRight && distanceR <= 5)
+            else if (interRight && distanceR <= minFrontDistance)
             {
                 TurnCar(-alpha); // Поворачиваю налево
             }
-            
+        }
+
+        /// <summary> Минимальное расстояние до препятствия до принятия решения </summary>
+        private float minSideDistance = 2;
+        private void CheckObstacleSideRays(OrientedBoundingBox orientedBoundingBox, float alpha)
+        {
+            float distanceL, distanceR;
+
+            bool interLeft = MyMath.RayIntersects(ref raySideLeft, orientedBoundingBox, out distanceL);
+            bool interRight = MyMath.RayIntersects(ref raySideRight, orientedBoundingBox, out distanceR);
+
+            if (!interLeft && !interRight)
+            {
+                return;
+            }
+            else if (interLeft && distanceL <= minSideDistance)
+            {
+                TurnCar(alpha); // Поворачиваю направо
+            }
+            else if (interRight && distanceR <= minSideDistance)
+            {
+                TurnCar(-alpha); // Поворачиваю налево
+            }
         }
     }
 }
