@@ -139,6 +139,13 @@ namespace Template
             boundingBox.Translate((Vector3)_position);
         }
         
+        public Car(List<MeshObject> meshes, Graphics.Materials _materials) :this(meshes)
+        {
+            var body = meshes.Find(m => m.Name.Contains("Body"));
+
+            body.Material = _materials[0];
+        }
+
         public MeshObject this[string name]
         {
             get

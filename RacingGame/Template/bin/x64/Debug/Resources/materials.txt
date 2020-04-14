@@ -69,3 +69,4 @@ specular:		0.8		0.8		0.8		1.0
 specularPower:	90.0
 textured:		1
 texture:		road.png
+

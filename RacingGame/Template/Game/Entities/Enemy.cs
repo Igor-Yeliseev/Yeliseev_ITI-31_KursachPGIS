@@ -54,9 +54,8 @@ namespace Template
         public EnemyCar(List<MeshObject> meshes) : base(meshes)
         {
             IsDead = false;
-
             wheelsDirection = _direction;
-
+            
             //Target = new Vector4(0.1f, 0.0f, -0.9f, 0.0f);
             //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
         }

@@ -436,7 +436,7 @@ namespace Template
 
                 // Игровое поле
                 //gameField.MoveEnemyToTargets();
-                gameField.MoveEnemyToTargets();
+                //gameField.MoveEnemyToTargets();
                 
 
 
