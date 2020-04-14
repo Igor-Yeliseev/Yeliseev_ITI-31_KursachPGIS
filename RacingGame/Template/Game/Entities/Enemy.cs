@@ -50,16 +50,23 @@ namespace Template
         
         /// <summary> Лучи сенсоров для ИИ </summary>
         Ray[] sensors = new Ray[5];
-        
+        Ray rayLeft, rayRight, rayCenter;
+
         public EnemyCar(List<MeshObject> meshes) : base(meshes)
         {
             IsDead = false;
             wheelsDirection = _direction;
             
+            var rayLPos = new Vector3(wheel1.Position.X, wheel1.Position.Y, wheel1.Position.Z + 0); // ИЗМЕНИТЬ ПОТОМ !!!
+            var rayRPos = new Vector3(wheel2.Position.X, wheel2.Position.Y, wheel2.Position.Z + 0);
+            var rayCenterPos = new Vector3(_frontAxle.X, _frontAxle.Y, _frontAxle.Z + 0);
+            rayLeft = new Ray(rayLPos, _direction);
+            rayRight = new Ray(rayRPos, _direction);
+            rayCenter = new Ray(rayCenterPos, _direction);
+            
             //Target = new Vector3(0.1f, 0.0f, -0.9f);
             //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
         }
-
         
         public override void TurnWheelsLeft(float alpha)
         {
@@ -96,6 +103,17 @@ namespace Template
         {
             base.TurnCar(alpha);
             wheelsDirection = Vector3.Transform(wheelsDirection, Matrix3x3.RotationY(alpha));
+            SetRaysDirection();
+        }
+
+        /// <summary>
+        /// Пересчитать направление лучей сенсоров
+        /// </summary>
+        private void SetRaysDirection()
+        {
+            rayLeft.Direction = _direction;
+            rayRight.Direction = _direction;
+            rayCenter.Direction = _direction;
         }
 
         /// <summary>
@@ -155,6 +173,29 @@ namespace Template
             Move(_direction, Math.Sign(_speed));
         }
 
+        /// <summary> Смещение вдоль направления </summary>
+        /// <param name="direction"> Вектор направления</param>
+        /// <param name="sign"> Знак (вперед, назад)</param>
+        public override void Move(Vector3 direction, int sign)
+        {
+            base.Move(direction, sign);
+            MoveRays(direction, sign);
+        }
+
+        /// <summary> Смещение лучей сенсоров вдоль направления </summary>
+        /// <param name="direction"> Вектор направления</param>
+        /// <param name="sign"> Знак (вперед, назад)</param>
+        private void MoveRays(Vector3 direction, int sign)
+        {
+            if (sign == 0) return;
+
+            direction *= scale * sign;
+        
+            rayLeft.Position += direction;
+            rayRight.Position += direction;
+            rayCenter.Position += direction;
+        }
+
         private int signCos = 0;
         private bool onTarget = false;
         /// <summary> Направлен ли вектор Direction в точку Target </summary>
@@ -207,14 +248,21 @@ namespace Template
         {
             return false;
         }
+        
+        private float disntace;
+        /// <summary> Дистанция до объекта </summary>
+        public float Distance { get => disntace; }
 
-
-        public void TestRays()
+        public void TestRays(OrientedBoundingBox orientedBoundingBox, float alpha)
         {
-            Ray ray1 = new Ray(_frontAxle, _direction);
 
+            bool intersect = MyMath.RayIntersects(ref rayLeft, orientedBoundingBox, out disntace);
 
+            if (intersect && disntace <= 6)
+            {
+                
+            }
         }
-
+        
     }
 }

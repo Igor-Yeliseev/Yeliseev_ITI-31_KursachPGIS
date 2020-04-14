@@ -66,7 +66,7 @@ namespace Template
         public float MaxBackSpeed { get; } = -6.0f;
 
         /// <summary> Масштаб изменения скорости </summary>
-        private float scale = 0.1f;
+        protected float scale = 0.1f;
 
         protected ContainmentType colliedCheckPts;
         /// <summary> Столкнулся ли объект с чекпоинтом </summary>
@@ -118,8 +118,7 @@ namespace Template
             wheel2 = meshes.Find(m => m.Name.Contains("wheel2"));
             float x = (wheel1.Position.X + wheel2.Position.X) / 2;
             _frontAxle = new Vector3(x, wheel1.Position.Y, wheel1.Position.Z);
-            //var vr = meshes[5].Position;
-            //_rearAxle = new Vector3(vr.X, wheel1.Position.Y, vr.Z);
+
             _rearAxle = new Vector3(0.0f, wheel1.Position.Y, 0.0f);
 
             float minZ = wheel1.Vertices[0].position.Z;
@@ -441,10 +440,10 @@ namespace Template
                 m.MoveBy(direction); // Перемещение вперед
             });
 
+            _position += direction;
             _frontAxle += direction;
             _rearAxle += direction;
-            _position += direction;
-            boundingBox.Translate((Vector3)direction);
+            boundingBox.Translate(direction);
         }
 
         /// <summary> Ускорение автомобиля </summary>

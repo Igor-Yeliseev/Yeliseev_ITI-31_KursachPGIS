@@ -408,7 +408,6 @@ namespace Template
                 if (_inputController.Space)
                 {
                     //anims.IsEnemyTurned = false;
-                    //enemy.Speed = 9;
 
                 }
 
@@ -436,38 +435,47 @@ namespace Template
 
                 // Игровое поле
                 //gameField.MoveEnemyToTargets();
-                //gameField.MoveEnemyToTargets();
                 
 
 
                 if (_inputController.Num1Pressed)
                 {
-                    enemy.TurnWheelsLeft(alpha);
+                    
                 }
                 if (_inputController.Num2Pressed)
                 {
-                    enemy.TurnWheelsRight(alpha);
+                    
                 }
 
 
                 if (_inputController.Num4Pressed)
                 {
-                    box1.RotateY(-alpha);
+                    //box1.RotateY(-alpha);
+                    enemy.TurnCar(-alpha);
                 }
                 if (_inputController.Num6Pressed)
                 {
-                    box1.RotateY(alpha);
+                    //box1.RotateY(alpha);
+                    enemy.TurnCar(alpha);
                 }
                 if (_inputController.Num8Pressed)
                 {
-                    box1.MoveForward();
+                    //box1.MoveForward();
+                    enemy.Speed = 9;
                 }
                 else if (_inputController.Num5Pressed)
                 {
-                    box1.MoveBackward();
+                    //box1.MoveBackward();
+                    enemy.Speed = -9;
                 }
                 else
-                    box1.moveSign = 0;
+                    enemy.Speed = 0; //box1.moveSign = 0;
+
+
+                enemy.TestRays(gameField.checkPoints[1].boundingBox, -alpha);
+                enemy.Move();
+
+
 
                 if (_inputController.Num7Pressed)
                 {
@@ -498,7 +506,6 @@ namespace Template
             // Collision Detection
             {
                 //car.CollisionTest(box2);
-                
                 //gameField.CheckRaceFinish();
 
                 screen = (car.IsCollied) ? "True" : "False";
@@ -534,10 +541,7 @@ namespace Template
             }
             //cube2
             float time = _timeHelper.Time;
-            //_renderer.SetPerObjectConstants(time, 0);
             _cube.Render(_viewMatrix, _projectionMatrix);
-            //_renderer.SetPerObjectConstants(time, 0);
-            //_floor.Render(_viewMatrix, _projectionMatrix);
 
             RenderHUD();
 
@@ -554,9 +558,10 @@ namespace Template
                                 $"Pos: {_character.Position.X,6:f1}, {_character.Position.Y,6:f1}, {_character.Position.Z,6:f1}\n" +
                                 $"Yaw: {_character.Yaw}, Pitch: {_character.Pitch}, Roll: {_character.Roll}\n" +
 
-                                $"Angle: {ANGLE}\n" +
                                 $"car Position X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
                                 $"car Speed: {car.Speed} ups\n\n" +
+                                
+                                $"Distance to obj: {enemy.Distance}\n" +
                                 $"enemy Position   X: {enemy.Position.X} Y:{enemy.Position.Y} Z:{enemy.Position.Z}\n" +
                                 $"enemy Direction   X: {enemy.Direction.X} Y:{enemy.Direction.Y} Z:{enemy.Direction.Z}\n" +
                                 $"enemy Speed: {enemy.Speed} ups\n" +
