@@ -283,7 +283,6 @@ namespace Template
             base.MoveTo(x, y, z);
 
             var dir = new Vector3(X, Y, Z);
-
             _frontAxle += dir;
             _rearAxle += dir;
         }
@@ -293,7 +292,6 @@ namespace Template
             base.MoveBy(dX, dY, dZ);
 
             var offset = new Vector3(dX, dY, dZ);
-
             _frontAxle += offset;
             _rearAxle += offset;
         }
@@ -319,7 +317,7 @@ namespace Template
         /// </summary>
         public void BackWheels()
         {
-            var v1 = _carDirection;
+            var v1 = _frontAxle - _rearAxle; //_carDirection;
             v1.Normalize();
             float angle = MyVector.GetAngle(v1, _direction);
 
@@ -462,7 +460,6 @@ namespace Template
             _position += direction;
             _frontAxle += direction;
             _rearAxle += direction;
-            //_carDirection += direction;
             boundingBox.Translate(direction);
         }
 
@@ -516,6 +513,31 @@ namespace Template
             if (turnCount != 0)
             {
                 var v1 = _carDirection; v1.Normalize();
+
+                if (MyVector.CosProduct(v1, _direction) < 0)
+                {
+                    wheel1.YawBy(-alpha); wheel2.YawBy(-alpha);
+                    _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(-alpha));
+                    turnCount -= 2;
+                }
+                else
+                {
+                    wheel1.YawBy(alpha); wheel2.YawBy(alpha);
+                    _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
+                    turnCount += 2;
+                }
+
+                return (turnCount == 0) ? false : true;
+            }
+            else
+                return false;
+        }
+
+        public bool AnimationWheels(Vector3 direction, float alpha)
+        {
+            if (turnCount != 0)
+            {
+                var v1 = direction; v1.Normalize();
 
                 if (MyVector.CosProduct(v1, _direction) < 0)
                 {

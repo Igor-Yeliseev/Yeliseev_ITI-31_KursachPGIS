@@ -196,6 +196,8 @@ namespace Template
             _textures.Add(loader.LoadTextureFromFile("Resources\\delorean.png", true, _samplerStates.Textured));
             _materials = loader.LoadMaterials("Resources\\materials.txt", _textures);
 
+            anims = new Animations();
+
             gameField = new GameField(_timeHelper, _materials[2]);
 
             // 6. Load meshes.
@@ -235,10 +237,7 @@ namespace Template
             cube2.MoveBy(4.0f, 0.0f, 12.0f);
             line2.MoveTo(0, 0, 0);
             line1.MoveTo(carMeshes[5].CenterPosition);
-
             
-
-            anims = new Animations();
 
             // Добавление мешей
             _meshObjects.Add(mbox1);
@@ -380,7 +379,7 @@ namespace Template
                 if (_inputController.DPressed) _character.MoveRightBy(_timeHelper.DeltaT * _character.Speed);
                 if (_inputController.APressed) _character.MoveRightBy(-_timeHelper.DeltaT * _character.Speed);
 
-                before = car.Position;
+                //before = car.Position;
 
                 if (_inputController.UpPressed)
                 {
@@ -397,7 +396,7 @@ namespace Template
                 car.MoveProperly();
 
 
-                _character.Position += car.Position - before;
+                //_character.Position += car.Position - before;
 
                 if (_inputController.LeftPressed)
                 {

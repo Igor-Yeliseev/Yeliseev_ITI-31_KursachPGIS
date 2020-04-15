@@ -30,11 +30,13 @@ namespace Template
         private TimeHelper timeHelper;
         private Car car;
         private EnemyCar enemy;
+        Animations animations;
 
         public GameField(TimeHelper timeHelper, Material material)
         {
             this.timeHelper = timeHelper;
             this.material = material;
+            animations = new Animations();
         }
 
         public void SetCheckPoints(List<MeshObject> meshes)
@@ -87,32 +89,28 @@ namespace Template
             float max = (- checkPoint.Direction * checkPoint.boundingBox.Extents.X).X;
             return MyMath.Random(min, max);
         }
-        
+
         /// <summary>
         /// Поворот врага к цели
         /// </summary>
         /// <param name="angle"></param>
         private void RotateEnemyToTarget(float angle)
         {
-            //enemy.TurnToTarget(angle);
-            enemy.TurnWheelsToTarget(angle);
             enemy.Target = centerPts[trgIndex];
+            enemy.CheckWheelsDirOnTarget(angle);
+            
 
-            if (/*enemy.IsColliedCheckPts && */enemy.IsOnTarget)
+            if (enemy.IsColliedCheckPts) // && enemy.IsOnTarget
             {
                 enemy.IsColliedCheckPts = false;
-                //enemy.IsOnTarget = false;
-                enemy.BackWheels();
 
-                //trgIndex++;
+                trgIndex++;
 
-                //if (trgIndex == centerPts.Length)
-                //    trgIndex = 0;
+                if (trgIndex == centerPts.Length)
+                    trgIndex = 0;
 
-                //enemy.Target = centerPts[trgIndex];
-
-                //enemy.Target = centerPts[trgIndex] + 
-                //               checkPoints[trgIndex].Direction * randomIncremCoord(checkPoints[trgIndex]);
+                enemy.Target = centerPts[trgIndex];
+                //enemy.Target = centerPts[trgIndex] + checkPoints[trgIndex].Direction * randomIncremCoord(checkPoints[trgIndex]);
             }
             
         }
@@ -131,12 +129,12 @@ namespace Template
             
             if (!enemy.CollisionCheckPoint(checkPoints[trgIndex])) // Двигать врага к цели пока не столкнется
             {
-                enemy.Accelerate(3);
+                enemy.Accelerate(12);
             }
-            else
-            {
-                enemy.Brake();
-            }
+            //else
+            //{
+            //    enemy.Brake();
+            //}
 
             enemy.MoveProperly();
         }

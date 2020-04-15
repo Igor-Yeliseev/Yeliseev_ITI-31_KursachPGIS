@@ -18,7 +18,7 @@ namespace Template
             set
             {
                 _target = new Vector3(value.X - _rearAxle.X, 0.0f, value.Z - _rearAxle.Z);
-                //wheelsOnTarget = false;
+                wheelsOnTarget = false;
             }
         }
         
@@ -107,10 +107,6 @@ namespace Template
         
         public override void TurnWheelsLeft(float alpha)
         {
-            //wheelsDirection = Vector3.Transform(wheelsDirection, Matrix3x3.RotationY(-alpha));
-            //wheel1.YawBy(-alpha);
-            //wheel2.YawBy(-alpha);
-
             if (turnCount >= -itrs)
             {
                 _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(-alpha));
@@ -119,15 +115,10 @@ namespace Template
                 wheel2.YawBy(-alpha);
                 turnCount -= 2;
             }
-
         }
 
         public override void TurnWheelsRight(float alpha)
         {
-            //wheelsDirection = Vector3.Transform(wheelsDirection, Matrix3x3.RotationY(alpha));
-            //wheel1.YawBy(alpha);
-            //wheel2.YawBy(alpha);
-
             if (turnCount <= itrs)
             {
                 _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
@@ -182,7 +173,7 @@ namespace Template
         private int signCosW = 0;
         private bool wheelsOnTarget = false;
         /// <summary> Повернуты ли колеса в точку Target </summary>
-        public bool IsWheelsOnTarget { get => wheelsOnTarget; }
+        public bool IsWheelsOnTarget { get => wheelsOnTarget; set => wheelsOnTarget = value; }
 
         
 
@@ -286,6 +277,8 @@ namespace Template
             if (onTarget)
                 return;
 
+            CheckWheelsDirOnTarget(angle);
+
             float cosProd = MyVector.CosProduct(_carDirection, _target);
 
             if (cosProd != 0 && signCos == Math.Sign(cosProd))
@@ -312,44 +305,48 @@ namespace Template
             }
             else
                 signCos = Math.Sign(cosProd);
+
         }
 
-        public Vector3 wheelsDirection;
+        /// <summary> Вектор направления передних колес </summary>
+        private Vector3 wheelsDirection;
+        /// <summary> Вектор направления передних колес </summary>
+        public Vector3 WheelsDirection { get => wheelsDirection; set => wheelsDirection = value; }
+
         /// <summary>
-        /// Поворачивать колеса к цели на угол angle
+        /// Проверить направравлены ли колеса вдоль вектора от цели до заднего моста
         /// </summary>
-        /// <param name="angle"> Угол поворота</param>
-        private void TurnWheelsToTarget2(float angle)
+        public void CheckWheelsDirOnTarget(float angle) 
         {
-            //if (wheelsOnTarget)
-            //    return;
+            if (wheelsOnTarget)
+                return;
 
-            //float cosProd = MyVector.CosProduct(wheelsDirection, _target);
+            float cosProd = MyVector.CosProduct(wheelsDirection, _target);
 
-            //if (cosProd != 0 && signCosW == Math.Sign(cosProd))
-            //{
-            //    if (cosProd < 0)
-            //        TurnWheelsRight(angle);
-            //    else
-            //        TurnWheelsLeft(angle);
+            if (cosProd != 0 && signCosW == Math.Sign(cosProd))
+            {
+                if (cosProd < 0)
+                    TurnWheelsRight(angle);
+                else
+                    TurnWheelsLeft(angle);
 
-            //    signCosW = Math.Sign(cosProd);
-            //    wheelsOnTarget = false;
-            //}
-            //else if (signCosW != 0)
-            //{
-            //    float ang = MyVector.GetAngle(wheelsDirection, _target);
+                signCosW = Math.Sign(cosProd);
+                wheelsOnTarget = false;
+            }
+            else if (signCosW != 0)
+            {
+                //float ang = MyVector.GetAngle(wheelsDirection, _target);
 
-            //    if (MyVector.CosProduct(wheelsDirection, _target) < 0)
-            //        TurnWheelsRight(angle);
-            //    else
-            //        TurnWheelsLeft(angle);
+                if (MyVector.CosProduct(wheelsDirection, _target) < 0)
+                    TurnWheelsRight(angle);
+                else
+                    TurnWheelsLeft(angle);
 
-            //    signCosW = 0;
-            //    wheelsOnTarget = true;
-            //}
-            //else
-            //    signCosW = Math.Sign(cosProd);
+                signCosW = 0;
+                wheelsOnTarget = true;
+            }
+            else
+                signCosW = Math.Sign(cosProd);
         }
 
 
