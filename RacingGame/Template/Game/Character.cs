@@ -18,24 +18,6 @@ namespace Template
         /// <value>Speed of character movements.</value>
         public float Speed { get => _speed; set => _speed = value; }
 
-        ///// <summary> The character's car </summary>
-        //private List<MeshObject> car;
-
-        ///// <summary> The character's car </summary>
-        //public List<MeshObject> Car
-        //{
-        //    get
-        //    {
-        //        return car;
-        //    }
-        //    set
-        //    {
-        //        if (value is List<MeshObject> && value != null)
-        //        {
-        //            car = value;
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// Constructor sets initial position, rotation angles and speed.
@@ -44,7 +26,7 @@ namespace Template
         /// <param name="yaw">Initial angle of rotation around 0Y axis (x - to left, y - to up, z - to back), rad.</param>
         /// <param name="pitch">Initial angle of rotation around 0X axis (x - to left, y - to up, z - to back), rad.</param>
         /// <param name="roll">Initial rotation around 0Z axis (x - to left, y - to up, z - to back), rad.</param>
-        public Character(Vector4 initialPosition, float yaw = 0.0f, float pitch = 0.0f, float roll = 0.0f, float speed = 1.0f) :
+        public Character(Vector4 initialPosition, float yaw = 0.0f, float pitch = 0.0f, float roll = 0.0f, float speed = 10.0f) :
             base(initialPosition, yaw, pitch, roll)
         {
             _speed = speed;

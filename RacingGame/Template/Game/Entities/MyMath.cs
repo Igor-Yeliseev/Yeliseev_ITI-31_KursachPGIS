@@ -9,6 +9,8 @@ namespace Template
 {
     class MyMath
     {
+        static Random random = new Random();
+
         /// <summary>
         /// Линейная интерполяция
         /// </summary>
@@ -87,6 +89,17 @@ namespace Template
             {
                 return false;
             } 
+        }
+
+        /// <summary>
+        /// Gets random float number within range.
+        /// </summary>
+        /// <param name="min"> Minimum.</param>
+        /// <param name="max"> Maximum.</param>
+        /// <returns> Random float number.</returns>
+        public static float Random(float min, float max)
+        {
+            return SharpDX.RandomUtil.NextFloat(random, min, max);
         }
     }
 }

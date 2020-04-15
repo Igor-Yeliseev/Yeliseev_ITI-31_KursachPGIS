@@ -30,6 +30,11 @@ namespace Template
         /// <summary> Задний мост (точка центра) </summary>
         public Vector3 RearAxle { get => _rearAxle; set => _rearAxle = value; }
 
+        /// <summary> Вектор направления машины (от центра заднего до центре переднего моста) </summary>
+        protected Vector3 _carDirection;
+        /// <summary> Вектор направления машины (от центра заднего до центре переднего моста) </summary>
+        public Vector3 CarDirection { get => _carDirection; set => _carDirection = value; }
+
         /// <summary> Величина скорости автомобиля (ед. в секунду) </summary>
         protected float _speed;
         /// <summary>
@@ -102,14 +107,14 @@ namespace Template
         }
 
         protected int turnCount = 0;
-        protected int itrs = 54;
-        
+        public int itrs = 54;
+
 
         /// <summary>
         /// Конструктор машины
         /// </summary>
         /// <param name="meshes"></param>
-        public Car(List<MeshObject> meshes) : base(meshes) 
+        public Car(List<MeshObject> meshes) : base(meshes)
         {
             _direction = new Vector3(0.0f, 0.0f, 1.0f);
             _speed = 0;
@@ -118,12 +123,12 @@ namespace Template
             wheel2 = meshes.Find(m => m.Name.Contains("wheel2"));
             float x = (wheel1.Position.X + wheel2.Position.X) / 2;
             _frontAxle = new Vector3(x, wheel1.Position.Y, wheel1.Position.Z);
-
             _rearAxle = new Vector3(0.0f, wheel1.Position.Y, 0.0f);
+            _carDirection = _frontAxle - _rearAxle;
 
             float minZ = wheel1.Vertices[0].position.Z;
             float maxZ = wheel1.Vertices[0].position.Z;
-            wheel1.Vertices.ForEach(v => 
+            wheel1.Vertices.ForEach(v =>
             {
                 if (v.position.Z < minZ)
                     minZ = v.position.Z;
@@ -137,8 +142,8 @@ namespace Template
             _position = body.Position;
             boundingBox.Translate(_position);
         }
-        
-        public Car(List<MeshObject> meshes, Graphics.Materials _materials) :this(meshes)
+
+        public Car(List<MeshObject> meshes, Graphics.Materials _materials) : this(meshes)
         {
             var body = meshes.Find(m => m.Name.Contains("Body"));
 
@@ -287,8 +292,10 @@ namespace Template
         {
             base.MoveBy(dX, dY, dZ);
 
-            _frontAxle += new Vector3(dX, dY, dZ);
-            _rearAxle += new Vector3(dX, dY, dZ);
+            var offset = new Vector3(dX, dY, dZ);
+
+            _frontAxle += offset;
+            _rearAxle += offset;
         }
 
         private float GetRotateAngle(float offset)
@@ -298,9 +305,13 @@ namespace Template
 
         private void rotFrontAxel(float alpha)
         {
-            _frontAxle -= _rearAxle;
-            _frontAxle = Vector3.Transform(_frontAxle, Matrix3x3.RotationY(alpha));
-            _frontAxle += _rearAxle;
+            _carDirection = _frontAxle - _rearAxle;
+            _carDirection = Vector3.Transform(_carDirection, Matrix3x3.RotationY(alpha));
+            _frontAxle = _rearAxle + _carDirection;
+
+            //_frontAxle -= _rearAxle;
+            //_frontAxle = Vector3.Transform(_frontAxle, Matrix3x3.RotationY(alpha));
+            //_frontAxle += _rearAxle;            
         }
 
         /// <summary>
@@ -308,10 +319,11 @@ namespace Template
         /// </summary>
         public void BackWheels()
         {
-            var v1 = _frontAxle - _rearAxle; v1.Normalize();
+            var v1 = _carDirection;
+            v1.Normalize();
             float angle = MyVector.GetAngle(v1, _direction);
 
-            if(MyVector.CosProduct(v1, _direction) < 0)
+            if (MyVector.CosProduct(v1, _direction) < 0)
             {
                 wheel1.YawBy(-angle); wheel2.YawBy(-angle);
                 _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(-angle));
@@ -332,6 +344,13 @@ namespace Template
             //int sign = Sign(_speed) ;
             int sign = Math.Sign(_speed);
             if (_speed == 0) return;
+
+            //if (_speed > MaxSpeed * 0.7) // Доработать
+            //{
+            //    itrs = 24;
+            //}
+            //else
+            //    itrs = 54;
 
             MoveProperly(sign);
         }
@@ -443,6 +462,7 @@ namespace Template
             _position += direction;
             _frontAxle += direction;
             _rearAxle += direction;
+            //_carDirection += direction;
             boundingBox.Translate(direction);
         }
 
@@ -450,6 +470,11 @@ namespace Template
         public void Accelerate()
         {
             Speed = MyMath.Lerp(_speed, MaxSpeed, 0.4f, 0.1f);
+        }
+
+        public void Accelerate(float speed)
+        {
+            Speed = MyMath.Lerp(_speed, speed, 0.4f, 0.1f);
         }
 
         /// <summary> Торможение автомобиля </summary>
@@ -468,7 +493,10 @@ namespace Template
                 Speed = MyMath.Lerp(_speed, 0, 1.7f, 0.1f);
             }
             else
+            {
                 Speed = MyMath.Lerp(_speed, MaxBackSpeed, 2.0f, 0.1f);
+            }
+
         }
 
         /// <summary> Движение по инерции с затуханием скорости </summary>
@@ -487,7 +515,7 @@ namespace Template
         {
             if (turnCount != 0)
             {
-                var v1 = _frontAxle - _rearAxle; v1.Normalize();
+                var v1 = _carDirection; v1.Normalize();
 
                 if (MyVector.CosProduct(v1, _direction) < 0)
                 {

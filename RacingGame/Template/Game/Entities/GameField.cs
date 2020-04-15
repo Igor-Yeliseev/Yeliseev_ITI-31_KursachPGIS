@@ -8,10 +8,11 @@ namespace Template
     class GameField
     {
         private Material material;
-
+        /// <summary> Массив чекпоинтов </summary>
         public CheckPoint[] checkPoints;
-        private Vector3[] targetPts;
-        private int trgIndex = 8;
+        /// <summary> Массив центральных точек боксов чекпоинтов </summary>
+        private Vector3[] centerPts;
+        public int trgIndex = 0;
 
         private int lapsCount = 3;
         public int LapCount
@@ -39,13 +40,13 @@ namespace Template
         public void SetCheckPoints(List<MeshObject> meshes)
         {
             checkPoints = new CheckPoint[meshes.Count];
-            targetPts = new Vector3[meshes.Count];
+            centerPts = new Vector3[meshes.Count];
 
             for (int i = 0; i < checkPoints.Length; i++)
             {
                 checkPoints[i] = new CheckPoint(meshes[i]);
                 var v = meshes[i].CenterPosition;
-                targetPts[i] = new Vector3(v.X, 0, v.Z);
+                centerPts[i] = new Vector3(v.X, 0, v.Z);
             }
 
             Array.Sort(checkPoints);
@@ -59,7 +60,7 @@ namespace Template
         public void SetEnemy(EnemyCar enemy)
         {
             this.enemy = enemy;
-            this.enemy.Target = targetPts[trgIndex];
+            this.enemy.Target = centerPts[trgIndex];
         }
 
         /// <summary>
@@ -77,47 +78,67 @@ namespace Template
             return (lapIndex == lapsCount - 1) ? true : false;
         }
         
+        /// <summary> Рандом приращения координаты от центра чекпоинта </summary>
+        /// <param name="checkPoint"> Экземпляр чекпоинта</param>
+        /// <returns></returns>
+        private float randomIncremCoord(CheckPoint checkPoint)
+        {
+            float min = (checkPoint.Direction * checkPoint.boundingBox.Extents.X).X;
+            float max = (- checkPoint.Direction * checkPoint.boundingBox.Extents.X).X;
+            return MyMath.Random(min, max);
+        }
+        
         /// <summary>
         /// Поворот врага к цели
         /// </summary>
         /// <param name="angle"></param>
         private void RotateEnemyToTarget(float angle)
         {
-            enemy.TurnToTarget(angle);
+            //enemy.TurnToTarget(angle);
+            enemy.TurnWheelsToTarget(angle);
+            enemy.Target = centerPts[trgIndex];
 
-            if (enemy.IsColliedCheckPts && enemy.IsOnTarget)
+            if (/*enemy.IsColliedCheckPts && */enemy.IsOnTarget)
             {
                 enemy.IsColliedCheckPts = false;
-                trgIndex++;
+                //enemy.IsOnTarget = false;
+                enemy.BackWheels();
 
-                if (trgIndex == targetPts.Length)
-                    trgIndex = 0;
+                //trgIndex++;
 
-                enemy.Target = targetPts[trgIndex];
+                //if (trgIndex == centerPts.Length)
+                //    trgIndex = 0;
+
+                //enemy.Target = centerPts[trgIndex];
+
+                //enemy.Target = centerPts[trgIndex] + 
+                //               checkPoints[trgIndex].Direction * randomIncremCoord(checkPoints[trgIndex]);
             }
-
-            //if(trgIndex < targetPts.Length && enemy.IsOnTarget)
-            //{
-            //    trgIndex++;
-
-            //    if (trgIndex < targetPts.Length)
-            //    {
-            //        enemy.Target = targetPts[trgIndex];
-            //    }
-            //}
+            
         }
 
         /// <summary> Двигать врага к цели </summary>
         private void GoToTarget()
         {
-            if (enemy.IsOnTarget) // Враг повернут в сторону цели
+            //if (enemy.IsOnTarget) // Враг повернут в сторону цели
+            //{
+            //    if (!enemy.CollisionCheckPoint(checkPoints[trgIndex])) // Двигать врага к цели пока не столкнется
+            //    {
+            //        enemy.Speed = 10;
+            //        enemy.Move();
+            //    }
+            //}
+            
+            if (!enemy.CollisionCheckPoint(checkPoints[trgIndex])) // Двигать врага к цели пока не столкнется
             {
-                if (!enemy.CollisionCheckPoint(checkPoints[trgIndex])) // Двингать врага к цели пока не столкнется
-                {
-                    enemy.Speed = 10;
-                    enemy.Move();
-                }
+                enemy.Accelerate(3);
             }
+            else
+            {
+                enemy.Brake();
+            }
+
+            enemy.MoveProperly();
         }
 
         /// <summary> Поворачивать и перемещать врага к цели </summary>
@@ -126,8 +147,6 @@ namespace Template
             float alpha = 2.0f * (float)Math.PI * 0.25f * timeHelper.DeltaT;
 
             RotateEnemyToTarget(alpha);
-
-            //TurnEnemyWheelsToTarget(alpha);
 
             GoToTarget();
         }
@@ -139,20 +158,20 @@ namespace Template
         
         /// <summary> Поворот колес врага в сторону цели на указаный угол </summary>
         /// <param name="angle"> Угол</param>
-        private void TurnEnemyWheelsToTarget(float angle)
-        {
-            enemy.TurnWheelsToTarget(angle);
+        //private void TurnEnemyWheelsToTarget(float angle)
+        //{
+        //    enemy.TurnWheelsToTarget(angle);
 
-            //if (enemy.IsWheelsOnTarget) // Менять цель
-            //{
-            //    trgIndex++;
+        //    if (enemy.IsColliedCheckPts && enemy.IsWheelsOnTarget) // Менять цель
+        //    {
+        //        enemy.IsColliedCheckPts = false;
+        //        trgIndex++;
 
-            //    if (trgIndex == targetPts.Length)
-            //        trgIndex = 0;
-
-            //    enemy.Target = targetPts[trgIndex];
-            //}
-        }
+        //        if (trgIndex == centerPts.Length)
+        //            trgIndex = 0;
+        //        enemy.Target = centerPts[trgIndex];
+        //    }
+        //}
 
     }
 }

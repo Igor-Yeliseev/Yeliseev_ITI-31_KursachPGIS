@@ -294,10 +294,9 @@ namespace Template
             });
 
             // Character and camera. X0Z - ground, 0Y - to up.
-            _character = new Character(new Vector4(0.0f, 6.0f, -12.0f, 1.0f), Game3DObject._PI, 0.0f, 0.0f, 10.0f); //********
+            _character = new Character(new Vector4(0.0f, 6.0f, -12.0f, 1.0f), Game3DObject._PI, 0.0f, 0.0f); //********
             _camera = new Camera(new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
             _camera.AttachToObject(_character);
-
             
         }
 
@@ -332,8 +331,12 @@ namespace Template
         float alpha;
         string screen = "";
         int ct = 0;
+        int idx = 0;
+        float increm = 1;
+        float min, max;
         //FileStream fs;
 
+        Vector3 before;
         //ContainmentType collied;
 
         /// <summary>Callback for RenderLoop.Run. Handle input and render scene.</summary>
@@ -357,9 +360,9 @@ namespace Template
                 RenderFormResizedCallback(this, new EventArgs());
                 //fs = new FileStream("D:/difs.txt", FileMode.OpenOrCreate);
 
-                _character.Position = new Vector3(-22.1f, 6.0f, 7.4f);
-                _character.Yaw = -2.3600119f;
-                _character.Pitch = -0.7657637f;
+                _character.Position = new Vector3(-3.0f, 6.0f, -3.0f);
+                //_character.Yaw = -2.3600119f;
+                //_character.Pitch = -0.7657637f;
             }
 
             if (_inputController.KeyboardUpdated)
@@ -377,8 +380,8 @@ namespace Template
                 if (_inputController.DPressed) _character.MoveRightBy(_timeHelper.DeltaT * _character.Speed);
                 if (_inputController.APressed) _character.MoveRightBy(-_timeHelper.DeltaT * _character.Speed);
 
+                before = car.Position;
 
-                
                 if (_inputController.UpPressed)
                 {
                     if (!car.IsCollied)
@@ -392,7 +395,9 @@ namespace Template
                 else
                     car.MoveInertia(); //car.Speed = 0;
                 car.MoveProperly();
-                
+
+
+                _character.Position += car.Position - before;
 
                 if (_inputController.LeftPressed)
                 {
@@ -409,47 +414,50 @@ namespace Template
                 {
                     //anims.IsEnemyTurned = false;
 
-                    var verts = gameField.checkPoints[8].boundingBox.GetCorners();
+                    min = (gameField.checkPoints[idx].Direction * gameField.checkPoints[idx].boundingBox.Extents.X).X;
+                    max = (-gameField.checkPoints[idx].Direction * gameField.checkPoints[idx].boundingBox.Extents.X).X;
+                    increm = MyMath.Random(min, max);
 
-                    switch (ct)
-                    {
-                        case 0:
-                            line2.MoveTo(verts[0]);
-                            break;
-                        case 1:
-                            line2.MoveTo(verts[1]);
-                            break;
-                        case 2:
-                            line2.MoveTo(verts[2]);
-                            break;
-                        case 3:
-                            line2.MoveTo(verts[3]);
-                            break;
-                        case 4:
-                            line2.MoveTo(verts[4]);
-                            break;
-                        case 5:
-                            line2.MoveTo(verts[5]);
-                            break;
-                        case 6:
-                            line2.MoveTo(verts[6]);
-                            break;
-                        case 7:
-                            line2.MoveTo(verts[7]);
-                            break;
-                    }
-                    ct++;
+                    idx++;
+                    if (idx == 9) idx = 0;
+
+                    //var verts = gameField.checkPoints[5].boundingBox.GetCorners();
+                    //switch (ct)
+                    //{
+                    //    case 0:
+                    //        line2.MoveTo(verts[0]);
+                    //        break;
+                    //    case 1:
+                    //        line2.MoveTo(verts[1]);
+                    //        break;
+                    //    case 2:
+                    //        line2.MoveTo(verts[2]);
+                    //        break;
+                    //    case 3:
+                    //        line2.MoveTo(verts[3]);
+                    //        break;
+                    //    case 4:
+                    //        line2.MoveTo(verts[4]);
+                    //        break;
+                    //    case 5:
+                    //        line2.MoveTo(verts[5]);
+                    //        break;
+                    //    case 6:
+                    //        line2.MoveTo(verts[6]);
+                    //        break;
+                    //    case 7:
+                    //        line2.MoveTo(verts[7]);
+                    //        break;
+                    //}
+                    //ct++;
                 }
 
 
                 // Вражеская машина
                 //enemy.CheckObstacle(gameField.checkPoints[1].boundingBox, alpha);
-                //line1.MoveTo(enemy.raySideRight.Position);
-                //line2.MoveTo(enemy.raySideRight.Position + enemy.raySideRight.Direction * 2);
                 //enemy.Move();
-
-
-
+                line1.MoveTo(enemy.RearAxle);
+                line2.MoveTo(enemy.RearAxle + enemy.CarDirection);
 
                 // АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ
                 // Поворот врага вдоль указанного направления
@@ -467,7 +475,7 @@ namespace Template
 
 
                 // Игровое поле
-                //gameField.MoveEnemyToTargets();
+                gameField.MoveEnemyToTargets();
 
 
 
@@ -503,8 +511,6 @@ namespace Template
                 }
                 else
                     //box1.moveSign = 0;
-                    
-
 
 
                 if (_inputController.Num7Pressed)
@@ -586,8 +592,9 @@ namespace Template
                                 $"MX: {_inputController.MouseRelativePositionX,3:d2} MY: {_inputController.MouseRelativePositionY,3:d2} MZ: {_inputController.MouseRelativePositionZ,4:d3}\n" +
                                 $"LB: {(_inputController.MouseButtons[0] ? 1 : 0)} MB: {(_inputController.MouseButtons[2] ? 1 : 0)} RB: {(_inputController.MouseButtons[1] ? 1 : 0)}\n" +
                                 $"Pos: {_character.Position.X,6:f1}, {_character.Position.Y,6:f1}, {_character.Position.Z,6:f1}\n" +
-                                $"Yaw: {_character.Yaw}, Pitch: {_character.Pitch}, Roll: {_character.Roll}\n" +
+                                $"Yaw: {_character.Yaw}, Pitch: {_character.Pitch}, Roll: {_character.Roll}\n\n" +
 
+                                $"car itrs: {car.itrs} \n" +
                                 $"car Position X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
                                 $"car Speed: {car.Speed} ups\n\n" +
                                 

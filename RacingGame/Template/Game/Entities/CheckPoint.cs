@@ -14,13 +14,14 @@ namespace Template
         public string Name { get; }
         private int index;
 
+        /// <summary> Направление прямоугольника </summary>
+        public Vector3 Direction;
+
         public CheckPoint(MeshObject mesh) : base(mesh)
         {
             Name = mesh.Name;
             index = int.Parse(Name.Last().ToString());
             
-            //RotateOBB(1);
-
             //if (MyVector.CosProduct(dir, (point1 - point0)) < 0)
             //    RotateOBB(-angle);
             //else
@@ -37,31 +38,34 @@ namespace Template
         {
             var set = new HashSet<Vector3>();
 
-            var normals = new HashSet<Vector4>();
+            var normals = new HashSet<Vector3>();
 
             foreach (var v in mesh.Vertices)
             {
                 set.Add((Vector3)v.position);
-                normals.Add(v.normal);
+                normals.Add((Vector3)v.normal);
             }
 
             var normal = normals.ElementAt(2);
-            normal.W = 0;
-            float angle = MyVector.GetAngle(normal, new Vector4(0.0f, 0.0f, 1.0f, 0.0f));
+            float angle = MyVector.GetAngle(normal, new Vector3(0.0f, 0.0f, 1.0f));
+
+            Direction = Vector3.Transform(new Vector3(1.0f, 0.0f, 0.0f), Matrix3x3.RotationY(-angle));
 
             var verts = set.ToArray();
 
             for (int i = 0; i < verts.Length; i++)
             {
-                verts[i] -= (Vector3)mesh.CenterPosition;
+                verts[i] -= mesh.CenterPosition;
                 if (angle != 0)
                     verts[i] = Vector3.Transform(verts[i], Matrix3x3.RotationY(angle));
             }
+            
+
 
             OrientedBoundingBox boundingBox = new OrientedBoundingBox(verts);
             Matrix matrix = Matrix.RotationY(-angle);
             boundingBox.Transform(matrix);
-            boundingBox.Translate((Vector3)mesh.CenterPosition);
+            boundingBox.Translate(mesh.CenterPosition);
             return boundingBox;
         }
 
