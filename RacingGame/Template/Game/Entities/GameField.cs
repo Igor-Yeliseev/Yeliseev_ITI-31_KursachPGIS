@@ -85,8 +85,8 @@ namespace Template
         /// <returns></returns>
         private float randomIncremCoord(CheckPoint checkPoint)
         {
-            float min = (checkPoint.Direction * checkPoint.boundingBox.Extents.X).X;
-            float max = (- checkPoint.Direction * checkPoint.boundingBox.Extents.X).X;
+            float min = (checkPoint.Direction * checkPoint.OBBox.Extents.X).X;
+            float max = (- checkPoint.Direction * checkPoint.OBBox.Extents.X).X;
             return MyMath.Random(min, max);
         }
 

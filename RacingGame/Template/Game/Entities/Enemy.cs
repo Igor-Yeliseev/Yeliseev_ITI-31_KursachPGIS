@@ -78,7 +78,7 @@ namespace Template
             IsDead = false;
             wheelsDirection = _direction;
             
-            var Z = boundingBox.Center.Z + boundingBox.Extents.Z; // Машины должны стоять параллельно осям
+            var Z = OBBox.Center.Z + OBBox.Extents.Z; // Машины должны стоять параллельно осям
 
             var rayRPos = new Vector3(wheel1.Position.X, wheel1.Position.Y, wheel1.Position.Z + 0); // ИЗМЕНИТЬ ПОТОМ Z !!!
             var rayLPos = new Vector3(wheel2.Position.X, wheel2.Position.Y, wheel2.Position.Z + 0);
@@ -192,11 +192,12 @@ namespace Template
             MoveRays(direction, sign);
         }
 
-        public override void MoveBy(float dX, float dY, float dZ)
+        public override void MoveBy(Vector3 vector)
         {
-            base.MoveBy(dX, dY, dZ);
-            MoveByRays(new Vector3(dX, dY, dZ));
+            base.MoveBy(vector);
+            MoveByRays(vector);
         }
+
         private void MoveByRays(Vector3 offset)
         {
             rayLeft.Position += offset;

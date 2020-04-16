@@ -156,21 +156,23 @@ namespace Template
             _indexBufferObject = Buffer11.Create(_directX3DGraphics.Device, BindFlags.IndexBuffer, _indexes, Utilities.SizeOf<int>() * _indexesCount);
         }
 
-        public override void MoveBy(float dX, float dY, float dZ)
-        {
-            base.MoveBy(dX, dY, dZ);
-            _centerPosition.X += dX;
-            _centerPosition.Y += dY;
-            _centerPosition.Z += dZ;
+        //public override void MoveBy(float dX, float dY, float dZ)
+        //{
+        //    base.MoveBy(dX, dY, dZ);
+        //    _centerPosition.X += dX;
+        //    _centerPosition.Y += dY;
+        //    _centerPosition.Z += dZ;
 
-            _center2Position.X += dX;
-            _center2Position.Y += dY;
-            _center2Position.Z += dZ;
-        }
+        //    _center2Position.X += dX;
+        //    _center2Position.Y += dY;
+        //    _center2Position.Z += dZ;
+        //}
 
-        public void MoveBy(Vector3 dv)
+        public override void MoveBy(Vector3 dv)
         {
-            MoveBy(dv.X, dv.Y, dv.Z);
+            base.MoveBy(dv);
+            _centerPosition += dv;
+            _center2Position += dv;
         }
 
         public override void MoveTo(float x, float y, float z)

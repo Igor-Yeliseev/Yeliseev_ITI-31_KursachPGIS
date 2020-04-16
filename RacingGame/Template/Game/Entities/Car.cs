@@ -138,9 +138,10 @@ namespace Template
             _wheelRadius = (maxZ - minZ) / 2;
 
             var body = meshes.Find(m => m.Name.Contains("Body"));
-            boundingBox = SetOBB(body);
+            OBBox = SetOBB(body);
             _position = body.Position;
-            boundingBox.Translate(_position);
+            OBBox.Translate(_position);
+            TranslateAABB(_position);
         }
 
         public Car(List<MeshObject> meshes, Graphics.Materials _materials) : this(meshes)
@@ -287,13 +288,11 @@ namespace Template
             _rearAxle += dir;
         }
 
-        public override void MoveBy(float dX, float dY, float dZ)
+        public override void MoveBy(Vector3 vector)
         {
-            base.MoveBy(dX, dY, dZ);
-
-            var offset = new Vector3(dX, dY, dZ);
-            _frontAxle += offset;
-            _rearAxle += offset;
+            base.MoveBy(vector);
+            _frontAxle += vector;
+            _rearAxle += vector;
         }
 
         private float GetRotateAngle(float offset)
@@ -372,7 +371,8 @@ namespace Template
             float angle = MyVector.GetAngle(v1, v2) * scale; // Угол поворота машины
 
             float projDir = MyVector.DotProduct(v1, _direction) / v1.Length(); // Смещение вдоль направления
-            v1.X *= projDir; v1.Y *= projDir; v1.Z *= projDir; // Получаем проекцию вектора направления
+            v1 = v1 * projDir; // Получаем проекцию вектора направления
+
 
             if (sign > 0) // Двигаюсь вперед
             {
@@ -392,7 +392,7 @@ namespace Template
 
                 v1 = _frontAxle - _rearAxle; v1.Normalize();
                 projDir = MyVector.DotProduct(v1, _direction) / v1.Length();
-                v1.X *= projDir; v1.Y *= projDir; v1.Z *= projDir;
+                v1 = v1 * projDir;
 
                 Move(v1, sign);
             }
@@ -411,7 +411,7 @@ namespace Template
 
             _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
             rotFrontAxel(alpha);
-            RotateOBB(alpha); // Поворот баудин бокса
+            RotateOBB(alpha); // Поворот баудин боксов
 
             _meshes.ForEach(m =>
             {
@@ -460,7 +460,8 @@ namespace Template
             _position += direction;
             _frontAxle += direction;
             _rearAxle += direction;
-            boundingBox.Translate(direction);
+            OBBox.Translate(direction);
+            TranslateAABB(direction);
         }
 
         /// <summary> Ускорение автомобиля </summary>
@@ -532,31 +533,7 @@ namespace Template
             else
                 return false;
         }
-
-        public bool AnimationWheels(Vector3 direction, float alpha)
-        {
-            if (turnCount != 0)
-            {
-                var v1 = direction; v1.Normalize();
-
-                if (MyVector.CosProduct(v1, _direction) < 0)
-                {
-                    wheel1.YawBy(-alpha); wheel2.YawBy(-alpha);
-                    _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(-alpha));
-                    turnCount -= 2;
-                }
-                else
-                {
-                    wheel1.YawBy(alpha); wheel2.YawBy(alpha);
-                    _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
-                    turnCount += 2;
-                }
-
-                return (turnCount == 0) ? false : true;
-            }
-            else
-                return false;
-        }
+        
 
         /// <summary>
         /// Определение и разрешение коллизий
@@ -564,18 +541,18 @@ namespace Template
         /// <param name="obj"></param>
         public override bool CollisionTest(PhysicalObject obj)
         {
-            collied = boundingBox.Contains(ref obj.boundingBox);
+            collied = OBBox.Contains(ref obj.OBBox);
 
             if (collied == ContainmentType.Intersects)
             {
                 if (_speed > 0)
                 {
-                    while (boundingBox.Contains(ref obj.boundingBox) == ContainmentType.Intersects)
+                    while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
                         MoveProperly(-1);
                 }
                 else
                 {
-                    while (boundingBox.Contains(ref obj.boundingBox) == ContainmentType.Intersects)
+                    while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
                         MoveProperly(1);
                 }
                 return true;
@@ -585,7 +562,7 @@ namespace Template
 
         public bool CollisionCheckPoint(CheckPoint chpt)
         {
-            colliedCheckPts = boundingBox.Contains(ref chpt.boundingBox);
+            colliedCheckPts = OBBox.Contains(ref chpt.OBBox);
             return (colliedCheckPts == ContainmentType.Intersects)? true : false;
         }
 

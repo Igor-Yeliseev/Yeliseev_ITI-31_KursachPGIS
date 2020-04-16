@@ -60,13 +60,13 @@ namespace Template
                     verts[i] = Vector3.Transform(verts[i], Matrix3x3.RotationY(angle));
             }
             
-
-
-            OrientedBoundingBox boundingBox = new OrientedBoundingBox(verts);
+            OrientedBoundingBox OBBox = new OrientedBoundingBox(verts);
             Matrix matrix = Matrix.RotationY(-angle);
-            boundingBox.Transform(matrix);
-            boundingBox.Translate(mesh.CenterPosition);
-            return boundingBox;
+            OBBox.Transform(matrix);
+            OBBox.Translate(mesh.CenterPosition);
+            AABBox = BoundingBox.FromPoints(OBBox.GetCorners());
+
+            return OBBox;
         }
 
         public void SetMaterial(Material material)

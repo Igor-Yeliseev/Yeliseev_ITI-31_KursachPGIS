@@ -10,7 +10,14 @@ namespace Template
     abstract class PhysicalObject : GameObject
     {
         /// <summary> The oriented bounding box </summary>
-        public OrientedBoundingBox boundingBox;
+        public OrientedBoundingBox OBBox;
+        /// <summary> The axis aligned bounding box </summary>
+        public BoundingBox AABBox;
+        protected void TranslateAABB(Vector3 vector)
+        {
+            AABBox.Minimum += vector;
+            AABBox.Maximum += vector;
+        }
 
         protected ContainmentType collied;
         /// <summary> Столкнулся ли объект с другим объектом </summary>
@@ -24,7 +31,7 @@ namespace Template
 
         public PhysicalObject(MeshObject mesh) : base(mesh)
         {
-            boundingBox = SetOBB(mesh); 
+            OBBox = SetOBB(mesh); 
         }
 
         /// <summary>
@@ -57,18 +64,20 @@ namespace Template
 
             var min = new Vector3(minX, minY, minZ);
             var max = new Vector3(maxX, maxY, maxZ);
-            
+
+            AABBox = new BoundingBox(min, max);
+
             return new OrientedBoundingBox(min, max);
         }
         
         public PhysicalObject(List<MeshObject> meshes, Vector3 position) : base(meshes, position)
         {
-            boundingBox = new OrientedBoundingBox();
+
         }
 
         public PhysicalObject(List<MeshObject> meshes) : base(meshes)
         {
-            boundingBox = new OrientedBoundingBox();
+
         }
 
         /// <summary>
@@ -80,21 +89,17 @@ namespace Template
             if (angle == 0) return;
             
             Vector3 dv = new Vector3(-_position.X, -_position.Y, -_position.Z);
-            boundingBox.Translate(dv);
-            boundingBox.Transform(Matrix.RotationY(angle));
-            boundingBox.Translate(-dv);
+            OBBox.Translate(dv);
+            OBBox.Transform(Matrix.RotationY(angle));
+            OBBox.Translate(-dv);
+            BoundingBox.FromPoints(OBBox.GetCorners(), out AABBox);
         }
 
-        public override void MoveBy(float dX, float dY, float dZ)
+        public override void MoveBy(Vector3 vector)
         {
-            base.MoveBy(dX, dY, dZ);
-
-            boundingBox.Translate(new Vector3(dX, dY, dZ));
-        }
-
-        public override void MoveBy(Vector3 v)
-        {
-            MoveBy(v.X, v.Y, v.Z);
+            base.MoveBy(vector);
+            OBBox.Translate(vector);
+            TranslateAABB(vector);
         }
 
         public override void MoveTo(float x, float y, float z)
@@ -105,7 +110,8 @@ namespace Template
 
             base.MoveTo(x, y, z);
 
-            boundingBox.Translate(new Vector3(X, Y, Z));
+            OBBox.Translate(new Vector3(X, Y, Z));
+            TranslateAABB(new Vector3(X, Y, Z));
         }
 
         public override void MoveTo(Vector3 v)

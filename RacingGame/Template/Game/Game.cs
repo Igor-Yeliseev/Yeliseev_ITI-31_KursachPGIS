@@ -217,25 +217,25 @@ namespace Template
             // Машина игрока
             var carMeshes = loader.LoadMeshesFromObject("Resources\\enemyCar.obj", _materials[2]);
             car = new Car(carMeshes);
-            car.MoveBy(-9.0f, 0.0f, 5.0f);
+            car.MoveBy(new Vector3(-9.0f, 0.0f, 5.0f));
             gameField.SetCar(car);
             // Машина соперника
             var enemyMeshes = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
             enemy = new EnemyCar(enemyMeshes);
-            enemy.MoveBy(-15.0f, 0.0f, 5.0f);
+            enemy.MoveBy(new Vector3(-15.0f, 0.0f, 5.0f));
             gameField.SetEnemy(enemy);
 
             // Кубы для тестов
             box1 = new Box(mbox1);
-            box1.MoveBy(0.0f, 1.0f, 0.0f); mbox1.Material = _materials[1];
+            box1.MoveBy(new Vector3(0.0f, 1.0f, 0.0f)); mbox1.Material = _materials[1];
             box2 = new Box(mbox2);
-            box2.MoveBy(0.0f, 1.0f, 5.0f);
+            box2.MoveBy(new Vector3(0.0f, 1.0f, 5.0f));
 
             // Перемещения
-            _cube.MoveBy(0.0f, 9.0f, 0.0f);
-            plane.MoveBy(-45.0f, 0.0f, 5.0f);
-            cube2.MoveBy(4.0f, 0.0f, 12.0f);
-            line2.MoveTo(0, 0, 0);
+            _cube.MoveBy(new Vector3(0.0f, 9.0f, 0.0f));
+            plane.MoveBy(new Vector3(-45.0f, 0.0f, 5.0f));
+            cube2.MoveBy(new Vector3(4.0f, 0.0f, 12.0f));
+            line2.MoveTo(new Vector3(0, 0, 0));
             line1.MoveTo(carMeshes[5].CenterPosition);
             
 
@@ -413,50 +413,53 @@ namespace Template
                 {
                     //anims.IsEnemyTurned = false;
 
-                    min = (gameField.checkPoints[idx].Direction * gameField.checkPoints[idx].boundingBox.Extents.X).X;
-                    max = (-gameField.checkPoints[idx].Direction * gameField.checkPoints[idx].boundingBox.Extents.X).X;
-                    increm = MyMath.Random(min, max);
+                    //min = (gameField.checkPoints[idx].Direction * gameField.checkPoints[idx].OBBox.Extents.X).X;
+                    //max = (-gameField.checkPoints[idx].Direction * gameField.checkPoints[idx].OBBox.Extents.X).X;
+                    //increm = MyMath.Random(min, max);
 
-                    idx++;
-                    if (idx == 9) idx = 0;
+                    //idx++;
+                    //if (idx == 9) idx = 0;
 
-                    //var verts = gameField.checkPoints[5].boundingBox.GetCorners();
-                    //switch (ct)
-                    //{
-                    //    case 0:
-                    //        line2.MoveTo(verts[0]);
-                    //        break;
-                    //    case 1:
-                    //        line2.MoveTo(verts[1]);
-                    //        break;
-                    //    case 2:
-                    //        line2.MoveTo(verts[2]);
-                    //        break;
-                    //    case 3:
-                    //        line2.MoveTo(verts[3]);
-                    //        break;
-                    //    case 4:
-                    //        line2.MoveTo(verts[4]);
-                    //        break;
-                    //    case 5:
-                    //        line2.MoveTo(verts[5]);
-                    //        break;
-                    //    case 6:
-                    //        line2.MoveTo(verts[6]);
-                    //        break;
-                    //    case 7:
-                    //        line2.MoveTo(verts[7]);
-                    //        break;
-                    //}
-                    //ct++;
+                    var verts = enemy.AABBox.GetCorners();
+                    switch (ct)
+                    {
+                        case 0:
+                            line2.MoveTo(verts[0]);
+                            break;
+                        case 1:
+                            line2.MoveTo(verts[1]);
+                            break;
+                        case 2:
+                            line2.MoveTo(verts[2]);
+                            break;
+                        case 3:
+                            line2.MoveTo(verts[3]);
+                            break;
+                        case 4:
+                            line2.MoveTo(verts[4]);
+                            break;
+                        case 5:
+                            line2.MoveTo(verts[5]);
+                            break;
+                        case 6:
+                            line2.MoveTo(verts[6]);
+                            break;
+                        case 7:
+                            line2.MoveTo(verts[7]);
+                            break;
+                    }
+                    ct++;
                 }
 
 
                 // Вражеская машина
-                //enemy.CheckObstacle(gameField.checkPoints[1].boundingBox, alpha);
-                //enemy.Move();
-                line1.MoveTo(enemy.RearAxle);
-                line2.MoveTo(enemy.RearAxle + enemy.CarDirection);
+                //enemy.CheckObstacle(gameField.checkPoints[1].OBBox, alpha);
+                enemy.Move();
+                //line1.MoveTo(enemy.RearAxle);
+                //line2.MoveTo(enemy.RearAxle + enemy.CarDirection);
+                line1.MoveTo(enemy.AABBox.GetCorners()[0]);
+                line2.MoveTo(enemy.AABBox.GetCorners()[1]);
+
 
                 // АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ
                 // Поворот врага вдоль указанного направления
@@ -474,7 +477,7 @@ namespace Template
 
 
                 // Игровое поле
-                gameField.MoveEnemyToTargets();
+                //gameField.MoveEnemyToTargets();
 
 
 

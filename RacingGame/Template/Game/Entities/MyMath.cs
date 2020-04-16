@@ -50,37 +50,37 @@ namespace Template
         /// Пересечение луча с боксом коллизий
         /// </summary>
         /// <param name="ray"> Луч</param>
-        /// <param name="boundingBox"> Ориентированный бокс</param>
+        /// <param name="OBBox"> Ориентированный бокс</param>
         /// <returns></returns>
-        public static bool RayIntersects(ref Ray ray, OrientedBoundingBox boundingBox)
+        public static bool RayIntersects(ref Ray ray, OrientedBoundingBox OBBox)
         {
-            return boundingBox.Intersects(ref ray);
+            return OBBox.Intersects(ref ray);
         }
 
         /// <summary>
         /// Пересечение луча с боксом коллизий
         /// </summary>
         /// <param name="ray"> Луч</param>
-        /// <param name="boundingBox"> Ориентированный бокс</param>
+        /// <param name="OBBox"> Ориентированный бокс</param>
         /// <param name="point"> Точка пересечения (SharpDX.Vector3.Zero если нет пересечения)</param>
         /// <returns></returns>
-        public static bool RayIntersects(ref Ray ray, OrientedBoundingBox boundingBox, out Vector3 point)
+        public static bool RayIntersects(ref Ray ray, OrientedBoundingBox OBBox, out Vector3 point)
         {
-            return boundingBox.Intersects(ref ray, out point);
+            return OBBox.Intersects(ref ray, out point);
         }
 
         /// <summary>
         /// Пересечение луча с боксом коллизий
         /// </summary>
         /// <param name="ray"> Луч</param>
-        /// <param name="boundingBox"> Ориентированный бокс</param>
+        /// <param name="OBBox"> Ориентированный бокс</param>
         /// <param name="distance"> Расстояние между точкой пересечения и позицией луча</param>
         /// <returns></returns>
-        public static bool RayIntersects(ref Ray ray, OrientedBoundingBox boundingBox, out float distance)
+        public static bool RayIntersects(ref Ray ray, OrientedBoundingBox OBBox, out float distance)
         {
             distance = -1;
             Vector3 point;
-            if(boundingBox.Intersects(ref ray, out point))
+            if(OBBox.Intersects(ref ray, out point))
             {
                 distance = (point - ray.Position).Length();
                 return true;
