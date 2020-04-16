@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Template.Graphics;
 
@@ -557,11 +558,11 @@ namespace Template
                 }
                 else
                     return false;
-            }            
+            }
             else
                 return false;
         }
-        
+
         /// <summary>
         /// Разрешение столкновения машины и объекта
         /// </summary>

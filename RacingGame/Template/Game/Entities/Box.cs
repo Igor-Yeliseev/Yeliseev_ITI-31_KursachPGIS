@@ -70,16 +70,15 @@ namespace Template
         {
             if (moveSign > 0)
             {
-                Move(-_direction);
-                //while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
-                //    Move(-_direction);
+                while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
+                    Move(-_direction);
             }
             else
             {
-                Move(_direction);
-                //while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
-                //    Move(_direction);
+                while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
+                    Move(_direction);
             }
         }
+
     }
 }

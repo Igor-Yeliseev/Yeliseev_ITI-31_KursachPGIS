@@ -98,7 +98,7 @@ namespace Template
         private Character _character;
         private Car car;
         private EnemyCar enemy;
-        private Box box1, box2;
+        private Box box1, box2, box3;
         private GameField gameField;
 
         /// <summary> Ogbjects animations </summary>
@@ -210,6 +210,8 @@ namespace Template
 
             var mbox1 = loader.LoadMeshObject("Resources\\box.txt", _materials);
             var mbox2 = loader.LoadMeshObject("Resources\\box.txt", _materials);
+            var mbox3 = (MeshObject)mbox1.Clone(); mbox3.MoveBy(new Vector3(-50.0f, 1.0f, 50.0f));
+
             var plane = loader.LoadMeshFromObject("Resources\\plane.obj", _materials[0]);
             var road = loader.LoadMeshFromObject("Resources\\road.obj", _materials[7]);
             var cube2 = loader.LoadMeshFromObject("Resources\\box.obj", _materials[0]);
@@ -229,9 +231,11 @@ namespace Template
 
             // Кубы для тестов
             box1 = new Box(mbox1);
+            box3 = new Box(mbox3);
             box1.MoveBy(new Vector3(0.0f, 1.0f, 0.0f)); mbox1.Material = _materials[1];
             box2 = new Box(mbox2);
             box2.MoveBy(new Vector3(0.0f, 1.0f, 5.0f));
+            //box2.MoveBy(new Vector3(-13.0f, 0.0f, 20.0f));
 
             // Перемещения
             _cube.MoveBy(new Vector3(0.0f, 9.0f, 0.0f));
@@ -244,6 +248,7 @@ namespace Template
             // Добавление мешей
             _meshObjects.Add(mbox1);
             _meshObjects.Add(mbox2);
+            _meshObjects.Add(mbox3);
             _meshObjects.Add(_cube);
             _meshObjects.Add(cube2);
             _meshObjects.Add(line1);
@@ -334,13 +339,9 @@ namespace Template
         float alpha;
         string screen = "";
         int ct = 0;
-        int idx = 0;
-        float increm = 1;
-        float min, max;
         //FileStream fs;
 
-        Vector3 before;
-        //ContainmentType collied;
+        Vector3 target;
 
         /// <summary>Callback for RenderLoop.Run. Handle input and render scene.</summary>
         public void RenderLoopCallback()
@@ -363,6 +364,12 @@ namespace Template
                 RenderFormResizedCallback(this, new EventArgs());
                 //fs = new FileStream("D:/difs.txt", FileMode.OpenOrCreate);
 
+                //target = new Vector3(-14.0f, 0.0f, 40.0f);
+                target = gameField.centerPts[0];
+                line1.MoveTo(target);
+                enemy.Speed = 3;
+                enemy.Speed = 3;
+
                 _character.Position = new Vector3(-3.0f, 6.0f, -3.0f);
                 //_character.Yaw = -2.3600119f;
                 //_character.Pitch = -0.7657637f;
@@ -383,8 +390,6 @@ namespace Template
                 if (_inputController.DPressed) _character.MoveRightBy(_timeHelper.DeltaT * _character.Speed);
                 if (_inputController.APressed) _character.MoveRightBy(-_timeHelper.DeltaT * _character.Speed);
 
-                //before = car.Position;
-
                 if (_inputController.UpPressed)
                 {
                     if (!car.IsCollied)
@@ -398,9 +403,7 @@ namespace Template
                 else
                     car.MoveInertia();
                 car.MoveProperly();
-
-                //_character.Position += car.Position - before;
-
+                
 
                 if (_inputController.LeftPressed)
                 {
@@ -416,13 +419,6 @@ namespace Template
                 if (_inputController.Space)
                 {
                     //anims.IsEnemyTurned = false;
-
-                    //min = (gameField.checkPoints[idx].Direction * gameField.checkPoints[idx].OBBox.Extents.X).X;
-                    //max = (-gameField.checkPoints[idx].Direction * gameField.checkPoints[idx].OBBox.Extents.X).X;
-                    //increm = MyMath.Random(min, max);
-
-                    //idx++;
-                    //if (idx == 9) idx = 0;
 
                     var verts = enemy.AABBox.GetCorners();
                     switch (ct)
@@ -465,6 +461,15 @@ namespace Template
                 //line2.MoveTo(enemy.AABBox.GetCorners()[1]);
 
 
+
+                enemy.CheckObstacle(box2.OBBox, alpha);
+                enemy.Target = target;
+                enemy.CheckWheelsDirOnTarget(alpha);
+                enemy.MoveProperly();
+
+
+
+
                 // АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ
                 // Поворот врага вдоль указанного направления
                 //if (!_inputController.Space && !anims.IsEnemyTurned)
@@ -497,23 +502,23 @@ namespace Template
 
                 if (_inputController.Num4Pressed)
                 {
-                    box1.RotateY(-alpha);
-                    //enemy.TurnCar(-alpha);
+                    //box1.RotateY(-alpha);
+                    enemy.TurnCar(-alpha);
                 }
                 if (_inputController.Num6Pressed)
                 {
-                    box1.RotateY(alpha);
-                    //enemy.TurnCar(alpha);
+                    //box1.RotateY(alpha);
+                    enemy.TurnCar(alpha);
                 }
                 if (_inputController.Num8Pressed)
                 {
-                    box1.MoveForward();
-                    //enemy.Speed = 9;
+                    //box1.MoveForward();
+                    enemy.Speed = 3;
                 }
                 else if (_inputController.Num5Pressed)
                 {
-                    box1.MoveBackward();
-                    //enemy.Speed = -9;
+                    //box1.MoveBackward();
+                    enemy.Speed = -3;
                 }
                 else
                     box1.moveSign = 0;
@@ -547,10 +552,13 @@ namespace Template
 
             // Collision Detection
             {
-                if (box1.CollisionTest(box2))
-                {
-                    box1.CollisionResponce(box2);
-                }
+
+                //if (enemy.CollisionTest(box2))
+                //{
+                //    //enemy.CollisionResponce(box2);
+                //    //enemy.Speed = 0;
+                //}
+
 
                 //gameField.CheckRaceFinish();
 

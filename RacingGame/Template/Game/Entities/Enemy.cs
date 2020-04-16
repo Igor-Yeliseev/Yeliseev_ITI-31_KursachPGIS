@@ -18,7 +18,7 @@ namespace Template
             set
             {
                 _target = new Vector3(value.X - _rearAxle.X, 0.0f, value.Z - _rearAxle.Z);
-                wheelsOnTarget = false;
+                //wheelsOnTarget = false;
             }
         }
         
@@ -319,8 +319,11 @@ namespace Template
         /// </summary>
         public void CheckWheelsDirOnTarget(float angle) 
         {
-            if (wheelsOnTarget)
+            if (_isFrontObstacle || _isSideObstacle)
                 return;
+
+            //if (wheelsOnTarget)
+            //    return;
 
             float cosProd = MyVector.CosProduct(wheelsDirection, _target);
 
@@ -358,7 +361,19 @@ namespace Template
         /// <returns></returns>
         public override bool CollisionTest(PhysicalObject obj)
         {
-            return false;
+            if (AABBox.Intersects(obj.AABBox))
+            {
+                collied = OBBox.Contains(ref obj.OBBox);
+
+                if (collied == ContainmentType.Intersects)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
         }
         
         private float distance;
@@ -368,12 +383,16 @@ namespace Template
         
         public void CheckObstacle(OrientedBoundingBox orientedBoundingBox, float alpha)
         {
-            // Передние лучи
-            CheckObstacleFrontRays(orientedBoundingBox, alpha);
             // Боковые лучи
             CheckObstacleSideRays(orientedBoundingBox, alpha);
+            // Передние лучи
+            CheckObstacleFrontRays(orientedBoundingBox, alpha);
         }
 
+        private bool _isFrontObstacle = false;
+        private bool _isSideObstacle = false;
+        public bool IsOnFrontObstacle { get => _isFrontObstacle; }
+        
         /// <summary> Минимальное расстояние до препятствия до принятия решения </summary>
         private float minFrontDistance = 6;
         private void CheckObstacleFrontRays(OrientedBoundingBox orientedBoundingBox, float alpha)
@@ -390,18 +409,29 @@ namespace Template
                 {
 
                     if (distanceL < distanceR)
-                        TurnCar(alpha);
+                        TurnWheelsRight(alpha); //TurnCar(alpha);
                     else if (distanceR < distanceL)
-                        TurnCar(-alpha);
+                        TurnWheelsLeft(alpha); //TurnCar(-alpha);
+
+                    _isFrontObstacle = true;
                 }
+                else
+                    _isFrontObstacle = false;
             }
             else if (interLeft && distanceL <= minFrontDistance)
             {
-                TurnCar(alpha); // Поворачиваю направо
+                //TurnCar(alpha); // Поворачиваю направо
+                TurnWheelsRight(alpha); _isFrontObstacle = true;
             }
             else if (interRight && distanceR <= minFrontDistance)
             {
-                TurnCar(-alpha); // Поворачиваю налево
+                //TurnCar(-alpha); // Поворачиваю налево
+                TurnWheelsLeft(alpha); _isFrontObstacle = true;
+            }
+            else
+            {
+                _isFrontObstacle = false;
+                //AnimationWheels(alpha);
             }
         }
 
@@ -416,15 +446,22 @@ namespace Template
 
             if (!interLeft && !interRight)
             {
+                _isSideObstacle = false;
                 return;
             }
             else if (interLeft && distanceL <= minSideDistance)
             {
-                TurnCar(alpha); // Поворачиваю направо
+                //TurnCar(alpha); // Поворачиваю направо
+                TurnWheelsRight(alpha); _isSideObstacle = true;
             }
             else if (interRight && distanceR <= minSideDistance)
             {
-                TurnCar(-alpha); // Поворачиваю налево
+                //TurnCar(-alpha); // Поворачиваю налево
+                TurnWheelsLeft(alpha); _isSideObstacle = true;
+            }
+            else
+            {
+                _isSideObstacle = false;
             }
         }
     }

@@ -11,7 +11,7 @@ namespace Template
         /// <summary> Массив чекпоинтов </summary>
         public CheckPoint[] checkPoints;
         /// <summary> Массив центральных точек боксов чекпоинтов </summary>
-        private Vector3[] centerPts;
+        public Vector3[] centerPts; // private
         public int trgIndex = 0;
 
         private int lapsCount = 3;
@@ -99,10 +99,10 @@ namespace Template
             enemy.Target = centerPts[trgIndex];
             enemy.CheckWheelsDirOnTarget(angle);
             
-
             if (enemy.IsColliedCheckPts) // && enemy.IsOnTarget
             {
                 enemy.IsColliedCheckPts = false;
+                enemy.IsWheelsOnTarget = false;
 
                 trgIndex++;
 
@@ -118,15 +118,6 @@ namespace Template
         /// <summary> Двигать врага к цели </summary>
         private void GoToTarget()
         {
-            //if (enemy.IsOnTarget) // Враг повернут в сторону цели
-            //{
-            //    if (!enemy.CollisionCheckPoint(checkPoints[trgIndex])) // Двигать врага к цели пока не столкнется
-            //    {
-            //        enemy.Speed = 10;
-            //        enemy.Move();
-            //    }
-            //}
-            
             if (!enemy.CollisionCheckPoint(checkPoints[trgIndex])) // Двигать врага к цели пока не столкнется
             {
                 enemy.Accelerate(12);
