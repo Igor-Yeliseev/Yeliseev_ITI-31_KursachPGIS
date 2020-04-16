@@ -120,5 +120,7 @@ namespace Template
         }
 
         public abstract bool CollisionTest(PhysicalObject obj);
+
+        public abstract void CollisionResponce(PhysicalObject obj);
     }
 }

@@ -82,7 +82,7 @@ namespace Template
         
 
         private MeshObject _cube;
-        private MeshObject line1, line2;
+        private MeshObject line1, line2, line3, line4;
         
         /// <summary>List of objects with meshes.</summary>
         private MeshObjects _meshObjects;
@@ -204,10 +204,12 @@ namespace Template
             _meshObjects = new MeshObjects();
             _cube = loader.LoadMeshObject("Resources\\cube.txt", _materials);
             line1 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[1]);
+            line2 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[3]);
+            line3 = (MeshObject)line1.Clone(); //line3.RollBy((float)Math.PI / 2);
+            line4 = (MeshObject)line2.Clone();
 
             var mbox1 = loader.LoadMeshObject("Resources\\box.txt", _materials);
             var mbox2 = loader.LoadMeshObject("Resources\\box.txt", _materials);
-            line2 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[3]);
             var plane = loader.LoadMeshFromObject("Resources\\plane.obj", _materials[0]);
             var road = loader.LoadMeshFromObject("Resources\\road.obj", _materials[7]);
             var cube2 = loader.LoadMeshFromObject("Resources\\box.obj", _materials[0]);
@@ -246,6 +248,8 @@ namespace Template
             _meshObjects.Add(cube2);
             _meshObjects.Add(line1);
             _meshObjects.Add(line2);
+            _meshObjects.Add(line3);
+            _meshObjects.Add(line4);
             _meshObjects.Add(plane);
             _meshObjects.Add(road);
             enemyMeshes.ForEach(m => _meshObjects.Add(m));
@@ -384,19 +388,19 @@ namespace Template
                 if (_inputController.UpPressed)
                 {
                     if (!car.IsCollied)
-                        car.Accelerate(); //car.Speed = 6;
+                        car.Accelerate();
                 }
                 else if (_inputController.DownPressed)
                 {
                     if (!car.IsCollied)
-                        car.Brake(); //car.Speed = -6;
+                        car.Brake();
                 }
                 else
-                    car.MoveInertia(); //car.Speed = 0;
+                    car.MoveInertia();
                 car.MoveProperly();
 
-
                 //_character.Position += car.Position - before;
+
 
                 if (_inputController.LeftPressed)
                 {
@@ -454,11 +458,11 @@ namespace Template
 
                 // Вражеская машина
                 //enemy.CheckObstacle(gameField.checkPoints[1].OBBox, alpha);
-                enemy.Move();
-                //line1.MoveTo(enemy.RearAxle);
-                //line2.MoveTo(enemy.RearAxle + enemy.CarDirection);
-                line1.MoveTo(enemy.AABBox.GetCorners()[0]);
-                line2.MoveTo(enemy.AABBox.GetCorners()[1]);
+                //enemy.Move();
+                //line3.MoveTo(car.RearAxle);
+                //line4.MoveTo(car.RearAxle + car.CarDirection);
+                //line1.MoveTo(enemy.AABBox.GetCorners()[0]);
+                //line2.MoveTo(enemy.AABBox.GetCorners()[1]);
 
 
                 // АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ
@@ -493,26 +497,26 @@ namespace Template
 
                 if (_inputController.Num4Pressed)
                 {
-                    //box1.RotateY(-alpha);
-                    enemy.TurnCar(-alpha);
+                    box1.RotateY(-alpha);
+                    //enemy.TurnCar(-alpha);
                 }
                 if (_inputController.Num6Pressed)
                 {
-                    //box1.RotateY(alpha);
-                    enemy.TurnCar(alpha);
+                    box1.RotateY(alpha);
+                    //enemy.TurnCar(alpha);
                 }
                 if (_inputController.Num8Pressed)
                 {
-                    //box1.MoveForward();
-                    enemy.Speed = 9;
+                    box1.MoveForward();
+                    //enemy.Speed = 9;
                 }
                 else if (_inputController.Num5Pressed)
                 {
-                    //box1.MoveBackward();
-                    enemy.Speed = -9;
+                    box1.MoveBackward();
+                    //enemy.Speed = -9;
                 }
                 else
-                    //box1.moveSign = 0;
+                    box1.moveSign = 0;
 
 
                 if (_inputController.Num7Pressed)
@@ -543,7 +547,11 @@ namespace Template
 
             // Collision Detection
             {
-                //car.CollisionTest(box2);
+                if (box1.CollisionTest(box2))
+                {
+                    box1.CollisionResponce(box2);
+                }
+
                 //gameField.CheckRaceFinish();
 
                 screen = (car.IsCollied) ? "True" : "False";

@@ -94,13 +94,6 @@ namespace Template
             else if (_roll < -_PI) _roll += _2PI;
         }
 
-        //public virtual void MoveBy(float dX, float dY, float dZ)
-        //{
-        //    _position.X += dX;
-        //    _position.Y += dY;
-        //    _position.Z += dZ;
-        //}
-
         public virtual void MoveBy(Vector3 vector)
         {
             _position += vector;

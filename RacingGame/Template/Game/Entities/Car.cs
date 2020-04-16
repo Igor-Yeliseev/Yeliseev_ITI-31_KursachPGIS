@@ -165,7 +165,7 @@ namespace Template
             _meshes.ForEach(m => meshObjects.Add(m));
         }
 
-        public void TurnLeft(float alpha)
+        private void TurnLeft(float alpha)
         {
             //_direction = Vector3.Transform(_direction, Matrix.RotationY(-alpha)); // Поворот вектора направления
             //rotFrontAxel(-alpha); // Поворот центра переднего моста
@@ -195,7 +195,7 @@ namespace Template
             //});
         }
 
-        public void TurnRight(float alpha)
+        private void TurnRight(float alpha)
         {
             //_direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
             //rotFrontAxel(alpha);
@@ -245,7 +245,7 @@ namespace Template
             }
         }
 
-        public void MoveForward()
+        private void MoveForward()
         {
             //_meshes.ForEach(m =>
             //{
@@ -260,7 +260,7 @@ namespace Template
             //_rearAxle += _direction / 100;
         }
 
-        public void MoveBackward()
+        private void MoveBackward()
         {
             //_meshes.ForEach(m =>
             //{
@@ -533,7 +533,12 @@ namespace Template
             else
                 return false;
         }
-        
+
+        public bool CollisionCheckPoint(CheckPoint chpt)
+        {
+            colliedCheckPts = OBBox.Contains(ref chpt.OBBox);
+            return (colliedCheckPts == ContainmentType.Intersects) ? true : false;
+        }
 
         /// <summary>
         /// Определение и разрешение коллизий
@@ -541,31 +546,38 @@ namespace Template
         /// <param name="obj"></param>
         public override bool CollisionTest(PhysicalObject obj)
         {
-            collied = OBBox.Contains(ref obj.OBBox);
-
-            if (collied == ContainmentType.Intersects)
+            if (AABBox.Intersects(obj.AABBox))
             {
-                if (_speed > 0)
+                collied = OBBox.Contains(ref obj.OBBox);
+
+                if (collied == ContainmentType.Intersects)
                 {
-                    while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
-                        MoveProperly(-1);
+                    CollisionResponce(obj);
+                    return true;
                 }
                 else
-                {
-                    while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
-                        MoveProperly(1);
-                }
-                return true;
-            }
-            else return false;
+                    return false;
+            }            
+            else
+                return false;
         }
-
-        public bool CollisionCheckPoint(CheckPoint chpt)
-        {
-            colliedCheckPts = OBBox.Contains(ref chpt.OBBox);
-            return (colliedCheckPts == ContainmentType.Intersects)? true : false;
-        }
-
         
+        /// <summary>
+        /// Разрешение столкновения машины и объекта
+        /// </summary>
+        /// <param name="obj"></param>
+        public override void CollisionResponce(PhysicalObject obj) // Добавить проверки на тип объекта (Стена, Враг, Приз и т.д.)
+        {
+            if (_speed > 0)
+            {
+                while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
+                    MoveProperly(-1);
+            }
+            else
+            {
+                while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
+                    MoveProperly(1);
+            }
+        }
     }
 }

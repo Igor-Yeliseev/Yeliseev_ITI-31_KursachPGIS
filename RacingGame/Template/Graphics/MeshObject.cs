@@ -16,7 +16,7 @@ namespace Template
     /// <summary>
     /// 3D object with mesh.
     /// </summary>
-    class MeshObject : Game3DObject, IDisposable
+    class MeshObject : Game3DObject, IDisposable, ICloneable
     {
         [StructLayout(LayoutKind.Sequential)]
         public struct VertexDataStruct : IComparable<VertexDataStruct>
@@ -156,18 +156,6 @@ namespace Template
             _indexBufferObject = Buffer11.Create(_directX3DGraphics.Device, BindFlags.IndexBuffer, _indexes, Utilities.SizeOf<int>() * _indexesCount);
         }
 
-        //public override void MoveBy(float dX, float dY, float dZ)
-        //{
-        //    base.MoveBy(dX, dY, dZ);
-        //    _centerPosition.X += dX;
-        //    _centerPosition.Y += dY;
-        //    _centerPosition.Z += dZ;
-
-        //    _center2Position.X += dX;
-        //    _center2Position.Y += dY;
-        //    _center2Position.Z += dZ;
-        //}
-
         public override void MoveBy(Vector3 dv)
         {
             base.MoveBy(dv);
@@ -237,6 +225,11 @@ namespace Template
         public override Matrix GetWorldMatrix()
         {
             return Matrix.Multiply(Matrix.RotationYawPitchRoll(_yaw, _pitch, _roll), Matrix.Translation((Vector3)_position));
+        }
+
+        public object Clone()
+        {
+            return (MeshObject) MemberwiseClone();
         }
     }
 }

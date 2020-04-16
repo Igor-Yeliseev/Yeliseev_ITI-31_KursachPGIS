@@ -21,11 +21,6 @@ namespace Template
         {
             Name = mesh.Name;
             index = int.Parse(Name.Last().ToString());
-            
-            //if (MyVector.CosProduct(dir, (point1 - point0)) < 0)
-            //    RotateOBB(-angle);
-            //else
-            //    RotateOBB(angle);
 
         }
 
@@ -87,6 +82,11 @@ namespace Template
                 return 1;
             else
                 return 0;
+        }
+
+        public override void CollisionResponce(PhysicalObject obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }
