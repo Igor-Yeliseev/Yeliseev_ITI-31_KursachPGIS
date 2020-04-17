@@ -21,7 +21,7 @@ namespace Template
                 //wheelsOnTarget = false;
             }
         }
-        
+
         /// <summary> Мертв ли враг </summary>
         public bool IsDead { get; set; }
 
@@ -47,19 +47,21 @@ namespace Template
             }
         }
 
-
-        // Ray[] sensors = new Ray[5];
-
+        
         /// <summary> Передний левый луч </summary>
-        public Ray rayLeft;
+        public Ray rayFrontLeft;
         /// <summary> Передний правый луч </summary>
-        public Ray rayRight;
+        public Ray rayFrontRight;
         /// <summary> Передний сентральный луч </summary>
-        public Ray rayCenter;
-        /// <summary> Боковой левый луч </summary>
-        public Ray raySideLeft;
-        /// <summary> Боковой правый луч </summary>
-        public Ray raySideRight;
+        public Ray rayFrontCenter;
+        /// <summary> Боковой передний левый луч </summary>
+        public Ray rayFrontSideLeft;
+        /// <summary> Боковой передний правый луч </summary>
+        public Ray rayFrontSideRight;
+        /// <summary> Боковой центральный левый луч </summary>
+        public Ray rayCenterSideLeft;
+        /// <summary> Боковой центральный правый луч </summary>
+        public Ray rayCenterSideRight;
 
         /// <summary> Расстояние от точки вращения до поцизии левого сенсора </summary>
         Vector3 rayLftToRearAxle;
@@ -70,36 +72,50 @@ namespace Template
 
         /// <summary> Расстояние от точки вращения до поцизии бокового левого сенсора </summary>
         Vector3 raySideLftToRearAxle;
-        /// <summary> Расстояние от точки вращения до поцизии правого левого сенсора </summary>
+        /// <summary> Расстояние от точки вращения до поцизии бокового левого сенсора </summary>
         Vector3 raySideRhtToRearAxle;
+
+        /// <summary> Расстояние от точки вращения до поцизии центральнго бокового левого сенсора </summary>
+        Vector3 rayCenSideLftToRearAxle;
+        /// <summary> Расстояние от точки вращения до поцизии центральнго бокового левого сенсора </summary>
+        Vector3 rayCenSideRhtToRearAxle;
 
         public EnemyCar(List<MeshObject> meshes) : base(meshes)
         {
             IsDead = false;
             wheelsDirection = _direction;
             
-            var Z = OBBox.Center.Z + OBBox.Extents.Z; // Машины должны стоять параллельно осям
+            var Z = (OBBox.Center.Z + OBBox.Extents.Z) / 2; // Машины должны стоять параллельно осям
 
-            var rayRPos = new Vector3(wheel1.Position.X, wheel1.Position.Y, wheel1.Position.Z + 0); // ИЗМЕНИТЬ ПОТОМ Z !!!
-            var rayLPos = new Vector3(wheel2.Position.X, wheel2.Position.Y, wheel2.Position.Z + 0);
-            var rayCenterPos = new Vector3(_frontAxle.X, _frontAxle.Y, _frontAxle.Z + 0);
+            float z = 2.3f;
 
-            var raySideRPos = new Vector3(wheel1.Position.X + 0, wheel1.Position.Y, Z); // ИЗМЕНИТЬ ПОТОМ X !!!
-            var raySideLPos = new Vector3(wheel2.Position.X - 0, wheel2.Position.Y, Z);
-            
-            // Передние лучи
-            rayRight = new Ray(rayRPos, _direction);
-            rayLeft = new Ray(rayLPos, _direction);
-            rayCenter = new Ray(rayCenterPos, _direction);
-            rayLftToRearAxle = rayLeft.Position - _rearAxle;
-            rayRhtToRearAxle = rayRight.Position - _rearAxle;
-            rayCenToRearAxle = rayCenter.Position - _rearAxle;
+            // Передние прямые лучи
+            var rayFrontRPos = new Vector3(wheel1.Position.X, wheel1.Position.Y, wheel1.Position.Z + z); // ИЗМЕНИТЬ ПОТОМ Z !!!
+            var rayFrontLPos = new Vector3(wheel2.Position.X, wheel2.Position.Y, wheel2.Position.Z + z);
+            var rayFrontCPos = new Vector3(_frontAxle.X, _frontAxle.Y, _frontAxle.Z + 0);
+            rayFrontRight = new Ray(rayFrontRPos, _direction);
+            rayFrontLeft = new Ray(rayFrontLPos, _direction);
+            rayFrontCenter = new Ray(rayFrontCPos, _direction);
+            rayLftToRearAxle = rayFrontLeft.Position - _rearAxle;
+            rayRhtToRearAxle = rayFrontRight.Position - _rearAxle;
+            rayCenToRearAxle = rayFrontCenter.Position - _rearAxle;
 
-            // Боковые лучи
-            raySideLftToRearAxle = raySideLPos - _rearAxle;
-            raySideRhtToRearAxle = raySideRPos - _rearAxle;
-            raySideLeft = new Ray(raySideLPos, Vector3.Transform(_direction, Matrix3x3.RotationY(-(float)Math.PI / 2)));
-            raySideRight = new Ray(raySideRPos, Vector3.Transform(_direction, Matrix3x3.RotationY((float)Math.PI / 2)));
+            // Боковые передние лучи
+            var rayFrontSideRPos = new Vector3(wheel1.Position.X, wheel1.Position.Y, wheel1.Position.Z + z); // ИЗМЕНИТЬ ПОТОМ Z !!!
+            var rayFrontSideLPos = new Vector3(wheel2.Position.X, wheel2.Position.Y, wheel2.Position.Z + z);
+            raySideLftToRearAxle = rayFrontSideLPos - _rearAxle;
+            raySideRhtToRearAxle = rayFrontSideRPos - _rearAxle;
+            rayFrontSideLeft = new Ray(rayFrontSideLPos, Vector3.Transform(_direction, Matrix3x3.RotationY(-(float)Math.PI / 4)));
+            rayFrontSideRight = new Ray(rayFrontSideRPos, Vector3.Transform(_direction, Matrix3x3.RotationY((float)Math.PI / 4)));
+            minFrontSideDistance = (float)Math.Round(minFrontDistance / (float)Math.Cos(Math.PI / 4.0), 2);
+
+            // Боковые центральные лучи
+            var rayCenterSideRPos = new Vector3(wheel1.Position.X + 0, wheel1.Position.Y, wheel1.Position.Z + z); // ИЗМЕНИТЬ ПОТОМ X !!!
+            var rayCenterSideLPos = new Vector3(wheel2.Position.X - 0, wheel2.Position.Y, wheel2.Position.Z + z);
+            rayCenSideLftToRearAxle = rayCenterSideLPos - _rearAxle;
+            rayCenSideRhtToRearAxle = rayCenterSideRPos - _rearAxle;
+            rayCenterSideLeft = new Ray(rayCenterSideLPos, Vector3.Transform(_direction, Matrix3x3.RotationY(-(float)Math.PI / 2)));
+            rayCenterSideRight = new Ray(rayCenterSideRPos, Vector3.Transform(_direction, Matrix3x3.RotationY((float)Math.PI / 2)));
 
             //Target = new Vector3(0.1f, 0.0f, -0.9f);
             //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
@@ -143,28 +159,40 @@ namespace Template
         /// </summary>
         private void SetRaysDirection(float alpha)
         {
+            var matrix = Matrix3x3.RotationY(alpha);
+
             // Передние лучи
-            Vector3 dir = Vector3.Transform(rayCenter.Direction, Matrix3x3.RotationY(alpha));
-            rayLeft.Direction = dir;
-            rayRight.Direction = dir;
-            rayCenter.Direction = dir;
+            Vector3 dir = Vector3.Transform(rayFrontCenter.Direction, matrix);
+            rayFrontLeft.Direction = dir;
+            rayFrontRight.Direction = dir;
+            rayFrontCenter.Direction = dir;
 
-            rayLftToRearAxle = Vector3.Transform(rayLftToRearAxle, Matrix3x3.RotationY(alpha));
-            rayRhtToRearAxle = Vector3.Transform(rayRhtToRearAxle, Matrix3x3.RotationY(alpha));
-            rayCenToRearAxle = Vector3.Transform(rayCenToRearAxle, Matrix3x3.RotationY(alpha));
+            rayLftToRearAxle = Vector3.Transform(rayLftToRearAxle, matrix);
+            rayRhtToRearAxle = Vector3.Transform(rayRhtToRearAxle, matrix);
+            rayCenToRearAxle = Vector3.Transform(rayCenToRearAxle, matrix);
 
-            rayLeft.Position = _rearAxle + rayLftToRearAxle;
-            rayRight.Position = _rearAxle + rayRhtToRearAxle;
-            rayCenter.Position = _rearAxle + rayCenToRearAxle;
+            rayFrontLeft.Position = _rearAxle + rayLftToRearAxle;
+            rayFrontRight.Position = _rearAxle + rayRhtToRearAxle;
+            rayFrontCenter.Position = _rearAxle + rayCenToRearAxle;
 
-            // Боковые лучи
-            raySideLeft.Direction = Vector3.Transform(raySideLeft.Direction, Matrix3x3.RotationY(alpha));
-            raySideRight.Direction = Vector3.Transform(raySideRight.Direction, Matrix3x3.RotationY(alpha));
+            // Боковые передние лучи
+            rayFrontSideLeft.Direction = Vector3.Transform(rayFrontSideLeft.Direction, matrix);
+            rayFrontSideRight.Direction = Vector3.Transform(rayFrontSideRight.Direction, matrix);
 
-            raySideLftToRearAxle = Vector3.Transform(raySideLftToRearAxle, Matrix3x3.RotationY(alpha));
-            raySideRhtToRearAxle = Vector3.Transform(raySideRhtToRearAxle, Matrix3x3.RotationY(alpha));
-            raySideLeft.Position = _rearAxle + raySideLftToRearAxle;
-            raySideRight.Position = _rearAxle + raySideRhtToRearAxle;
+            raySideLftToRearAxle = Vector3.Transform(raySideLftToRearAxle, matrix);
+            raySideRhtToRearAxle = Vector3.Transform(raySideRhtToRearAxle, matrix);
+            rayFrontSideLeft.Position = _rearAxle + raySideLftToRearAxle;
+            rayFrontSideRight.Position = _rearAxle + raySideRhtToRearAxle;
+
+            // Боковые центральные лучи
+            rayCenterSideLeft.Direction = Vector3.Transform(rayCenterSideLeft.Direction, matrix);
+            rayCenterSideRight.Direction = Vector3.Transform(rayCenterSideRight.Direction, matrix);
+
+            rayCenSideLftToRearAxle = Vector3.Transform(rayCenSideLftToRearAxle, matrix);
+            rayCenSideRhtToRearAxle = Vector3.Transform(rayCenSideRhtToRearAxle, matrix);
+            rayCenterSideLeft.Position = _rearAxle + rayCenSideLftToRearAxle;
+            rayCenterSideRight.Position = _rearAxle + rayCenSideRhtToRearAxle;
+
         }
 
         /// <summary>
@@ -175,7 +203,36 @@ namespace Template
         /// <summary> Повернуты ли колеса в точку Target </summary>
         public bool IsWheelsOnTarget { get => wheelsOnTarget; set => wheelsOnTarget = value; }
 
-        
+        public override void Accelerate()
+        {
+            base.Accelerate();
+            minFrontDistance = MyMath.Lerp(minFrontDistance, 20, 0.4f, 0.1f);
+        }
+
+        public override void Accelerate(float speed)
+        {
+            base.Accelerate(speed);
+            minFrontDistance = MyMath.Lerp(minFrontDistance, speed * 0.66f, 0.4f, 0.1f);
+        }
+
+        public override void Brake()
+        {
+            if (_speed > MaxSpeed / 1.4f)
+            {
+                Speed = MyMath.Lerp(_speed, 0, 0.7f, 0.1f);
+                minFrontDistance = MyMath.Lerp(minFrontDistance, 6, 0.7f, 0.1f);
+            }
+            else if (_speed > MaxSpeed / 2.5f)
+            {
+                Speed = MyMath.Lerp(_speed, 0, 1.0f, 0.1f);
+                minFrontDistance = MyMath.Lerp(minFrontDistance, 6, 1.0f, 0.1f);
+            }
+            else
+            {
+                Speed = MyMath.Lerp(_speed, 0, 1.4f, 0.1f);
+                minFrontDistance = MyMath.Lerp(minFrontDistance, 6, 1.5f, 0.1f);
+            }
+        }
 
         /// <summary> Перемещать машину вдоль направления в соответствии с ее скоростью </summary>
         public void Move()
@@ -200,12 +257,15 @@ namespace Template
 
         private void MoveByRays(Vector3 offset)
         {
-            rayLeft.Position += offset;
-            rayRight.Position += offset;
-            rayCenter.Position += offset;
+            rayFrontLeft.Position += offset;
+            rayFrontRight.Position += offset;
+            rayFrontCenter.Position += offset;
 
-            raySideLeft.Position += offset;
-            raySideRight.Position += offset;
+            rayFrontSideLeft.Position += offset;
+            rayFrontSideRight.Position += offset;
+
+            rayCenterSideLeft.Position += offset;
+            rayCenterSideRight.Position += offset;
         }
 
         /// <summary> Смещение лучей сенсоров вдоль направления </summary>
@@ -216,13 +276,16 @@ namespace Template
             if (sign == 0) return;
 
             direction *= scale * sign;
-        
-            rayLeft.Position += direction;
-            rayRight.Position += direction;
-            rayCenter.Position += direction;
 
-            raySideLeft.Position += direction;
-            raySideRight.Position += direction;
+            rayFrontLeft.Position += direction;
+            rayFrontRight.Position += direction;
+            rayFrontCenter.Position += direction;
+
+            rayFrontSideLeft.Position += direction;
+            rayFrontSideRight.Position += direction;
+
+            rayCenterSideLeft.Position += direction;
+            rayCenterSideRight.Position += direction;
         }
 
         private int signCos = 0;
@@ -340,7 +403,6 @@ namespace Template
             else if (signCosW != 0)
             {
                 //float ang = MyVector.GetAngle(wheelsDirection, _target);
-
                 if (MyVector.CosProduct(wheelsDirection, _target) < 0)
                     TurnWheelsRight(angle);
                 else
@@ -381,12 +443,13 @@ namespace Template
         public float Distance { get => distance; }
 
         
-        public void CheckObstacle(OrientedBoundingBox orientedBoundingBox, float alpha)
+        public void CheckObstacle(ref OrientedBoundingBox orientedBoundingBox, float alpha)
         {
-            // Боковые лучи
-            CheckObstacleSideRays(orientedBoundingBox, alpha);
             // Передние лучи
-            CheckObstacleFrontRays(orientedBoundingBox, alpha);
+            CheckObstacleFrontRays(ref orientedBoundingBox, alpha);
+            // Боковые лучи
+            CheckObstacleSideRays(ref rayFrontSideLeft, ref rayFrontSideRight, ref orientedBoundingBox, minFrontSideDistance, alpha);
+            CheckObstacleSideRays(ref rayCenterSideLeft, ref rayCenterSideRight, ref orientedBoundingBox, minCenterSideDistance, alpha);
         }
 
         private bool _isFrontObstacle = false;
@@ -394,25 +457,28 @@ namespace Template
         public bool IsOnFrontObstacle { get => _isFrontObstacle; }
         
         /// <summary> Минимальное расстояние до препятствия до принятия решения </summary>
-        private float minFrontDistance = 6;
-        private void CheckObstacleFrontRays(OrientedBoundingBox orientedBoundingBox, float alpha)
+        public float minFrontDistance = 6;
+        private void CheckObstacleFrontRays(ref OrientedBoundingBox orientedBoundingBox, float alpha)
         {
             float distanceL, distanceR;
 
-            bool interLeft = MyMath.RayIntersects(ref rayLeft, orientedBoundingBox, out distanceL);
-            bool interRight = MyMath.RayIntersects(ref rayRight, orientedBoundingBox, out distanceR);
-            //bool interCenter = MyMath.RayIntersects(ref rayCenter, orientedBoundingBox, out disntaceC);
+            bool interLeft = MyMath.RayIntersects(ref rayFrontLeft, ref orientedBoundingBox, out distanceL);
+            bool interRight = MyMath.RayIntersects(ref rayFrontRight, ref orientedBoundingBox, out distanceR);
+            //bool interCenter = MyMath.RayIntersects(ref rayFrontCenter, orientedBoundingBox, out disntaceC);
 
             if (interLeft && interRight)
             {
                 if (distanceL <= minFrontDistance || distanceR <= minFrontDistance)
                 {
 
-                    if (distanceL < distanceR)
-                        TurnWheelsRight(alpha); //TurnCar(alpha);
-                    else if (distanceR < distanceL)
-                        TurnWheelsLeft(alpha); //TurnCar(-alpha);
-
+                    if (distanceL < distanceR) {
+                        TurnWheelsRight(alpha);
+                        Brake();
+                    }
+                    else if (distanceR < distanceL) {
+                        TurnWheelsLeft(alpha);
+                        Brake();
+                    }
                     _isFrontObstacle = true;
                 }
                 else
@@ -421,12 +487,15 @@ namespace Template
             else if (interLeft && distanceL <= minFrontDistance)
             {
                 //TurnCar(alpha); // Поворачиваю направо
-                TurnWheelsRight(alpha); _isFrontObstacle = true;
+                TurnWheelsRight(alpha);
+                Brake();
+                _isFrontObstacle = true;
             }
             else if (interRight && distanceR <= minFrontDistance)
             {
-                //TurnCar(-alpha); // Поворачиваю налево
-                TurnWheelsLeft(alpha); _isFrontObstacle = true;
+                TurnWheelsLeft(alpha);
+                Brake();
+                _isFrontObstacle = true;
             }
             else
             {
@@ -436,28 +505,33 @@ namespace Template
         }
 
         /// <summary> Минимальное расстояние до препятствия до принятия решения </summary>
-        private float minSideDistance = 2;
-        private void CheckObstacleSideRays(OrientedBoundingBox orientedBoundingBox, float alpha)
+        private float minFrontSideDistance;
+        private float minCenterSideDistance = 4;
+        
+        private void CheckObstacleSideRays(ref Ray raySideLeft, ref Ray raySideRight, ref OrientedBoundingBox orientedBoundingBox, float minDistance, float alpha)
         {
             float distanceL, distanceR;
 
-            bool interLeft = MyMath.RayIntersects(ref raySideLeft, orientedBoundingBox, out distanceL);
-            bool interRight = MyMath.RayIntersects(ref raySideRight, orientedBoundingBox, out distanceR);
+            bool interLeft = MyMath.RayIntersects(ref raySideLeft, ref orientedBoundingBox, out distanceL);
+            bool interRight = MyMath.RayIntersects(ref raySideRight, ref orientedBoundingBox, out distanceR);
 
             if (!interLeft && !interRight)
             {
                 _isSideObstacle = false;
                 return;
             }
-            else if (interLeft && distanceL <= minSideDistance)
+            else if (interLeft && distanceL <= minDistance)
             {
                 //TurnCar(alpha); // Поворачиваю направо
-                TurnWheelsRight(alpha); _isSideObstacle = true;
+                TurnWheelsRight(alpha);
+                Brake();
+                _isSideObstacle = true;
             }
-            else if (interRight && distanceR <= minSideDistance)
+            else if (interRight && distanceR <= minDistance)
             {
-                //TurnCar(-alpha); // Поворачиваю налево
-                TurnWheelsLeft(alpha); _isSideObstacle = true;
+                TurnWheelsLeft(alpha);
+                Brake();
+                _isSideObstacle = true;
             }
             else
             {

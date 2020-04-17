@@ -120,7 +120,7 @@ namespace Template
         {
             if (!enemy.CollisionCheckPoint(checkPoints[trgIndex])) // Двигать врага к цели пока не столкнется
             {
-                enemy.Accelerate(12);
+                enemy.Accelerate(15);
             }
             //else
             //{

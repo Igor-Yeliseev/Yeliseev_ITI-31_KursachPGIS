@@ -55,6 +55,7 @@ namespace Template
                     scale = Math.Abs(scale * (value / (scale * 60)));
 
                 Acceleration = value - _speed;
+                
                 _speed = value;
             }
         }
@@ -67,7 +68,7 @@ namespace Template
         /// <summary>
         /// Максимальная скорость автомобиля
         /// </summary>
-        public virtual float MaxSpeed { get; set; } = 20.0f;
+        public virtual float MaxSpeed { get; set; } = 30.0f;
         /// <summary> Максимальная скорость задним ходом </summary>
         public float MaxBackSpeed { get; } = -6.0f;
 
@@ -374,7 +375,6 @@ namespace Template
             float projDir = MyVector.DotProduct(v1, _direction) / v1.Length(); // Смещение вдоль направления
             v1 = v1 * projDir; // Получаем проекцию вектора направления
 
-
             if (sign > 0) // Двигаюсь вперед
             {
                 if (MyVector.CosProduct(v1, v2) < 0)
@@ -408,30 +408,33 @@ namespace Template
             if (alpha == 0)
                 return;
 
-            Vector3 oldCenterPos, c2_pos;
+            //Vector3 oldCenterPos, c2_pos;
+            Matrix3x3 matrix = Matrix3x3.RotationY(alpha);
 
             _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
             rotFrontAxel(alpha);
             RotateOBB(alpha); // Поворот баудин боксов
-
+            
             _meshes.ForEach(m =>
             {
                 if (m.Name.Contains("wheel"))
                 {
-                    oldCenterPos = m.Center2Position;
-                    m.MoveTo(0, 0, 0);
                     m.YawBy(alpha);
+                    m.Position = _rearAxle + Vector3.Transform(m.Position - _rearAxle, matrix);
 
-                    c2_pos = m.Position;
-                    m.Position = -m.Center2Position;
-                    m.Center2Position = c2_pos;
+                    //oldCenterPos = m.Center2Position;
+                    //m.MoveTo(0, 0, 0);
+                    //m.YawBy(alpha);
 
-                    m.Position = Vector3.Transform(m.Position, Matrix3x3.RotationY(alpha));
+                    //c2_pos = m.Position;
+                    //m.Position = -m.Center2Position;
+                    //m.Center2Position = c2_pos;
 
-                    //var vect = m.Position - m.Center2Position;
-                    m.MoveTo(oldCenterPos);
-                    m.Position += (m.Position - m.Center2Position);
-                    m.Center2Position = oldCenterPos;
+                    //m.Position = Vector3.Transform(m.Position, Matrix3x3.RotationY(alpha));
+
+                    //m.MoveTo(oldCenterPos);
+                    //m.Position += (m.Position - m.Center2Position);
+                    //m.Center2Position = oldCenterPos;
                 }
                 else m.YawBy(alpha);
             });
@@ -466,40 +469,39 @@ namespace Template
         }
 
         /// <summary> Ускорение автомобиля </summary>
-        public void Accelerate()
+        public virtual void Accelerate()
         {
             Speed = MyMath.Lerp(_speed, MaxSpeed, 0.4f, 0.1f);
         }
 
-        public void Accelerate(float speed)
+        public virtual void Accelerate(float speed)
         {
             Speed = MyMath.Lerp(_speed, speed, 0.4f, 0.1f);
         }
 
         /// <summary> Торможение автомобиля </summary>
-        public void Brake()
+        public virtual void Brake()
         {
-            if (_speed > MaxSpeed / 2)
+            if (_speed > MaxSpeed / 1.4f)
             {
                 Speed = MyMath.Lerp(_speed, 0, 0.7f, 0.1f);
             }
-            else if (_speed > MaxSpeed / 3)
+            else if (_speed > MaxSpeed / 2.5)
             {
                 Speed = MyMath.Lerp(_speed, 0, 1.0f, 0.1f);
             }
             else if (_speed > MaxSpeed / 4)
             {
-                Speed = MyMath.Lerp(_speed, 0, 1.7f, 0.1f);
+                Speed = MyMath.Lerp(_speed, 0, 1.3f, 0.1f);
             }
             else
             {
-                Speed = MyMath.Lerp(_speed, MaxBackSpeed, 2.0f, 0.1f);
+                Speed = MyMath.Lerp(_speed, MaxBackSpeed, 1.3f, 0.1f);
             }
-
         }
 
         /// <summary> Движение по инерции с затуханием скорости </summary>
-        public void MoveInertia()
+        public virtual void MoveInertia()
         {
             Speed = MyMath.Lerp(_speed, 0, 0.3f, 0.2f);
         }

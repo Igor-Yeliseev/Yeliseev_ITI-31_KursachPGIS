@@ -80,8 +80,7 @@ namespace Template
         private Materials _materials;
         private Illumination _illumination;
         
-
-        private MeshObject _cube;
+        
         private MeshObject line1, line2, line3, line4;
         
         /// <summary>List of objects with meshes.</summary>
@@ -152,9 +151,11 @@ namespace Template
             // Initialization order:
             // 1. Render form.
             _renderForm = new RenderForm("SharpDX");
+            _renderForm.ClientSize = new System.Drawing.Size(1024, 768);
             _renderForm.UserResized += RenderFormResizedCallback;
             _renderForm.Activated += RenderFormActivatedCallback;
             _renderForm.Deactivate += RenderFormDeactivateCallback;
+
             // Input controller and time helper.
             _inputController = new InputController(_renderForm);
             _timeHelper = new TimeHelper();
@@ -202,7 +203,6 @@ namespace Template
 
             // 6. Load meshes.
             _meshObjects = new MeshObjects();
-            _cube = loader.LoadMeshObject("Resources\\cube.txt", _materials);
             line1 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[1]);
             line2 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[3]);
             line3 = (MeshObject)line1.Clone(); //line3.RollBy((float)Math.PI / 2);
@@ -221,12 +221,10 @@ namespace Template
             // Машина игрока
             var carMeshes = loader.LoadMeshesFromObject("Resources\\enemyCar.obj", _materials[2]);
             car = new Car(carMeshes);
-            car.MoveBy(new Vector3(-9.0f, 0.0f, 5.0f));
             gameField.SetCar(car);
             // Машина соперника
             var enemyMeshes = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
             enemy = new EnemyCar(enemyMeshes);
-            enemy.MoveBy(new Vector3(-15.0f, 0.0f, 5.0f));
             gameField.SetEnemy(enemy);
 
             // Кубы для тестов
@@ -235,10 +233,8 @@ namespace Template
             box1.MoveBy(new Vector3(0.0f, 1.0f, 0.0f)); mbox1.Material = _materials[1];
             box2 = new Box(mbox2);
             box2.MoveBy(new Vector3(0.0f, 1.0f, 5.0f));
-            //box2.MoveBy(new Vector3(-13.0f, 0.0f, 20.0f));
 
             // Перемещения
-            _cube.MoveBy(new Vector3(0.0f, 9.0f, 0.0f));
             plane.MoveBy(new Vector3(-45.0f, 0.0f, 5.0f));
             cube2.MoveBy(new Vector3(4.0f, 0.0f, 12.0f));
             line2.MoveTo(new Vector3(0, 0, 0));
@@ -249,7 +245,6 @@ namespace Template
             _meshObjects.Add(mbox1);
             _meshObjects.Add(mbox2);
             _meshObjects.Add(mbox3);
-            _meshObjects.Add(_cube);
             _meshObjects.Add(cube2);
             _meshObjects.Add(line1);
             _meshObjects.Add(line2);
@@ -364,13 +359,16 @@ namespace Template
                 RenderFormResizedCallback(this, new EventArgs());
                 //fs = new FileStream("D:/difs.txt", FileMode.OpenOrCreate);
 
-                //target = new Vector3(-14.0f, 0.0f, 40.0f);
-                target = gameField.centerPts[0];
-                line1.MoveTo(target);
-                enemy.Speed = 3;
-                enemy.Speed = 3;
+                car.MoveBy(new Vector3(-30.0f, 0.0f, 13.0f));
+                enemy.MoveBy(new Vector3(-30.0f, 0.0f, -5.0f));
 
-                _character.Position = new Vector3(-3.0f, 6.0f, -3.0f);
+                target = new Vector3(-14.0f, 0.0f, 40.0f);
+                //target = gameField.centerPts[0];
+                line1.MoveTo(target);
+
+                box2.MoveBy(new Vector3(-13.0f, 0.0f, 20.0f));
+
+                _character.Position = new Vector3(-30.0f, 6.0f, -20.0f);
                 //_character.Yaw = -2.3600119f;
                 //_character.Pitch = -0.7657637f;
             }
@@ -457,16 +455,15 @@ namespace Template
                 //enemy.Move();
                 //line3.MoveTo(car.RearAxle);
                 //line4.MoveTo(car.RearAxle + car.CarDirection);
-                //line1.MoveTo(enemy.AABBox.GetCorners()[0]);
-                //line2.MoveTo(enemy.AABBox.GetCorners()[1]);
+                line1.MoveTo(enemy.rayFrontRight.Position);
+                line2.MoveTo(enemy.rayFrontRight.Position + enemy.rayFrontRight.Direction * enemy.minFrontDistance);
 
 
 
-                enemy.CheckObstacle(box2.OBBox, alpha);
-                enemy.Target = target;
-                enemy.CheckWheelsDirOnTarget(alpha);
-                enemy.MoveProperly();
-
+                enemy.CheckObstacle(ref car.OBBox, alpha);
+                //enemy.Target = target;
+                //enemy.CheckWheelsDirOnTarget(alpha);
+                //enemy.MoveProperly();
 
 
 
@@ -486,43 +483,42 @@ namespace Template
 
 
                 // Игровое поле
-                //gameField.MoveEnemyToTargets();
+                gameField.MoveEnemyToTargets();
 
 
 
                 if (_inputController.Num1Pressed)
                 {
-                    
                 }
                 if (_inputController.Num2Pressed)
                 {
-                    
+                    enemy.MoveBy(-enemy.Direction / 2);
                 }
 
 
                 if (_inputController.Num4Pressed)
                 {
                     //box1.RotateY(-alpha);
-                    enemy.TurnCar(-alpha);
+                    enemy.TurnWheelsLeft(alpha);
                 }
                 if (_inputController.Num6Pressed)
                 {
                     //box1.RotateY(alpha);
-                    enemy.TurnCar(alpha);
+                    enemy.TurnWheelsRight(alpha);
                 }
                 if (_inputController.Num8Pressed)
                 {
                     //box1.MoveForward();
-                    enemy.Speed = 3;
+                    enemy.Accelerate();
                 }
                 else if (_inputController.Num5Pressed)
                 {
                     //box1.MoveBackward();
-                    enemy.Speed = -3;
+                    enemy.Brake();
                 }
                 else
                     box1.moveSign = 0;
-
+                
 
                 if (_inputController.Num7Pressed)
                 {
@@ -581,8 +577,6 @@ namespace Template
             //float angle = _timeHelper.Time * 2.0f * (float)Math.PI * 0.25f; // Frequency = 0.25 Hz
             //_cube.Pitch = angle;
 
-            //Matrix worldMatrix;
-
             // Render 3D objects.
             for (int i = 0; i <= _meshObjects.Count - 1; i++)
             {
@@ -593,9 +587,6 @@ namespace Template
                 MeshObject meshObject = _meshObjects[i];
                 meshObject.Render(_viewMatrix, _projectionMatrix);
             }
-            //cube2
-            float time = _timeHelper.Time;
-            _cube.Render(_viewMatrix, _projectionMatrix);
 
             RenderHUD();
 

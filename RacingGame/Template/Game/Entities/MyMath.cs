@@ -64,7 +64,7 @@ namespace Template
         /// <param name="OBBox"> Ориентированный бокс</param>
         /// <param name="point"> Точка пересечения (SharpDX.Vector3.Zero если нет пересечения)</param>
         /// <returns></returns>
-        public static bool RayIntersects(ref Ray ray, OrientedBoundingBox OBBox, out Vector3 point)
+        public static bool RayIntersects(ref Ray ray, ref OrientedBoundingBox OBBox, out Vector3 point)
         {
             return OBBox.Intersects(ref ray, out point);
         }
@@ -76,7 +76,7 @@ namespace Template
         /// <param name="OBBox"> Ориентированный бокс</param>
         /// <param name="distance"> Расстояние между точкой пересечения и позицией луча</param>
         /// <returns></returns>
-        public static bool RayIntersects(ref Ray ray, OrientedBoundingBox OBBox, out float distance)
+        public static bool RayIntersects(ref Ray ray, ref OrientedBoundingBox OBBox, out float distance)
         {
             distance = -1;
             Vector3 point;
