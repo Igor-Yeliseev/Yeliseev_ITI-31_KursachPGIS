@@ -139,11 +139,7 @@ namespace Template
 
             GoToTarget();
         }
-
-        public void StopEnemy()
-        {
-            enemy.Speed = MyMath.Lerp(enemy.Speed, 0, 0.6f, 0.2f);
-        }                                          
+                                        
         
         /// <summary> Поворот колес врага в сторону цели на указаный угол </summary>
         /// <param name="angle"> Угол</param>

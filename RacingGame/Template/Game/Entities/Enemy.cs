@@ -1,9 +1,6 @@
 ﻿using SharpDX;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Template
 {
@@ -116,9 +113,7 @@ namespace Template
             rayCenSideRhtToRearAxle = rayCenterSideRPos - _rearAxle;
             rayCenterSideLeft = new Ray(rayCenterSideLPos, Vector3.Transform(_direction, Matrix3x3.RotationY(-(float)Math.PI / 2)));
             rayCenterSideRight = new Ray(rayCenterSideRPos, Vector3.Transform(_direction, Matrix3x3.RotationY((float)Math.PI / 2)));
-
-            //Target = new Vector3(0.1f, 0.0f, -0.9f);
-            //float w = MyVector.GetAngle(_direction, _target) * 180 / (float)Math.PI;
+            
         }
         
         public override void TurnWheelsLeft(float alpha)
@@ -442,7 +437,11 @@ namespace Template
         /// <summary> Дистанция до объекта </summary>
         public float Distance { get => distance; }
 
-        
+        /// <summary>
+        /// Проверить лучи на предмет опасного приближения
+        /// </summary>
+        /// <param name="orientedBoundingBox"></param>
+        /// <param name="alpha"></param>
         public void CheckObstacle(ref OrientedBoundingBox orientedBoundingBox, float alpha)
         {
             // Передние лучи
@@ -454,9 +453,8 @@ namespace Template
 
         private bool _isFrontObstacle = false;
         private bool _isSideObstacle = false;
-        public bool IsOnFrontObstacle { get => _isFrontObstacle; }
         
-        /// <summary> Минимальное расстояние до препятствия до принятия решения </summary>
+        /// <summary> Минимальное расстояние от препятствия до передних лучей </summary>
         public float minFrontDistance = 6;
         private void CheckObstacleFrontRays(ref OrientedBoundingBox orientedBoundingBox, float alpha)
         {
@@ -504,8 +502,9 @@ namespace Template
             }
         }
 
-        /// <summary> Минимальное расстояние до препятствия до принятия решения </summary>
+        /// <summary> Минимальное расстояние от препятствия до передних боковых </summary>
         private float minFrontSideDistance;
+        /// <summary> Минимальное расстояние от препятствия до центральных боковых </summary>
         private float minCenterSideDistance = 4;
         
         private void CheckObstacleSideRays(ref Ray raySideLeft, ref Ray raySideRight, ref OrientedBoundingBox orientedBoundingBox, float minDistance, float alpha)

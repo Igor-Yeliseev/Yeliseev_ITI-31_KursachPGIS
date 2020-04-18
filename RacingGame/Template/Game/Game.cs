@@ -74,6 +74,7 @@ namespace Template
 
         /// <summary>DirectX 2D graphic object.</summary>
         private DirectX2DGraphics _directX2DGraphics;
+        private HUDRacing hudRacing;
 
         private SamplerStates _samplerStates;
         private Textures _textures;
@@ -155,18 +156,19 @@ namespace Template
             _renderForm.UserResized += RenderFormResizedCallback;
             _renderForm.Activated += RenderFormActivatedCallback;
             _renderForm.Deactivate += RenderFormDeactivateCallback;
-
             // Input controller and time helper.
             _inputController = new InputController(_renderForm);
             _timeHelper = new TimeHelper();
             _random = new Random();
             // 2. DirectX 3D.
-            _directX3DGraphics = new DirectX3DGraphics(_renderForm) { RenderMode = DirectX3DGraphics.RenderModes.Wireframe };
+            _directX3DGraphics = new DirectX3DGraphics(_renderForm) { RenderMode = DirectX3DGraphics.RenderModes.Wireframe};
             // 3. Renderer.
             _renderer = new Renderer(_directX3DGraphics);
             _renderer.CreateConstantBuffers();
             // 4. DirectX 2D.
             _directX2DGraphics = new DirectX2DGraphics(_directX3DGraphics);
+            // Мой худ
+            hudRacing = new HUDRacing(_directX2DGraphics, _inputController);
             // 5. Load materials
             Loader loader = new Loader(_directX3DGraphics, _directX2DGraphics, _renderer, _directX2DGraphics.ImagingFactory);
             _samplerStates = new SamplerStates(_directX3DGraphics);
@@ -257,6 +259,7 @@ namespace Template
             car.AddToMeshes(_meshObjects);
             // 6. Load HUD resources into DirectX 2D object.
             InitHUDResources();
+            hudRacing.InitPicsIndicies();
 
             loader = null;
 
@@ -328,6 +331,8 @@ namespace Template
             _camera.Aspect = _renderForm.ClientSize.Width / (float)_renderForm.ClientSize.Height;
             _angularCameraRotationStep = _camera.FOVY / _renderForm.ClientSize.Height;
             _projectionMatrix = _camera.GetProjectionMatrix();
+            hudRacing.GetRectSides();
+            hudRacing.GetBitmaps();
         }
 
         float ANGLE;
@@ -341,7 +346,6 @@ namespace Template
         /// <summary>Callback for RenderLoop.Run. Handle input and render scene.</summary>
         public void RenderLoopCallback()
         {
-
             _timeHelper.Update();
             _inputController.UpdateKeyboardState();
             _inputController.UpdateMouseState();
@@ -355,8 +359,11 @@ namespace Template
 
             if (_firstRun)
             {
-                _firstRun = false; alpha = 0;
+                _firstRun = false;
+                alpha = 0;
                 RenderFormResizedCallback(this, new EventArgs());
+                hudRacing.Car = car;
+
                 //fs = new FileStream("D:/difs.txt", FileMode.OpenOrCreate);
 
                 car.MoveBy(new Vector3(-30.0f, 0.0f, 13.0f));
@@ -418,40 +425,39 @@ namespace Template
                 {
                     //anims.IsEnemyTurned = false;
 
-                    var verts = enemy.AABBox.GetCorners();
-                    switch (ct)
-                    {
-                        case 0:
-                            line2.MoveTo(verts[0]);
-                            break;
-                        case 1:
-                            line2.MoveTo(verts[1]);
-                            break;
-                        case 2:
-                            line2.MoveTo(verts[2]);
-                            break;
-                        case 3:
-                            line2.MoveTo(verts[3]);
-                            break;
-                        case 4:
-                            line2.MoveTo(verts[4]);
-                            break;
-                        case 5:
-                            line2.MoveTo(verts[5]);
-                            break;
-                        case 6:
-                            line2.MoveTo(verts[6]);
-                            break;
-                        case 7:
-                            line2.MoveTo(verts[7]);
-                            break;
-                    }
-                    ct++;
+                    //var verts = enemy.AABBox.GetCorners();
+                    //switch (ct)
+                    //{
+                    //    case 0:
+                    //        line2.MoveTo(verts[0]);
+                    //        break;
+                    //    case 1:
+                    //        line2.MoveTo(verts[1]);
+                    //        break;
+                    //    case 2:
+                    //        line2.MoveTo(verts[2]);
+                    //        break;
+                    //    case 3:
+                    //        line2.MoveTo(verts[3]);
+                    //        break;
+                    //    case 4:
+                    //        line2.MoveTo(verts[4]);
+                    //        break;
+                    //    case 5:
+                    //        line2.MoveTo(verts[5]);
+                    //        break;
+                    //    case 6:
+                    //        line2.MoveTo(verts[6]);
+                    //        break;
+                    //    case 7:
+                    //        line2.MoveTo(verts[7]);
+                    //        break;
+                    //}
+                    //ct++;
                 }
 
 
                 // Вражеская машина
-                //enemy.CheckObstacle(gameField.checkPoints[1].OBBox, alpha);
                 //enemy.Move();
                 //line3.MoveTo(car.RearAxle);
                 //line4.MoveTo(car.RearAxle + car.CarDirection);
@@ -460,7 +466,7 @@ namespace Template
 
 
 
-                enemy.CheckObstacle(ref car.OBBox, alpha);
+                //enemy.CheckObstacle(ref car.OBBox, alpha);
                 //enemy.Target = target;
                 //enemy.CheckWheelsDirOnTarget(alpha);
                 //enemy.MoveProperly();
@@ -483,8 +489,7 @@ namespace Template
 
 
                 // Игровое поле
-                gameField.MoveEnemyToTargets();
-
+                // gameField.MoveEnemyToTargets();
 
 
                 if (_inputController.Num1Pressed)
@@ -492,7 +497,6 @@ namespace Template
                 }
                 if (_inputController.Num2Pressed)
                 {
-                    enemy.MoveBy(-enemy.Direction / 2);
                 }
 
 
@@ -532,7 +536,8 @@ namespace Template
                     //p.X += alpha;
                     //box1.Position = p;                    
                 }
-                
+
+                hudRacing.Update();
 
                 if (_inputController.Esc) { _renderForm.Close(); }                               // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 // Toggle help by F1.
@@ -618,10 +623,14 @@ namespace Template
             float armorWidthInDIP = _directX2DGraphics.Bitmaps[_HUDResources.armorIconIndex].Size.Width;
             float armorHeightInDIP = _directX2DGraphics.Bitmaps[_HUDResources.armorIconIndex].Size.Height;
             Matrix3x2 armorTransformMatrix = Matrix3x2.Translation(new Vector2(_directX2DGraphics.RenderTargetClientRectangle.Right - armorWidthInDIP - 1, 1));
+
             _directX2DGraphics.BeginDraw();
-            _directX2DGraphics.DrawText(text, _HUDResources.textFPSTextFormatIndex,
-                _directX2DGraphics.RenderTargetClientRectangle, _HUDResources.textFPSBrushIndex + 1); // 0 - Желтый, 1 - Красный, 2 - Черный
+            _directX2DGraphics.DrawText(text, _HUDResources.textFPSTextFormatIndex, _directX2DGraphics.RenderTargetClientRectangle, _HUDResources.textFPSBrushIndex + 1); // 0 - Желтый, 1 - Красный, 2 - Черный
+
             _directX2DGraphics.DrawBitmap(_HUDResources.armorIconIndex, armorTransformMatrix, 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+
+            hudRacing.DrawBitmaps();
+
             _directX2DGraphics.EndDraw();
         }
 

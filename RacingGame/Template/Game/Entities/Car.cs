@@ -496,7 +496,8 @@ namespace Template
             }
             else
             {
-                Speed = MyMath.Lerp(_speed, MaxBackSpeed, 1.3f, 0.1f);
+                Speed = MyMath.Lerp(_speed, 0, 1.7f, 0.1f);
+                //Speed = MyMath.Lerp(_speed, MaxBackSpeed, 1.3f, 0.1f);
             }
         }
 
