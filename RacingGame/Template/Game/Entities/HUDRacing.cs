@@ -23,16 +23,28 @@ namespace Template
         DirectX2DGraphics directX2DGraphics;
         InputController inputController;
 
+        /// <summary Спидометр </summary>
         Icon speedometer;
-        
+        /// <summary> Стрелка </summary>
         Icon arrowSpeed;
         float angle = 3.1415926535897931f / 180;
         float oldAngle = 0;
         float maxAngle = (float)Math.PI;
 
-        Icon lapsIcon;
+        /// <summary> Круги </summary>
+        Icon lapIcon;
+        Icon ammoIcon;
+
+        /// <summary> Цифры </summary>
         Icon[] numbers;
         int numbIndex = 0;
+        Icon slash;
+
+        Icon healthBar;
+        Icon barFrame;
+        /// <summary> Величина отнятия здоровья (10% от макс здоровья)</summary>
+        float hitValue;
+        float widthHeath;
 
         private Car car;
         public Car Car
@@ -54,11 +66,23 @@ namespace Template
 
         public void Update()
         {
-            if (inputController.Space)
-            {
-                numbIndex++;
-                if (numbIndex > 9) numbIndex = 0;
-            }
+            //if (inputController.Space)
+            //{
+            //    numbIndex++;
+            //    if (numbIndex > 9) numbIndex = 0;
+
+            //    if(widthHeath > 0)
+            //    {
+            //        float scale = hitValue / widthHeath;
+            //        widthHeath -= scale * widthHeath;
+            //        healthBar.matrix *= Matrix3x2.Scaling(1 - scale, 1.0f, new Vector2(50, lapIcon.bitmap.Size.Height));
+            //    }
+
+            //    //float scale = hitValue / widthHeath;
+            //    //widthHeath += scale * widthHeath;
+            //    //healthBar.matrix *= Matrix3x2.Scaling(1 + scale, 1.0f, new Vector2(50, lapsIcon.bitmap.Size.Height));
+
+            //}
 
             if (inputController.UpPressed)
             {
@@ -110,30 +134,39 @@ namespace Template
         {
             speedometer.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\speedometer.png");
             arrowSpeed.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\arrow.png");
-            lapsIcon.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\Laps.png");
+            lapIcon.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\lap.png");
+            healthBar.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\HealthBar.png");
+            barFrame.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\barFrame.png");
+            slash.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\slash.png");
+            ammoIcon.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\ammo.png");
 
             for (int i = 0; i < numbers.Length; i++)
             {
                 numbers[i].index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\number" + i + ".png");
                 numbers[i].matrix = Matrix3x2.Identity;
             }
-
-            //number.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\number.png");
-
-            speedometer.matrix = arrowSpeed.matrix = lapsIcon.matrix = Matrix3x2.Identity;
+            
+            speedometer.matrix = arrowSpeed.matrix = lapIcon.matrix = healthBar.matrix = 
+                barFrame.matrix = slash.matrix = ammoIcon.matrix = Matrix3x2.Identity;
         }
 
         public void GetBitmaps()
         {
             speedometer.bitmap = directX2DGraphics.Bitmaps[speedometer.index];
-            arrowSpeed.bitmap = directX2DGraphics.Bitmaps[arrowSpeed.index];
-            lapsIcon.bitmap = directX2DGraphics.Bitmaps[lapsIcon.index];
+            lapIcon.bitmap = directX2DGraphics.Bitmaps[lapIcon.index];
+            healthBar.bitmap = directX2DGraphics.Bitmaps[healthBar.index];
+            slash.bitmap = directX2DGraphics.Bitmaps[slash.index];
+            ammoIcon.bitmap = directX2DGraphics.Bitmaps[ammoIcon.index];
+            barFrame.bitmap = directX2DGraphics.Bitmaps[barFrame.index];
+            widthHeath = healthBar.bitmap.Size.Width;
+            hitValue = widthHeath * 0.1f;
 
             for (int i = 0; i < numbers.Length; i++)
             {
                 numbers[i].bitmap = directX2DGraphics.Bitmaps[numbers[i].index];
             }
 
+            arrowSpeed.bitmap = directX2DGraphics.Bitmaps[arrowSpeed.index];
         }
 
         private Matrix3x2 GetTransformMatrix(ref Icon picture)
@@ -156,9 +189,24 @@ namespace Template
         {
             directX2DGraphics.DrawBitmap(speedometer.index, GetTransformMatrix(ref speedometer), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
             directX2DGraphics.DrawBitmap(arrowSpeed.index, GetTransformMatrix(ref arrowSpeed), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
-            directX2DGraphics.DrawBitmap(lapsIcon.index, GetTransformMatrix(ref lapsIcon), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
-            directX2DGraphics.DrawBitmap(numbers[numbIndex].index, GetTransformMatrix(ref numbers[numbIndex], 500, Bottom - numbers[numbIndex].bitmap.Size.Height), 1.0f, 
-                                         SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(lapIcon.index, GetTransformMatrix(ref lapIcon, 50, 0), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(numbers[numbIndex].index, GetTransformMatrix(ref numbers[numbIndex], 50 + lapIcon.bitmap.Size.Width, 0),
+                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+
+            float X = lapIcon.bitmap.Size.Width + numbers[numbIndex].bitmap.Size.Width;
+            directX2DGraphics.DrawBitmap(slash.index, GetTransformMatrix(ref slash, X, 0), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+            
+            directX2DGraphics.DrawBitmap(numbers[5].index, GetTransformMatrix(ref numbers[5], X + 60, 0),
+                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+
+            float Y = lapIcon.bitmap.Size.Height;
+            directX2DGraphics.DrawBitmap(healthBar.index, GetTransformMatrix(ref healthBar, 50, Y),
+                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(barFrame.index, GetTransformMatrix(ref barFrame, 50-6, Y - 6),
+                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+
+            directX2DGraphics.DrawBitmap(ammoIcon.index, GetTransformMatrix(ref ammoIcon, 50, Y + 20),
+                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
         }
 
     }

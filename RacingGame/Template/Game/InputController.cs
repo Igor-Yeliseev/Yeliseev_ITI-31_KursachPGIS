@@ -285,6 +285,7 @@ namespace Template
 
             // Space (typicaly jump) - by key down.
             _space = ProcessKeyPressTriggerByKeyDown(Key.Space, ref _spacePreviousPressed, ref _spaceCurrentPressed);
+
         }
 
         /// <summary>Update keyboard state.</summary>

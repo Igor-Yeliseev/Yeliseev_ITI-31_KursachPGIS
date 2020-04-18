@@ -152,7 +152,7 @@ namespace Template
             // Initialization order:
             // 1. Render form.
             _renderForm = new RenderForm("SharpDX");
-            _renderForm.ClientSize = new System.Drawing.Size(1024, 768);
+            _renderForm.ClientSize = new System.Drawing.Size(1600, 900);
             _renderForm.UserResized += RenderFormResizedCallback;
             _renderForm.Activated += RenderFormActivatedCallback;
             _renderForm.Deactivate += RenderFormDeactivateCallback;
@@ -338,7 +338,7 @@ namespace Template
         float ANGLE;
         float alpha;
         string screen = "";
-        int ct = 0;
+        int ct = 0, ch = 0;
         //FileStream fs;
 
         Vector3 target;
@@ -376,8 +376,6 @@ namespace Template
                 box2.MoveBy(new Vector3(-13.0f, 0.0f, 20.0f));
 
                 _character.Position = new Vector3(-30.0f, 6.0f, -20.0f);
-                //_character.Yaw = -2.3600119f;
-                //_character.Pitch = -0.7657637f;
             }
 
             if (_inputController.KeyboardUpdated)
@@ -425,35 +423,36 @@ namespace Template
                 {
                     //anims.IsEnemyTurned = false;
 
-                    //var verts = enemy.AABBox.GetCorners();
-                    //switch (ct)
-                    //{
-                    //    case 0:
-                    //        line2.MoveTo(verts[0]);
-                    //        break;
-                    //    case 1:
-                    //        line2.MoveTo(verts[1]);
-                    //        break;
-                    //    case 2:
-                    //        line2.MoveTo(verts[2]);
-                    //        break;
-                    //    case 3:
-                    //        line2.MoveTo(verts[3]);
-                    //        break;
-                    //    case 4:
-                    //        line2.MoveTo(verts[4]);
-                    //        break;
-                    //    case 5:
-                    //        line2.MoveTo(verts[5]);
-                    //        break;
-                    //    case 6:
-                    //        line2.MoveTo(verts[6]);
-                    //        break;
-                    //    case 7:
-                    //        line2.MoveTo(verts[7]);
-                    //        break;
-                    //}
-                    //ct++;
+                    var verts = gameField.checkPoints[ch].OBBox.GetCorners();
+                    switch (ct)
+                    {
+                        case 0:
+                            line2.MoveTo(verts[0]);
+                            break;
+                        case 1:
+                            line2.MoveTo(verts[1]);
+                            break;
+                        case 2:
+                            line2.MoveTo(verts[2]);
+                            break;
+                        case 3:
+                            line2.MoveTo(verts[3]);
+                            break;
+                        case 4:
+                            line2.MoveTo(verts[4]);
+                            break;
+                        case 5:
+                            line2.MoveTo(verts[5]);
+                            break;
+                        case 6:
+                            line2.MoveTo(verts[6]);
+                            break;
+                        case 7:
+                            line2.MoveTo(verts[7]);
+                            break;
+                    }
+                    ct++;
+                    if(ct > 3) { ch++; ct = 0; }
                 }
 
 
@@ -461,8 +460,8 @@ namespace Template
                 //enemy.Move();
                 //line3.MoveTo(car.RearAxle);
                 //line4.MoveTo(car.RearAxle + car.CarDirection);
-                line1.MoveTo(enemy.rayFrontRight.Position);
-                line2.MoveTo(enemy.rayFrontRight.Position + enemy.rayFrontRight.Direction * enemy.minFrontDistance);
+                //line1.MoveTo(enemy.rayFrontRight.Position);
+                //line2.MoveTo(enemy.rayFrontRight.Position + enemy.rayFrontRight.Direction * enemy.minFrontDistance);
 
 
 
@@ -489,7 +488,7 @@ namespace Template
 
 
                 // Игровое поле
-                // gameField.MoveEnemyToTargets();
+                //gameField.MoveEnemyToTargets();
 
 
                 if (_inputController.Num1Pressed)

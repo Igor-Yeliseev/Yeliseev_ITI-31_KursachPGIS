@@ -6,7 +6,7 @@ using Template.Graphics;
 
 namespace Template
 {
-    class CheckPoint : PhysicalObject, IComparable<CheckPoint>
+    class CheckPoint : PhysicalObject
     {
         public string Name { get; }
         private int index;
@@ -69,16 +69,6 @@ namespace Template
         public override bool CollisionTest(PhysicalObject obj)
         {
             return false;
-        }
-
-        public int CompareTo(CheckPoint obj)
-        {
-            if (index < obj.index)
-                return -1;
-            else if (index > obj.index)
-                return 1;
-            else
-                return 0;
         }
 
         public override void CollisionResponce(PhysicalObject obj)

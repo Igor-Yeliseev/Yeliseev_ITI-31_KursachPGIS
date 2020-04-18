@@ -50,8 +50,7 @@ namespace Template
                 var v = meshes[i].CenterPosition;
                 centerPts[i] = new Vector3(v.X, 0, v.Z);
             }
-
-            Array.Sort(checkPoints);
+            
         }
 
         public void SetCar(Car car)
