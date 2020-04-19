@@ -10,7 +10,7 @@ namespace Template
 {
     class HUDRacing
     {
-        struct Icon
+        public struct Icon
         {
             public Bitmap bitmap;
             public int index;
@@ -36,8 +36,8 @@ namespace Template
         Icon ammoIcon;
 
         /// <summary> Цифры </summary>
-        Icon[] numbers;
-        int numbIndex = 0;
+        public Icon[] numbers;
+        public int numbIndex = 0;
         Icon slash;
 
         Icon healthBar;

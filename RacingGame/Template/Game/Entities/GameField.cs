@@ -25,17 +25,20 @@ namespace Template
             }
         }
 
-        private int lapIndex = 0;
+        private int chptIndex = 0;
 
         private TimeHelper timeHelper;
         private Car car;
         private EnemyCar enemy;
         Animations animations;
 
-        public GameField(TimeHelper timeHelper, Material material)
+        HUDRacing hud;
+
+        public GameField(TimeHelper timeHelper, HUDRacing hud, Material material)
         {
             this.timeHelper = timeHelper;
             this.material = material;
+            this.hud = hud;
             animations = new Animations();
         }
 
@@ -70,13 +73,18 @@ namespace Template
         /// <returns></returns>
         public bool CheckRaceFinish()
         {
-            if (lapIndex < checkPoints.Length && (car.CollisionCheckPoint(checkPoints[lapIndex])))
+            if (chptIndex < checkPoints.Length && (car.CollisionCheckPoint(checkPoints[chptIndex])))
             {
-                checkPoints[lapIndex].SetMaterial(material);
-                lapIndex++;
+                checkPoints[chptIndex].SetMaterial(material);
+                chptIndex++;
+                if (chptIndex == checkPoints.Length)
+                {
+                    hud.numbIndex++;
+                    chptIndex = 0;
+                }
             }
 
-            return (lapIndex == lapsCount - 1) ? true : false;
+            return false;
         }
         
         /// <summary> Рандом приращения координаты от центра чекпоинта </summary>
@@ -138,24 +146,7 @@ namespace Template
 
             GoToTarget();
         }
-                                        
         
-        /// <summary> Поворот колес врага в сторону цели на указаный угол </summary>
-        /// <param name="angle"> Угол</param>
-        //private void TurnEnemyWheelsToTarget(float angle)
-        //{
-        //    enemy.TurnWheelsToTarget(angle);
-
-        //    if (enemy.IsColliedCheckPts && enemy.IsWheelsOnTarget) // Менять цель
-        //    {
-        //        enemy.IsColliedCheckPts = false;
-        //        trgIndex++;
-
-        //        if (trgIndex == centerPts.Length)
-        //            trgIndex = 0;
-        //        enemy.Target = centerPts[trgIndex];
-        //    }
-        //}
 
     }
 }

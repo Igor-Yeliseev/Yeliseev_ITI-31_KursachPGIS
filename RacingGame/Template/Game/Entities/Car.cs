@@ -12,7 +12,7 @@ namespace Template
     class Car : PhysicalObject
     {
         /// <summary> Переднее левое колесо </summary>
-        protected MeshObject wheel1;
+        public MeshObject wheel1;
         /// <summary> Переднее правое колесо </summary>
         protected MeshObject wheel2;
 
@@ -108,7 +108,7 @@ namespace Template
             }
         }
 
-        protected int turnCount = 0;
+        public int turnCount = 0;
         public int itrs = 54;
 
 
@@ -160,11 +160,6 @@ namespace Template
                 var mesh = _meshes.Where(m => m.Name == name);
                 return mesh.FirstOrDefault();
             }
-        }
-
-        public void AddToMeshes(MeshObjects meshObjects)
-        {
-            _meshes.ForEach(m => meshObjects.Add(m));
         }
 
         private void TurnLeft(float alpha)
@@ -227,7 +222,7 @@ namespace Template
 
         public virtual void TurnWheelsLeft(float alpha)
         {
-            if (turnCount >= -itrs)
+            if (turnCount > -itrs)
             {
                 _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(-alpha));
                 wheel1.YawBy(-alpha);
@@ -238,7 +233,7 @@ namespace Template
 
         public virtual void TurnWheelsRight(float alpha)
         {
-            if (turnCount <= itrs)
+            if (turnCount < itrs)
             {
                 _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
                 wheel1.YawBy(alpha);
@@ -340,7 +335,6 @@ namespace Template
         /// </summary>
         public void MoveProperly()
         {
-            //int sign = Sign(_speed) ;
             int sign = Math.Sign(_speed);
             if (_speed == 0) return;
 

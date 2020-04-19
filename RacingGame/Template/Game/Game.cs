@@ -197,32 +197,36 @@ namespace Template
             _textures[_textures.Count - 1].SamplerState = new SamplerState(_directX3DGraphics.Device, samplerStateDescription);
 
             _textures.Add(loader.LoadTextureFromFile("Resources\\delorean.png", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\mustang.png", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\corvette.png", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\camaro.png", true, _samplerStates.Textured));
             _materials = loader.LoadMaterials("Resources\\materials.txt", _textures);
 
             anims = new Animations();
 
-            gameField = new GameField(_timeHelper, _materials[2]);
+            gameField = new GameField(_timeHelper, hudRacing, _materials[2]);
 
             // 6. Load meshes.
             _meshObjects = new MeshObjects();
             line1 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[1]);
             line2 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[3]);
-            line3 = (MeshObject)line1.Clone(); //line3.RollBy((float)Math.PI / 2);
+            line3 = (MeshObject)line1.Clone();
             line4 = (MeshObject)line2.Clone();
 
             var mbox1 = loader.LoadMeshObject("Resources\\box.txt", _materials);
             var mbox2 = loader.LoadMeshObject("Resources\\box.txt", _materials);
             var mbox3 = (MeshObject)mbox1.Clone(); mbox3.MoveBy(new Vector3(-50.0f, 1.0f, 50.0f));
 
-            var plane = loader.LoadMeshFromObject("Resources\\plane.obj", _materials[0]);
-            var road = loader.LoadMeshFromObject("Resources\\road.obj", _materials[7]);
+            var mustang = loader.LoadMeshesFromObject("Resources\\mustang.obj", _materials[6]);
+            var corvette = loader.LoadMeshesFromObject("Resources\\corvette.obj", _materials[7]);
+            var camaro = loader.LoadMeshesFromObject("Resources\\camaro.obj", _materials[9]);
+            var road = loader.LoadMeshFromObject("Resources\\road.obj", _materials[8]);
             var cube2 = loader.LoadMeshFromObject("Resources\\box.obj", _materials[0]);
             // Чекпоинты
             var checkPointMeshes = loader.LoadMeshesFromObject("Resources\\checkPoints.obj", _materials[1]);
             gameField.SetCheckPoints(checkPointMeshes);
             // Машина игрока
-            var carMeshes = loader.LoadMeshesFromObject("Resources\\enemyCar.obj", _materials[2]);
-            car = new Car(carMeshes);
+            car = new Car(mustang);
             gameField.SetCar(car);
             // Машина соперника
             var enemyMeshes = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
@@ -237,10 +241,10 @@ namespace Template
             box2.MoveBy(new Vector3(0.0f, 1.0f, 5.0f));
 
             // Перемещения
-            plane.MoveBy(new Vector3(-45.0f, 0.0f, 5.0f));
+            corvette.ForEach(m => m.MoveBy(new Vector3(-45.0f, 0.0f, 7.0f)));
             cube2.MoveBy(new Vector3(4.0f, 0.0f, 12.0f));
             line2.MoveTo(new Vector3(0, 0, 0));
-            line1.MoveTo(carMeshes[5].CenterPosition);
+            line1.MoveTo(camaro.First().CenterPosition);
             
 
             // Добавление мешей
@@ -252,11 +256,14 @@ namespace Template
             _meshObjects.Add(line2);
             _meshObjects.Add(line3);
             _meshObjects.Add(line4);
-            _meshObjects.Add(plane);
+
+            mustang.ForEach(m => _meshObjects.Add(m));
+            corvette.ForEach(m => _meshObjects.Add(m));
+            camaro.ForEach(m => _meshObjects.Add(m));
+
             _meshObjects.Add(road);
             enemyMeshes.ForEach(m => _meshObjects.Add(m));
             checkPointMeshes.ForEach(m => _meshObjects.Add(m));
-            car.AddToMeshes(_meshObjects);
             // 6. Load HUD resources into DirectX 2D object.
             InitHUDResources();
             hudRacing.InitPicsIndicies();
@@ -336,7 +343,9 @@ namespace Template
         }
 
         float ANGLE;
+        float deltaTime = 0;
         float alpha;
+        float whlAngle;
         string screen = "";
         int ct = 0, ch = 0;
         //FileStream fs;
@@ -355,17 +364,15 @@ namespace Template
                 _character.YawBy(_inputController.MouseRelativePositionX * _angularCameraRotationStep); // вправо влево
             }
 
-            alpha = 2.0f * (float)Math.PI * 0.25f * _timeHelper.DeltaT;
+            alpha = 2.0f * (float)Math.PI * 0.25f * deltaTime;
 
             if (_firstRun)
             {
                 _firstRun = false;
-                alpha = 0;
+                deltaTime = _timeHelper.DeltaT / 60;
+
                 RenderFormResizedCallback(this, new EventArgs());
                 hudRacing.Car = car;
-
-                //fs = new FileStream("D:/difs.txt", FileMode.OpenOrCreate);
-
                 car.MoveBy(new Vector3(-30.0f, 0.0f, 13.0f));
                 enemy.MoveBy(new Vector3(-30.0f, 0.0f, -5.0f));
 
@@ -410,12 +417,12 @@ namespace Template
 
                 if (_inputController.LeftPressed)
                 {
-                    anims.IsWheelsAnimate = false;
+                    //anims.IsWheelsAnimate = false;
                     car.TurnWheelsLeft(alpha);
                 }
                 if (_inputController.RightPressed)
                 {
-                    anims.IsWheelsAnimate = false;
+                    //anims.IsWheelsAnimate = false;
                     car.TurnWheelsRight(alpha);
                 }
                 
@@ -423,36 +430,39 @@ namespace Template
                 {
                     //anims.IsEnemyTurned = false;
 
-                    var verts = gameField.checkPoints[ch].OBBox.GetCorners();
-                    switch (ct)
-                    {
-                        case 0:
-                            line2.MoveTo(verts[0]);
-                            break;
-                        case 1:
-                            line2.MoveTo(verts[1]);
-                            break;
-                        case 2:
-                            line2.MoveTo(verts[2]);
-                            break;
-                        case 3:
-                            line2.MoveTo(verts[3]);
-                            break;
-                        case 4:
-                            line2.MoveTo(verts[4]);
-                            break;
-                        case 5:
-                            line2.MoveTo(verts[5]);
-                            break;
-                        case 6:
-                            line2.MoveTo(verts[6]);
-                            break;
-                        case 7:
-                            line2.MoveTo(verts[7]);
-                            break;
-                    }
-                    ct++;
-                    if(ct > 3) { ch++; ct = 0; }
+                    line1.MoveTo(car.wheel1.Position);
+                    car.BackWheels();
+
+                    //var verts = gameField.checkPoints[ch].OBBox.GetCorners();
+                    //switch (ct)
+                    //{
+                    //    case 0:
+                    //        line2.MoveTo(verts[0]);
+                    //        break;
+                    //    case 1:
+                    //        line2.MoveTo(verts[1]);
+                    //        break;
+                    //    case 2:
+                    //        line2.MoveTo(verts[2]);
+                    //        break;
+                    //    case 3:
+                    //        line2.MoveTo(verts[3]);
+                    //        break;
+                    //    case 4:
+                    //        line2.MoveTo(verts[4]);
+                    //        break;
+                    //    case 5:
+                    //        line2.MoveTo(verts[5]);
+                    //        break;
+                    //    case 6:
+                    //        line2.MoveTo(verts[6]);
+                    //        break;
+                    //    case 7:
+                    //        line2.MoveTo(verts[7]);
+                    //        break;
+                    //}
+                    //ct++;
+                    //if(ct > 3) { ch++; ct = 0; }
                 }
 
 
@@ -489,6 +499,9 @@ namespace Template
 
                 // Игровое поле
                 //gameField.MoveEnemyToTargets();
+                //gameField.CheckRaceFinish();
+
+
 
 
                 if (_inputController.Num1Pressed)
@@ -559,9 +572,6 @@ namespace Template
                 //    //enemy.Speed = 0;
                 //}
 
-
-                //gameField.CheckRaceFinish();
-
                 screen = (car.IsCollied) ? "True" : "False";
                 
             }
@@ -607,7 +617,7 @@ namespace Template
                                 $"Pos: {_character.Position.X,6:f1}, {_character.Position.Y,6:f1}, {_character.Position.Z,6:f1}\n" +
                                 $"Yaw: {_character.Yaw}, Pitch: {_character.Pitch}, Roll: {_character.Roll}\n\n" +
 
-                                $"car itrs: {car.itrs} \n" +
+                                $"car itrs: {car.turnCount} \n" +
                                 $"car Position X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
                                 $"car Speed: {car.Speed} ups\n\n" +
                                 
