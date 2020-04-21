@@ -71,9 +71,9 @@ namespace Template
                 _roll = _objectToAttached._roll;
             }
             Matrix rotation = Matrix.RotationYawPitchRoll(_yaw, _pitch, _roll);
-            Vector3 viewTo = (Vector3)Vector4.Transform(-Vector4.UnitZ, rotation);
-            Vector3 viewUp = (Vector3)Vector4.Transform(Vector4.UnitY, rotation);
-            return Matrix.LookAtLH((Vector3)_position, (Vector3)_position + viewTo, viewUp);
+            Vector3 viewTo = (Vector3)Vector3.Transform(-Vector3.UnitZ, rotation);
+            Vector3 viewUp = (Vector3)Vector3.Transform(Vector3.UnitY, rotation);
+            return Matrix.LookAtLH(_position, _position + viewTo, viewUp);
         }
     }
 }

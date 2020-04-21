@@ -8,6 +8,7 @@ namespace Template
     {
 
         private Vector3 _target;
+        public int targetIndex = 0;
         /// <summary> Вектор от центра заднего моста к точки цели </summary>
         public Vector3 Target
         {
@@ -445,7 +446,7 @@ namespace Template
         public void CheckObstacle(ref OrientedBoundingBox orientedBoundingBox, float alpha)
         {
             // Передние лучи
-            CheckObstacleFrontRays(ref orientedBoundingBox, alpha);
+            CheckObstacleFrontRays(ref orientedBoundingBox, alpha / 3);
             // Боковые лучи
             CheckObstacleSideRays(ref rayFrontSideLeft, ref rayFrontSideRight, ref orientedBoundingBox, minFrontSideDistance, alpha);
             CheckObstacleSideRays(ref rayCenterSideLeft, ref rayCenterSideRight, ref orientedBoundingBox, minCenterSideDistance, alpha);
@@ -471,12 +472,13 @@ namespace Template
 
                     if (distanceL < distanceR) {
                         TurnWheelsRight(alpha);
-                        Brake();
+
                     }
                     else if (distanceR < distanceL) {
                         TurnWheelsLeft(alpha);
-                        Brake();
                     }
+                    Brake();
+
                     _isFrontObstacle = true;
                 }
                 else
@@ -484,15 +486,14 @@ namespace Template
             }
             else if (interLeft && distanceL <= minFrontDistance)
             {
-                //TurnCar(alpha); // Поворачиваю направо
-                TurnWheelsRight(alpha);
-                Brake();
+                TurnWheelsRight(alpha); //TurnCar(alpha); // Поворачиваю направо
+                //Brake();
                 _isFrontObstacle = true;
             }
             else if (interRight && distanceR <= minFrontDistance)
             {
                 TurnWheelsLeft(alpha);
-                Brake();
+                //Brake();
                 _isFrontObstacle = true;
             }
             else
@@ -505,7 +506,7 @@ namespace Template
         /// <summary> Минимальное расстояние от препятствия до передних боковых </summary>
         private float minFrontSideDistance;
         /// <summary> Минимальное расстояние от препятствия до центральных боковых </summary>
-        private float minCenterSideDistance = 4;
+        private float minCenterSideDistance = 2;
         
         private void CheckObstacleSideRays(ref Ray raySideLeft, ref Ray raySideRight, ref OrientedBoundingBox orientedBoundingBox, float minDistance, float alpha)
         {
@@ -521,15 +522,14 @@ namespace Template
             }
             else if (interLeft && distanceL <= minDistance)
             {
-                //TurnCar(alpha); // Поворачиваю направо
                 TurnWheelsRight(alpha);
-                Brake();
+                //Brake();
                 _isSideObstacle = true;
             }
             else if (interRight && distanceR <= minDistance)
             {
                 TurnWheelsLeft(alpha);
-                Brake();
+                //Brake();
                 _isSideObstacle = true;
             }
             else

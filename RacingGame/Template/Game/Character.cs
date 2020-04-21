@@ -74,6 +74,18 @@ namespace Template
             }
         }
 
+        /// <summary>
+        /// Distance from car to character's camera
+        /// </summary>
+        public Vector3 distance = new Vector3(-5.0f, 5.0f, -10.0f);
+        public void FollowCar(Car car)
+        {
+            _position = car.Position + distance;
+
+            distance = Vector3.Transform(distance, Matrix3x3.RotationY(car.Angle));
+            YawBy(car.Angle);
+        }
+        
         /// <summary>Rotate around 0Z axis by deltaRoll (x - to left, y - to up, z - to back), rad.</summary>
         /// <param name="deltaRoll">Angle, rad.</param>
         public override void RollBy(float deltaRoll)

@@ -97,7 +97,7 @@ namespace Template
         /// <summary>Character.</summary>
         private Character _character;
         private Car car;
-        private EnemyCar enemy;
+        private EnemyCar enemy, enemy2, enemy3;
         private Box box1, box2, box3;
         private GameField gameField;
 
@@ -200,6 +200,7 @@ namespace Template
             _textures.Add(loader.LoadTextureFromFile("Resources\\mustang.png", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\corvette.png", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\camaro.png", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\startline.jpg", true, _samplerStates.Textured));
             _materials = loader.LoadMaterials("Resources\\materials.txt", _textures);
 
             anims = new Animations();
@@ -221,17 +222,21 @@ namespace Template
             var corvette = loader.LoadMeshesFromObject("Resources\\corvette.obj", _materials[7]);
             var camaro = loader.LoadMeshesFromObject("Resources\\camaro.obj", _materials[9]);
             var road = loader.LoadMeshFromObject("Resources\\road.obj", _materials[8]);
-            var cube2 = loader.LoadMeshFromObject("Resources\\box.obj", _materials[0]);
+            var startline = loader.LoadMeshFromObject("Resources\\startline.obj", _materials[10]);
             // Чекпоинты
             var checkPointMeshes = loader.LoadMeshesFromObject("Resources\\checkPoints.obj", _materials[1]);
             gameField.SetCheckPoints(checkPointMeshes);
             // Машина игрока
-            car = new Car(mustang);
+            car = new Car(camaro);
             gameField.SetCar(car);
             // Машина соперника
-            var enemyMeshes = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
-            enemy = new EnemyCar(enemyMeshes);
-            gameField.SetEnemy(enemy);
+            var delorean = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
+            enemy = new EnemyCar(delorean);
+            enemy2 = new EnemyCar(mustang);
+            enemy3 = new EnemyCar(corvette);
+            gameField.AddEnemy(enemy);
+            //gameField.AddEnemy(enemy2);
+            //gameField.AddEnemy(enemy3);
 
             // Кубы для тестов
             box1 = new Box(mbox1);
@@ -241,28 +246,28 @@ namespace Template
             box2.MoveBy(new Vector3(0.0f, 1.0f, 5.0f));
 
             // Перемещения
-            corvette.ForEach(m => m.MoveBy(new Vector3(-45.0f, 0.0f, 7.0f)));
-            cube2.MoveBy(new Vector3(4.0f, 0.0f, 12.0f));
+            enemy2.MoveBy(new Vector3(-45.0f, 0.0f, 7.0f));
+            enemy3.MoveBy(new Vector3(-55.0f, 0.0f, 7.0f));
             line2.MoveTo(new Vector3(0, 0, 0));
             line1.MoveTo(camaro.First().CenterPosition);
-            
+
 
             // Добавление мешей
             _meshObjects.Add(mbox1);
             _meshObjects.Add(mbox2);
             _meshObjects.Add(mbox3);
-            _meshObjects.Add(cube2);
             _meshObjects.Add(line1);
             _meshObjects.Add(line2);
             _meshObjects.Add(line3);
             _meshObjects.Add(line4);
+            _meshObjects.Add(startline);
 
             mustang.ForEach(m => _meshObjects.Add(m));
             corvette.ForEach(m => _meshObjects.Add(m));
             camaro.ForEach(m => _meshObjects.Add(m));
+            delorean.ForEach(m => _meshObjects.Add(m));
 
             _meshObjects.Add(road);
-            enemyMeshes.ForEach(m => _meshObjects.Add(m));
             checkPointMeshes.ForEach(m => _meshObjects.Add(m));
             // 6. Load HUD resources into DirectX 2D object.
             InitHUDResources();
@@ -310,7 +315,6 @@ namespace Template
             _character = new Character(new Vector4(0.0f, 6.0f, -12.0f, 1.0f), Game3DObject._PI, 0.0f, 0.0f); //********
             _camera = new Camera(new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
             _camera.AttachToObject(_character);
-            
         }
 
         /// <summary>Render form activated callback. Hide cursor.</summary>
@@ -370,6 +374,7 @@ namespace Template
             {
                 _firstRun = false;
                 deltaTime = _timeHelper.DeltaT / 60;
+                gameField.Angle = 2.0f * (float)Math.PI * 0.25f * deltaTime;
 
                 RenderFormResizedCallback(this, new EventArgs());
                 hudRacing.Car = car;
@@ -381,7 +386,6 @@ namespace Template
                 line1.MoveTo(target);
 
                 box2.MoveBy(new Vector3(-13.0f, 0.0f, 20.0f));
-
                 _character.Position = new Vector3(-30.0f, 6.0f, -20.0f);
             }
 
@@ -400,6 +404,18 @@ namespace Template
                 if (_inputController.DPressed) _character.MoveRightBy(_timeHelper.DeltaT * _character.Speed);
                 if (_inputController.APressed) _character.MoveRightBy(-_timeHelper.DeltaT * _character.Speed);
 
+
+                if (_inputController.LeftPressed)
+                {
+                    //anims.IsWheelsAnimate = false;
+                    car.TurnWheelsLeft(alpha);
+                }
+                if (_inputController.RightPressed)
+                {
+                    //anims.IsWheelsAnimate = false;
+                    car.TurnWheelsRight(alpha);
+                }
+
                 if (_inputController.UpPressed)
                 {
                     if (!car.IsCollied)
@@ -413,25 +429,16 @@ namespace Template
                 else
                     car.MoveInertia();
                 car.MoveProperly();
-                
+                _character.FollowCar(car);
 
-                if (_inputController.LeftPressed)
-                {
-                    //anims.IsWheelsAnimate = false;
-                    car.TurnWheelsLeft(alpha);
-                }
-                if (_inputController.RightPressed)
-                {
-                    //anims.IsWheelsAnimate = false;
-                    car.TurnWheelsRight(alpha);
-                }
-                
+
+                line1.MoveTo(car.wheel1.Position);
+
                 if (_inputController.Space)
                 {
                     //anims.IsEnemyTurned = false;
 
-                    line1.MoveTo(car.wheel1.Position);
-                    car.BackWheels();
+                    //car.BackWheels();
 
                     //var verts = gameField.checkPoints[ch].OBBox.GetCorners();
                     //switch (ct)
@@ -498,10 +505,8 @@ namespace Template
 
 
                 // Игровое поле
-                //gameField.MoveEnemyToTargets();
-                //gameField.CheckRaceFinish();
-
-
+                gameField.CheckRaceFinish();
+                //gameField.MoveEnemies();
 
 
                 if (_inputController.Num1Pressed)

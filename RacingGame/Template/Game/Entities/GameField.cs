@@ -12,26 +12,38 @@ namespace Template
         public CheckPoint[] checkPoints;
         /// <summary> Массив центральных точек боксов чекпоинтов </summary>
         public Vector3[] centerPts; // private
-        public int trgIndex = 0;
 
-        private int lapsCount = 3;
+        
+        /// <summary> Количество кругов в гонке </summary>
+        private int lapsCount = 1;
+        /// <summary> Количество кругов в гонке </summary>
         public int LapCount
         {
             get => lapsCount;
             set
             {
                 if (value >= 0)
+                {
                     lapsCount = value;
+                }
             }
         }
+
+        private int place = 1;
 
         private int chptIndex = 0;
 
         private TimeHelper timeHelper;
         private Car car;
         private EnemyCar enemy;
+        private List<EnemyCar> enemies = new List<EnemyCar>();
+
+        private float angle;
+        public float Angle { get => angle; set => angle = value; }
+
         Animations animations;
 
+        /// <summary> 2D Худ </summary>
         HUDRacing hud;
 
         public GameField(TimeHelper timeHelper, HUDRacing hud, Material material)
@@ -39,6 +51,7 @@ namespace Template
             this.timeHelper = timeHelper;
             this.material = material;
             this.hud = hud;
+            this.hud.lapCount = lapsCount;
             animations = new Animations();
         }
 
@@ -61,30 +74,42 @@ namespace Template
             this.car = car;
         }
 
-        public void SetEnemy(EnemyCar enemy)
+        public void AddEnemy(EnemyCar enemy)
         {
-            this.enemy = enemy;
-            this.enemy.Target = centerPts[trgIndex];
+            enemies.Add(enemy);
+            enemy.Target = centerPts[0];
         }
+
 
         /// <summary>
         /// Проверка окончания гонки
         /// </summary>
         /// <returns></returns>
-        public bool CheckRaceFinish()
+        public void CheckRaceFinish()
         {
-            if (chptIndex < checkPoints.Length && (car.CollisionCheckPoint(checkPoints[chptIndex])))
+            if (car.Lap == lapsCount)
+                return;
+
+            if (chptIndex < checkPoints.Length && car.CollisionCheckPoint(checkPoints[chptIndex]))
             {
                 checkPoints[chptIndex].SetMaterial(material);
                 chptIndex++;
                 if (chptIndex == checkPoints.Length)
                 {
-                    hud.numbIndex++;
+                    car.Lap++;
+                    if(car.Lap == lapsCount)
+                    {
+                        hud.placeIcon.matrix = Matrix3x2.Identity;
+                        hud.placeNumber = hud.numbers[hud.placeIndex];
+                        hud.placeNumber.matrix = Matrix3x2.Identity;
+                        hud.placeNumber.matrix *= Matrix3x2.Scaling(2.0f);
+                        return;
+                    }
+
+                    hud.lapIndex++;
                     chptIndex = 0;
                 }
             }
-
-            return false;
         }
         
         /// <summary> Рандом приращения координаты от центра чекпоинта </summary>
@@ -101,9 +126,9 @@ namespace Template
         /// Поворот врага к цели
         /// </summary>
         /// <param name="angle"></param>
-        private void RotateEnemyToTarget(float angle)
+        private void RotateEnemyToTarget(float angle, EnemyCar enemy)
         {
-            enemy.Target = centerPts[trgIndex];
+            enemy.Target = centerPts[enemy.targetIndex];
             enemy.CheckWheelsDirOnTarget(angle);
             
             if (enemy.IsColliedCheckPts) // && enemy.IsOnTarget
@@ -111,21 +136,28 @@ namespace Template
                 enemy.IsColliedCheckPts = false;
                 enemy.IsWheelsOnTarget = false;
 
-                trgIndex++;
+                enemy.targetIndex++;
 
-                if (trgIndex == centerPts.Length)
-                    trgIndex = 0;
+                if (enemy.targetIndex == centerPts.Length)
+                {
+                    enemy.Lap++;
+                    if(enemy.Lap == lapsCount)
+                    {
+                        hud.placeIndex++;
+                    }
+                    enemy.targetIndex = 0;
+                }
 
-                enemy.Target = centerPts[trgIndex];
+                enemy.Target = centerPts[enemy.targetIndex];
                 //enemy.Target = centerPts[trgIndex] + checkPoints[trgIndex].Direction * randomIncremCoord(checkPoints[trgIndex]);
             }
             
         }
 
         /// <summary> Двигать врага к цели </summary>
-        private void GoToTarget()
+        private void GoToTarget(EnemyCar enemy)
         {
-            if (!enemy.CollisionCheckPoint(checkPoints[trgIndex])) // Двигать врага к цели пока не столкнется
+            if (!enemy.CollisionCheckPoint(checkPoints[enemy.targetIndex])) // Двигать врага к цели пока не столкнется
             {
                 enemy.Accelerate(15);
             }
@@ -138,15 +170,18 @@ namespace Template
         }
 
         /// <summary> Поворачивать и перемещать врага к цели </summary>
-        public void MoveEnemyToTargets()
+        private void MoveEnemyToTargets(EnemyCar enemy)
         {
-            float alpha = 2.0f * (float)Math.PI * 0.25f * timeHelper.DeltaT;
-
-            RotateEnemyToTarget(alpha);
-
-            GoToTarget();
+            RotateEnemyToTarget(angle, enemy);
+            GoToTarget(enemy);
         }
         
-
+        public void MoveEnemies()
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                MoveEnemyToTargets(enemies[i]);
+            }
+        }
     }
 }
