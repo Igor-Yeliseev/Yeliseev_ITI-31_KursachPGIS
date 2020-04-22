@@ -230,14 +230,10 @@ namespace Template
             directX2DGraphics.DrawBitmap(ammoIcon.index, GetTransformMatrix(ref ammoIcon, 50, Y + 20),
                                           1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
 
-            DrawFinishPlace();
-        }
 
-        private void DrawFinishPlace()
-        {
             directX2DGraphics.DrawBitmap(placeIcon.index, GetTransformMatrix(ref placeIcon, (Right - placeIcon.bitmap.Size.Width) / 2,
                                                                                             (Bottom - placeIcon.bitmap.Size.Height) / 2), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
-            
+
             directX2DGraphics.DrawBitmap(placeNumber.index, GetTransformMatrix(ref placeNumber, 400, 50),
                                           1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
         }

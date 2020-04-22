@@ -98,5 +98,17 @@ namespace Template
         {
             return SharpDX.RandomUtil.NextFloat(random, min, max);
         }
+
+
+        /// <summary>
+        /// Gets random float number within range.
+        /// </summary>
+        /// <param name="min"> Minimum.</param>
+        /// <param name="max"> Maximum.</param>
+        /// <returns> Random float number.</returns>
+        public static int Random(int min, int max)
+        {
+            return random.Next(min, max);
+        }
     }
 }

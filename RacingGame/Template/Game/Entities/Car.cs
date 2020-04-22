@@ -155,6 +155,7 @@ namespace Template
 
             Body = meshes.Find(m => m.Name.Contains("Body"));
             OBBox = SetOBB(Body);
+
             _position = Body.Position;
             OBBox.Translate(_position);
             TranslateAABB(_position);

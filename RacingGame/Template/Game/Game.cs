@@ -354,8 +354,6 @@ namespace Template
         int ct = 0, ch = 0;
         //FileStream fs;
 
-        Vector3 target;
-
         /// <summary>Callback for RenderLoop.Run. Handle input and render scene.</summary>
         public void RenderLoopCallback()
         {
@@ -380,19 +378,16 @@ namespace Template
                 hudRacing.Car = car;
                 car.MoveBy(new Vector3(-30.0f, 0.0f, 13.0f));
                 enemy.MoveBy(new Vector3(-30.0f, 0.0f, -5.0f));
-
-                target = new Vector3(-14.0f, 0.0f, 40.0f);
-                //target = gameField.centerPts[0];
-                line1.MoveTo(target);
+                
+                gameField.line = line2;
 
                 box2.MoveBy(new Vector3(-13.0f, 0.0f, 20.0f));
-                _character.Position = new Vector3(-30.0f, 6.0f, -20.0f);
+                //_character.Position = new Vector3(-30.0f, 6.0f, -20.0f);
             }
 
             if (_inputController.KeyboardUpdated)
             {
-                ANGLE = 0;
-                
+
                 if (_inputController.WPressed)
                 {
                     _character.MoveForwardBy(_timeHelper.DeltaT * _character.Speed);
@@ -429,10 +424,11 @@ namespace Template
                 else
                     car.MoveInertia();
                 car.MoveProperly();
-                _character.FollowCar(car);
+                //_character.FollowCar(car);
 
 
-                line1.MoveTo(car.wheel1.Position);
+                //line1.MoveTo(car.AABBox.Maximum);
+                //line2.MoveTo(enemy.AABBox.Maximum);
 
                 if (_inputController.Space)
                 {
@@ -505,54 +501,56 @@ namespace Template
 
 
                 // Игровое поле
-                gameField.CheckRaceFinish();
-                //gameField.MoveEnemies();
+                //gameField.CheckRaceFinish();
+                gameField.MoveEnemies();
 
 
-                if (_inputController.Num1Pressed)
-                {
-                }
-                if (_inputController.Num2Pressed)
-                {
-                }
+                //if (_inputController.Num1Pressed)
+                //{
+                //}
+                //if (_inputController.Num2Pressed)
+                //{
+                //}
 
 
-                if (_inputController.Num4Pressed)
-                {
-                    //box1.RotateY(-alpha);
-                    enemy.TurnWheelsLeft(alpha);
-                }
-                if (_inputController.Num6Pressed)
-                {
-                    //box1.RotateY(alpha);
-                    enemy.TurnWheelsRight(alpha);
-                }
-                if (_inputController.Num8Pressed)
-                {
-                    //box1.MoveForward();
-                    enemy.Accelerate();
-                }
-                else if (_inputController.Num5Pressed)
-                {
-                    //box1.MoveBackward();
-                    enemy.Brake();
-                }
-                else
-                    box1.moveSign = 0;
-                
+                //if (_inputController.Num4Pressed)
+                //{
+                //    //box1.RotateY(-alpha);
+                //    enemy.TurnWheelsLeft(alpha);
+                //}
+                //if (_inputController.Num6Pressed)
+                //{
+                //    //box1.RotateY(alpha);
+                //    enemy.TurnWheelsRight(alpha);
+                //}
+                //if (_inputController.Num8Pressed)
+                //{
+                //    //box1.MoveForward();
+                //    enemy.Accelerate();
+                //}
+                //else if (_inputController.Num5Pressed)
+                //{
+                //    //box1.MoveBackward();
+                //    enemy.Brake();
+                //}
+                //else
+                //    box1.moveSign = 0;
+                //enemy.MoveProperly();
 
-                if (_inputController.Num7Pressed)
-                {
-                    //var p = box1.Position;
-                    //p.X -= alpha;
-                    //box1.Position = p;
-                }
-                if (_inputController.Num9Pressed)
-                {
-                    //var p = box1.Position;
-                    //p.X += alpha;
-                    //box1.Position = p;                    
-                }
+
+
+                //if (_inputController.Num7Pressed)
+                //{
+                //    //var p = box1.Position;
+                //    //p.X -= alpha;
+                //    //box1.Position = p;
+                //}
+                //if (_inputController.Num9Pressed)
+                //{
+                //    //var p = box1.Position;
+                //    //p.X += alpha;
+                //    //box1.Position = p;
+                //}
 
                 hudRacing.Update();
 
@@ -569,17 +567,12 @@ namespace Template
 
 
             // Collision Detection
-            {
-
-                //if (enemy.CollisionTest(box2))
-                //{
-                //    //enemy.CollisionResponce(box2);
-                //    //enemy.Speed = 0;
-                //}
-
-                screen = (car.IsCollied) ? "True" : "False";
-                
-            }
+            //if (enemy.CollisionTest(box2))
+            //{
+            //    //enemy.CollisionResponce(box2);
+            //    //enemy.Speed = 0;
+            //}
+            //screen = (car.IsCollied) ? "True" : "False";
 
 
             _viewMatrix = _camera.GetViewMatrix();
@@ -626,10 +619,10 @@ namespace Template
                                 $"car Position X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
                                 $"car Speed: {car.Speed} ups\n\n" +
                                 
-                                $"Distance to obj: {enemy.Distance}\n" +
                                 $"enemy Position   X: {enemy.Position.X} Y:{enemy.Position.Y} Z:{enemy.Position.Z}\n" +
                                 $"enemy Direction   X: {enemy.Direction.X} Y:{enemy.Direction.Y} Z:{enemy.Direction.Z}\n" +
                                 $"enemy Speed: {enemy.Speed} ups\n" +
+                                $"enemy MaxSpeed: {enemy.MaxSpeed} ups\n" +
                                 $"enemy Acceleration: {enemy.Acceleration} ups\n" +
                                 $"Data: {screen}\n";
 
@@ -643,7 +636,7 @@ namespace Template
 
             _directX2DGraphics.DrawBitmap(_HUDResources.armorIconIndex, armorTransformMatrix, 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
 
-            hudRacing.DrawBitmaps();
+            //hudRacing.DrawBitmaps();
 
             _directX2DGraphics.EndDraw();
         }

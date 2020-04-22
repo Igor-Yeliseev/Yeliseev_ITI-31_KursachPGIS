@@ -6,9 +6,9 @@ namespace Template
 {
     class EnemyCar : Car
     {
+        public int targetIndex = 0;
 
         private Vector3 _target;
-        public int targetIndex = 0;
         /// <summary> Вектор от центра заднего моста к точки цели </summary>
         public Vector3 Target
         {
@@ -19,6 +19,9 @@ namespace Template
                 //wheelsOnTarget = false;
             }
         }
+
+        /// <summary> Контрольная точка к которой стремятся повернутся машины врагов </summary>
+        public Vector3 CheckPoint { get; set; }
 
         /// <summary> Мертв ли враг </summary>
         public bool IsDead { get; set; }
@@ -45,7 +48,8 @@ namespace Template
             }
         }
 
-        
+        public bool IsFinishRace { get; set; }
+
         /// <summary> Передний левый луч </summary>
         public Ray rayFrontLeft;
         /// <summary> Передний правый луч </summary>
@@ -228,6 +232,12 @@ namespace Template
                 Speed = MyMath.Lerp(_speed, 0, 1.4f, 0.1f);
                 minFrontDistance = MyMath.Lerp(minFrontDistance, 6, 1.5f, 0.1f);
             }
+        }
+
+        public void SlowDown()
+        {
+            Speed = MyMath.Lerp(_speed, MaxSpeed, 0.8f, 0.1f);
+            minFrontDistance = MyMath.Lerp(minFrontDistance, 6, 0.7f, 0.1f);
         }
 
         /// <summary> Перемещать машину вдоль направления в соответствии с ее скоростью </summary>
@@ -433,20 +443,26 @@ namespace Template
             else
                 return false;
         }
-        
-        private float distance;
-        /// <summary> Дистанция до объекта </summary>
-        public float Distance { get => distance; }
+
+        /// <summary>
+        /// Проверить врагов на предмет столкновения
+        /// </summary>
+        /// <param name="enemy"></param>
+        /// <param name="alpha"></param>
+        public void CheckObstacle(Car enemy, float alpha)
+        {
+            checkObstacle(ref enemy.OBBox, alpha);
+        }
 
         /// <summary>
         /// Проверить лучи на предмет опасного приближения
         /// </summary>
         /// <param name="orientedBoundingBox"></param>
         /// <param name="alpha"></param>
-        public void CheckObstacle(ref OrientedBoundingBox orientedBoundingBox, float alpha)
+        private void checkObstacle(ref OrientedBoundingBox orientedBoundingBox, float alpha)
         {
             // Передние лучи
-            CheckObstacleFrontRays(ref orientedBoundingBox, alpha / 3);
+            CheckObstacleFrontRays(ref orientedBoundingBox, alpha);
             // Боковые лучи
             CheckObstacleSideRays(ref rayFrontSideLeft, ref rayFrontSideRight, ref orientedBoundingBox, minFrontSideDistance, alpha);
             CheckObstacleSideRays(ref rayCenterSideLeft, ref rayCenterSideRight, ref orientedBoundingBox, minCenterSideDistance, alpha);
@@ -487,13 +503,13 @@ namespace Template
             else if (interLeft && distanceL <= minFrontDistance)
             {
                 TurnWheelsRight(alpha); //TurnCar(alpha); // Поворачиваю направо
-                //Brake();
+                Brake();
                 _isFrontObstacle = true;
             }
             else if (interRight && distanceR <= minFrontDistance)
             {
                 TurnWheelsLeft(alpha);
-                //Brake();
+                Brake();
                 _isFrontObstacle = true;
             }
             else

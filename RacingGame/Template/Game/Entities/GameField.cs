@@ -12,8 +12,8 @@ namespace Template
         public CheckPoint[] checkPoints;
         /// <summary> Массив центральных точек боксов чекпоинтов </summary>
         public Vector3[] centerPts; // private
+        private Vector3[] targetPts;
 
-        
         /// <summary> Количество кругов в гонке </summary>
         private int lapsCount = 1;
         /// <summary> Количество кругов в гонке </summary>
@@ -66,7 +66,7 @@ namespace Template
                 var v = meshes[i].CenterPosition;
                 centerPts[i] = new Vector3(v.X, 0, v.Z);
             }
-            
+
         }
 
         public void SetCar(Car car)
@@ -77,7 +77,9 @@ namespace Template
         public void AddEnemy(EnemyCar enemy)
         {
             enemies.Add(enemy);
-            enemy.Target = centerPts[0];
+            enemy.MaxSpeed = 25;
+            enemy.CheckPoint = centerPts[0] + checkPoints[0].Direction * randomIncremCoord(checkPoints[0]);
+            enemy.Target = enemy.CheckPoint;
         }
 
 
@@ -97,7 +99,7 @@ namespace Template
                 if (chptIndex == checkPoints.Length)
                 {
                     car.Lap++;
-                    if(car.Lap == lapsCount)
+                    if (car.Lap == lapsCount)
                     {
                         hud.placeIcon.matrix = Matrix3x2.Identity;
                         hud.placeNumber = hud.numbers[hud.placeIndex];
@@ -111,14 +113,14 @@ namespace Template
                 }
             }
         }
-        
+
         /// <summary> Рандом приращения координаты от центра чекпоинта </summary>
         /// <param name="checkPoint"> Экземпляр чекпоинта</param>
         /// <returns></returns>
         private float randomIncremCoord(CheckPoint checkPoint)
         {
             float min = (checkPoint.Direction * checkPoint.OBBox.Extents.X).X;
-            float max = (- checkPoint.Direction * checkPoint.OBBox.Extents.X).X;
+            float max = (-checkPoint.Direction * checkPoint.OBBox.Extents.X).X;
             return MyMath.Random(min, max);
         }
 
@@ -128,9 +130,9 @@ namespace Template
         /// <param name="angle"></param>
         private void RotateEnemyToTarget(float angle, EnemyCar enemy)
         {
-            enemy.Target = centerPts[enemy.targetIndex];
+            enemy.Target = enemy.CheckPoint;
             enemy.CheckWheelsDirOnTarget(angle);
-            
+
             if (enemy.IsColliedCheckPts) // && enemy.IsOnTarget
             {
                 enemy.IsColliedCheckPts = false;
@@ -140,26 +142,41 @@ namespace Template
 
                 if (enemy.targetIndex == centerPts.Length)
                 {
+                    enemy.targetIndex = 0;
                     enemy.Lap++;
-                    if(enemy.Lap == lapsCount)
+                    if (enemy.Lap == lapsCount)
                     {
                         hud.placeIndex++;
+                        enemy.IsFinishRace = true;
+                        enemy.Speed = 0;
+                        return;
                     }
-                    enemy.targetIndex = 0;
                 }
 
-                enemy.Target = centerPts[enemy.targetIndex];
-                //enemy.Target = centerPts[trgIndex] + checkPoints[trgIndex].Direction * randomIncremCoord(checkPoints[trgIndex]);
+                //enemy.Target = centerPts[enemy.targetIndex];
+                int index = enemy.targetIndex;
+                enemy.CheckPoint = centerPts[index] + checkPoints[index].Direction * randomIncremCoord(checkPoints[index]);
+                line.MoveTo(enemy.CheckPoint);
+                enemy.Target = enemy.CheckPoint;
+
+                enemy.MaxSpeed = MyMath.Random(15, 25);
             }
-            
+
         }
+
+        public MeshObject line;
 
         /// <summary> Двигать врага к цели </summary>
         private void GoToTarget(EnemyCar enemy)
         {
             if (!enemy.CollisionCheckPoint(checkPoints[enemy.targetIndex])) // Двигать врага к цели пока не столкнется
             {
-                enemy.Accelerate(15);
+                if(enemy.Speed > enemy.MaxSpeed)
+                {
+                    enemy.SlowDown();
+                }
+                else
+                    enemy.Accelerate();
             }
             //else
             //{
@@ -172,16 +189,28 @@ namespace Template
         /// <summary> Поворачивать и перемещать врага к цели </summary>
         private void MoveEnemyToTargets(EnemyCar enemy)
         {
+            if (enemy.IsFinishRace)
+                return;
+
             RotateEnemyToTarget(angle, enemy);
             GoToTarget(enemy);
         }
-        
+
         public void MoveEnemies()
         {
             for (int i = 0; i < enemies.Count; i++)
             {
+                for (int j = 0; j < enemies.Count; j++)
+                {
+                    if (i == j)
+                        enemies[i].CheckObstacle(car, angle);
+                    else
+                        enemies[i].CheckObstacle(enemies[j], angle);
+                }
                 MoveEnemyToTargets(enemies[i]);
             }
         }
+
+        
     }
 }
