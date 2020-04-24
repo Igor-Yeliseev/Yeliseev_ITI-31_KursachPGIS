@@ -154,6 +154,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\SharpAudioDevice.cs" />
+    <Compile Include="Audio\SharpAudioVoice.cs" />
     <Compile Include="Game\Animation.cs" />
     <Compile Include="Game\Entities\Box.cs" />
     <Compile Include="Game\Entities\Car.cs" />
@@ -164,6 +166,7 @@
     <Compile Include="Game\Entities\HUDRacing.cs" />
     <Compile Include="Game\Entities\MyMath.cs" />
     <Compile Include="Game\Entities\PhysicalObject.cs" />
+    <Compile Include="Game\Entities\Sounds.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Game\Character.cs" />
     <Compile Include="Graphics\DirectX2DGraphics.cs" />

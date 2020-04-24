@@ -22,32 +22,7 @@ namespace Template
 
         /// <summary> Контрольная точка к которой стремятся повернутся машины врагов </summary>
         public Vector3 CheckPoint { get; set; }
-
-        /// <summary> Мертв ли враг </summary>
-        public bool IsDead { get; set; }
-
-        /// <summary> Здоровье </summary>
-        int _health = 100;
-        /// <summary> Здоровье </summary>
-        public int Health
-        {
-            get
-            {
-                return _health;
-            }
-            set
-            {
-                _health += value;
-                if (_health < 0)
-                {
-                    _health = 0;
-                    IsDead = true;
-                }
-                else if (_health > 100)
-                    _health = 100;
-            }
-        }
-
+        
         public bool IsFinishRace { get; set; }
 
         /// <summary> Передний левый луч </summary>

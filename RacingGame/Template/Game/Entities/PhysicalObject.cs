@@ -23,6 +23,10 @@ namespace Template
             {
                 return (collied == ContainmentType.Intersects) ? true : false;
             }
+            set
+            {
+                collied = (value == true) ? ContainmentType.Intersects : ContainmentType.Disjoint;
+            }
         }
 
         public PhysicalObject(MeshObject mesh) : base(mesh)
@@ -35,7 +39,7 @@ namespace Template
         /// </summary>
         /// <param name="mesh"> Меш</param>
         /// <returns></returns>
-        protected virtual  OrientedBoundingBox SetOBB(MeshObject mesh)
+        protected virtual OrientedBoundingBox SetOBB(MeshObject mesh)
         {
             float minX, minY, minZ, maxX, maxY, maxZ;
             var vertex = mesh.Vertices[0].position;

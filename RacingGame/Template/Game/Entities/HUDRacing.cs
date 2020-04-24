@@ -60,6 +60,12 @@ namespace Template
             set
             {
                 car = value;
+                car.Collied += (c) =>
+                {
+                    float scale = hitValue / widthHeath;
+                    widthHeath -= scale * widthHeath;
+                    healthBar.matrix *= Matrix3x2.Scaling(1 - scale, 1.0f, new Vector2(50, lapIcon.bitmap.Size.Height));
+                };
             }
         }
 
@@ -76,9 +82,9 @@ namespace Template
             if (inputController.Space)
             {
                 //numbers[placeIndex].matrix = Matrix3x2.Identity;
-                placeNumber = numbers[placeIndex];
-                placeNumber.matrix = Matrix3x2.Identity;
-                placeNumber.matrix *= Matrix3x2.Scaling(2.0f);
+                //placeNumber = numbers[placeIndex];
+                //placeNumber.matrix = Matrix3x2.Identity;
+                //placeNumber.matrix *= Matrix3x2.Scaling(2.0f);
 
                 //lapIndex++;
                 //if (lapIndex > 9) lapIndex = 0;
@@ -92,7 +98,7 @@ namespace Template
 
                 //float scale = hitValue / widthHeath;
                 //widthHeath += scale * widthHeath;
-                //healthBar.matrix *= Matrix3x2.Scaling(1 + scale, 1.0f, new Vector2(50, lapsIcon.bitmap.Size.Height));
+                //healthBar.matrix *= Matrix3x2.Scaling(1 + scale, 1.0f, new Vector2(50, lapIcon.bitmap.Size.Height));
 
             }
 

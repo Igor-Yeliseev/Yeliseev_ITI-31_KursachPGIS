@@ -35,7 +35,6 @@ namespace Template
 
         private TimeHelper timeHelper;
         private Car car;
-        private EnemyCar enemy;
         private List<EnemyCar> enemies = new List<EnemyCar>();
 
         private float angle;
@@ -159,7 +158,7 @@ namespace Template
                 line.MoveTo(enemy.CheckPoint);
                 enemy.Target = enemy.CheckPoint;
 
-                enemy.MaxSpeed = MyMath.Random(15, 25);
+                enemy.MaxSpeed = MyMath.Random(18, 28);
             }
 
         }
@@ -212,5 +211,13 @@ namespace Template
         }
 
         
+        public void CheckCollisions()
+        {
+            foreach (var enemy in enemies)
+            {
+                car.CollisionTest(enemy);
+            }
+        }
+
     }
 }

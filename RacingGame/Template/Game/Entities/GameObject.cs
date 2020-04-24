@@ -34,15 +34,6 @@ namespace Template
             _position = new Vector3(0.0f, 0.0f, 0.0f);
         }
 
-        //public virtual void MoveBy(float dX, float dY, float dZ)
-        //{
-        //    _meshes.ForEach(m => m.MoveBy(dX, dY, dZ));
-
-        //    _position.X += dX;
-        //    _position.Y += dY;
-        //    _position.Z += dZ;
-        //}
-
         public virtual void MoveBy(Vector3 vector)
         {
             _meshes.ForEach(m => m.MoveBy(vector));

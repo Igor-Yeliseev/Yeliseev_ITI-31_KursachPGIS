@@ -101,6 +101,8 @@ namespace Template
         private Box box1, box2, box3;
         private GameField gameField;
 
+        private Sounds sounds;
+
         /// <summary> Ogbjects animations </summary>
         Animations anims;
 
@@ -227,12 +229,12 @@ namespace Template
             var checkPointMeshes = loader.LoadMeshesFromObject("Resources\\checkPoints.obj", _materials[1]);
             gameField.SetCheckPoints(checkPointMeshes);
             // Машина игрока
-            car = new Car(camaro);
+            car = new Car(mustang);
             gameField.SetCar(car);
             // Машина соперника
             var delorean = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
             enemy = new EnemyCar(delorean);
-            enemy2 = new EnemyCar(mustang);
+            enemy2 = new EnemyCar(camaro);
             enemy3 = new EnemyCar(corvette);
             gameField.AddEnemy(enemy);
             //gameField.AddEnemy(enemy2);
@@ -272,6 +274,9 @@ namespace Template
             // 6. Load HUD resources into DirectX 2D object.
             InitHUDResources();
             hudRacing.InitPicsIndicies();
+
+            // Load game sounds
+            InitSounds();
 
             loader = null;
 
@@ -315,6 +320,17 @@ namespace Template
             _character = new Character(new Vector4(0.0f, 6.0f, -12.0f, 1.0f), Game3DObject._PI, 0.0f, 0.0f); //********
             _camera = new Camera(new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
             _camera.AttachToObject(_character);
+
+
+        }
+
+        private void InitSounds()
+        {
+            sounds = new Sounds(_inputController, car);
+            sounds.Load("Resources\\Sounds\\throttle.wav");
+            sounds.Load("Resources\\Sounds\\reverse.wav");
+            sounds.Load("Resources\\Sounds\\brake_tires_squal.wav");
+            sounds.Load("Resources\\Sounds\\crash.wav");
         }
 
         /// <summary>Render form activated callback. Hide cursor.</summary>
@@ -382,7 +398,6 @@ namespace Template
                 gameField.line = line2;
 
                 box2.MoveBy(new Vector3(-13.0f, 0.0f, 20.0f));
-                //_character.Position = new Vector3(-30.0f, 6.0f, -20.0f);
             }
 
             if (_inputController.KeyboardUpdated)
@@ -424,8 +439,9 @@ namespace Template
                 else
                     car.MoveInertia();
                 car.MoveProperly();
-                //_character.FollowCar(car);
+                _character.FollowCar(car);
 
+                sounds.Plays();
 
                 //line1.MoveTo(car.AABBox.Maximum);
                 //line2.MoveTo(enemy.AABBox.Maximum);
@@ -435,37 +451,7 @@ namespace Template
                     //anims.IsEnemyTurned = false;
 
                     //car.BackWheels();
-
-                    //var verts = gameField.checkPoints[ch].OBBox.GetCorners();
-                    //switch (ct)
-                    //{
-                    //    case 0:
-                    //        line2.MoveTo(verts[0]);
-                    //        break;
-                    //    case 1:
-                    //        line2.MoveTo(verts[1]);
-                    //        break;
-                    //    case 2:
-                    //        line2.MoveTo(verts[2]);
-                    //        break;
-                    //    case 3:
-                    //        line2.MoveTo(verts[3]);
-                    //        break;
-                    //    case 4:
-                    //        line2.MoveTo(verts[4]);
-                    //        break;
-                    //    case 5:
-                    //        line2.MoveTo(verts[5]);
-                    //        break;
-                    //    case 6:
-                    //        line2.MoveTo(verts[6]);
-                    //        break;
-                    //    case 7:
-                    //        line2.MoveTo(verts[7]);
-                    //        break;
-                    //}
-                    //ct++;
-                    //if(ct > 3) { ch++; ct = 0; }
+                    
                 }
 
 
@@ -502,8 +488,8 @@ namespace Template
 
                 // Игровое поле
                 //gameField.CheckRaceFinish();
-                gameField.MoveEnemies();
-
+                //gameField.MoveEnemies();
+                gameField.CheckCollisions();
 
                 //if (_inputController.Num1Pressed)
                 //{
@@ -554,7 +540,11 @@ namespace Template
 
                 hudRacing.Update();
 
-                if (_inputController.Esc) { _renderForm.Close(); }                               // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (_inputController.Esc)
+                {
+                    sounds.Dispose();
+                    _renderForm.Close();
+                }                               // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 // Toggle help by F1.
                 if (_inputController.Func[0]) _displayHelp = !_displayHelp;
                 // Switch solid and wireframe modes by F2, F3.
@@ -636,7 +626,7 @@ namespace Template
 
             _directX2DGraphics.DrawBitmap(_HUDResources.armorIconIndex, armorTransformMatrix, 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
 
-            //hudRacing.DrawBitmaps();
+            hudRacing.DrawBitmaps();
 
             _directX2DGraphics.EndDraw();
         }

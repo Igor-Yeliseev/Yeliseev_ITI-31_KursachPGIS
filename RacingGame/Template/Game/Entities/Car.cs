@@ -9,10 +9,12 @@ using Template.Graphics;
 
 namespace Template
 {
+    internal delegate void Hit(Car car);
+
     class Car : PhysicalObject
     {
         /// <summary> Переднее левое колесо </summary>
-       public MeshObject wheel1;
+        public MeshObject wheel1;
         /// <summary> Переднее правое колесо </summary>
         protected MeshObject wheel2;
         /// <summary> Car's body mesh </summary>
@@ -38,6 +40,30 @@ namespace Template
         /// <summary> Вектор направления машины (от центра заднего до центре переднего моста) </summary>
         public Vector3 CarDirection { get => _carDirection; set => _carDirection = value; }
 
+        /// <summary> Мертв ли враг </summary>
+        public bool IsDead { get; set; }
+
+        /// <summary> Здоровье </summary>
+        protected int _health = 100;
+        /// <summary> Здоровье </summary>
+        public int Health
+        {
+            get
+            {
+                return _health;
+            }
+            set
+            {
+                _health += value;
+                if (_health < 0)
+                {
+                    _health = 0;
+                    IsDead = true;
+                }
+                else if (_health > 100)
+                    _health = 100;
+            }
+        }
 
         /// <summary> Текущий круг </summary>
         public int Lap { get; set; } = 0;
@@ -63,7 +89,7 @@ namespace Template
                 else
                     scale = Math.Abs(scale * (value / (scale * 60)));
 
-                Acceleration = value - _speed;
+                Acceleration = (value - _speed);
                 
                 _speed = value;
             }
@@ -75,7 +101,7 @@ namespace Template
         public float Angle { get => angle; private set => angle = value; }
 
         /// <summary>
-        /// Величина ускорения
+        /// На сколько процентов изменилась скорость
         /// </summary>
         public float Acceleration { get; set; }
 
@@ -341,19 +367,6 @@ namespace Template
                     m.YawBy(alpha);
                     m.Position = _rearAxle + Vector3.Transform(m.Position - _rearAxle, matrix);
 
-                    //oldCenterPos = m.Center2Position;
-                    //m.MoveTo(0, 0, 0);
-                    //m.YawBy(alpha);
-
-                    //c2_pos = m.Position;
-                    //m.Position = -m.Center2Position;
-                    //m.Center2Position = c2_pos;
-
-                    //m.Position = Vector3.Transform(m.Position, Matrix3x3.RotationY(alpha));
-
-                    //m.MoveTo(oldCenterPos);
-                    //m.Position += (m.Position - m.Center2Position);
-                    //m.Center2Position = oldCenterPos;
                 }
                 else m.YawBy(alpha);
             });
@@ -415,8 +428,8 @@ namespace Template
             }
             else
             {
-                Speed = MyMath.Lerp(_speed, 0, 1.7f, 0.1f);
-                //Speed = MyMath.Lerp(_speed, MaxBackSpeed, 1.3f, 0.1f);
+                //Speed = MyMath.Lerp(_speed, 0, 1.7f, 0.1f);
+                Speed = MyMath.Lerp(_speed, MaxBackSpeed, 1.0f, 0.1f);
             }
         }
 
@@ -463,6 +476,9 @@ namespace Template
             return (colliedCheckPts == ContainmentType.Intersects) ? true : false;
         }
 
+        /// <summary> Raise event when car collied </summary>
+        public event Hit Collied;
+
         /// <summary>
         /// Определение и разрешение коллизий
         /// </summary>
@@ -475,6 +491,8 @@ namespace Template
 
                 if (collied == ContainmentType.Intersects)
                 {
+                    Health -= 10;
+                    Collied?.Invoke(this);
                     CollisionResponce(obj);
                     return true;
                 }
@@ -501,6 +519,9 @@ namespace Template
                 while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
                     MoveProperly(1);
             }
+            _speed = 0;
         }
     }
+
+    
 }
