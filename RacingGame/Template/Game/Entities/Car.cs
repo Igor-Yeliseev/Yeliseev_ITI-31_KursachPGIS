@@ -54,14 +54,15 @@ namespace Template
             }
             set
             {
-                _health += value;
-                if (_health < 0)
+                if (value <= 0)
                 {
                     _health = 0;
                     IsDead = true;
                 }
-                else if (_health > 100)
+                else if (value > 100)
                     _health = 100;
+                else
+                    _health = value;
             }
         }
 
@@ -509,7 +510,7 @@ namespace Template
         {
             if(_speed > 8)
             {
-                Health -= 10;
+                Health -= 20;
                 Collied?.Invoke(this);
             }
 

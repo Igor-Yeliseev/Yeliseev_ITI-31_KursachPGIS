@@ -228,6 +228,11 @@ namespace Template
             // Чекпоинты
             var checkPointMeshes = loader.LoadMeshesFromObject("Resources\\checkPoints.obj", _materials[1]);
             gameField.SetCheckPoints(checkPointMeshes);
+            // Столбы
+            var pillars = loader.LoadMeshesFromObject("Resources\\pillars.obj", _materials[3]);
+            gameField.SetPillars(pillars);
+            gameField.Hedra = loader.LoadMeshesFromObject("Resources\\prism.obj", _materials[2]).First(); 
+
             // Машина игрока
             car = new Car(mustang);
             gameField.SetCar(car);
@@ -263,14 +268,14 @@ namespace Template
             _meshObjects.Add(line3);
             _meshObjects.Add(line4);
             _meshObjects.Add(startline);
+            _meshObjects.Add(road);
 
             mustang.ForEach(m => _meshObjects.Add(m));
             corvette.ForEach(m => _meshObjects.Add(m));
             camaro.ForEach(m => _meshObjects.Add(m));
             delorean.ForEach(m => _meshObjects.Add(m));
-
-            _meshObjects.Add(road);
-            checkPointMeshes.ForEach(m => _meshObjects.Add(m));
+            //checkPointMeshes.ForEach(m => _meshObjects.Add(m));
+            
             // 6. Load HUD resources into DirectX 2D object.
             InitHUDResources();
             hudRacing.InitPicsIndicies();
@@ -483,7 +488,7 @@ namespace Template
 
 
                 // Игровое поле
-                //gameField.CheckRaceFinish();
+                gameField.CheckRaceFinish();
                 //gameField.MoveEnemies();
                 gameField.CheckCollisions();
 
@@ -573,7 +578,6 @@ namespace Template
 
             _renderer.SetPerObjectConstants(_timeHelper.Time, 0);
             //float angle = _timeHelper.Time * 2.0f * (float)Math.PI * 0.25f; // Frequency = 0.25 Hz
-            //_cube.Pitch = angle;
 
             // Render 3D objects.
             for (int i = 0; i <= _meshObjects.Count - 1; i++)
@@ -585,6 +589,8 @@ namespace Template
                 MeshObject meshObject = _meshObjects[i];
                 meshObject.Render(_viewMatrix, _projectionMatrix);
             }
+
+            gameField.Draw(_viewMatrix, _projectionMatrix);
 
             RenderHUD();
 

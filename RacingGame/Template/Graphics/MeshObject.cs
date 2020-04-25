@@ -130,7 +130,7 @@ namespace Template
 
                 _centerPosition = new Vector3(x, y, z); // Определение геометрического центра фигуры
 
-                if (_name.Contains("wheel"))
+                if (_name.Contains("wheel") || _name.Contains("cylinder"))
                 {
                     ToPosition();
                     _center2Position = _position;
@@ -231,5 +231,6 @@ namespace Template
         {
             return (MeshObject) MemberwiseClone();
         }
+        
     }
 }

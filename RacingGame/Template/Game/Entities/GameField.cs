@@ -14,6 +14,8 @@ namespace Template
         public Vector3[] centerPts; // private
         private Vector3[] targetPts;
 
+        private List<MeshObject> pillars;
+
         /// <summary> Количество кругов в гонке </summary>
         private int lapsCount = 1;
         /// <summary> Количество кругов в гонке </summary>
@@ -68,6 +70,42 @@ namespace Template
 
         }
 
+        MeshObject _hedra1, _hedra2;
+        /// <summary> Значок над цилиднром </summary>
+        public MeshObject Hedra
+        {
+            get
+            {
+                return _hedra1;
+            }
+            set
+            {
+                _hedra1 = value;
+                _hedra2 = (MeshObject)_hedra1.Clone();
+            }
+        }
+
+        public void SetPillars(List<MeshObject> pillars)
+        {
+            pillars.Sort(new PillarsComparer());
+            this.pillars = pillars;
+        }
+
+        public void Draw(Matrix viewMatrix, Matrix projectionMatrix)
+        {
+            pillars[chptIndex * 2].Render(viewMatrix, projectionMatrix);
+            pillars[chptIndex * 2 + 1].Render(viewMatrix, projectionMatrix);
+
+            _hedra1.Position = pillars[chptIndex * 2].Position;
+            _hedra1.Render(viewMatrix, projectionMatrix);
+
+            _hedra2.Position = pillars[chptIndex * 2 + 1].Position;
+            _hedra2.Render(viewMatrix, projectionMatrix);
+
+            _hedra1.YawBy(angle);
+            _hedra2.YawBy(angle);
+        }
+
         public void SetCar(Car car)
         {
             this.car = car;
@@ -104,6 +142,7 @@ namespace Template
                         hud.placeNumber = hud.numbers[hud.placeIndex];
                         hud.placeNumber.matrix = Matrix3x2.Identity;
                         hud.placeNumber.matrix *= Matrix3x2.Scaling(2.0f);
+                        chptIndex = 0;
                         return;
                     }
 

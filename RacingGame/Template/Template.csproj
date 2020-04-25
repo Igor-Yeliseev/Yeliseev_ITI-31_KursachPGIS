@@ -167,6 +167,7 @@
     <Compile Include="Game\Entities\HUDRacing.cs" />
     <Compile Include="Game\Entities\MyMath.cs" />
     <Compile Include="Game\Entities\PhysicalObject.cs" />
+    <Compile Include="Game\Entities\PillarsComparer.cs" />
     <Compile Include="Game\Entities\Sounds.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Game\Character.cs" />

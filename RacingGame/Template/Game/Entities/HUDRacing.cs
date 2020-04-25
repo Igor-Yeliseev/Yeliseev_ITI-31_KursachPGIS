@@ -48,7 +48,7 @@ namespace Template
         Icon healthBar;
         Icon barFrame;
         /// <summary> Величина отнятия здоровья (10% от макс здоровья)</summary>
-        float hitValue;
+        float hitValue = 0.2f;
         float widthHeath;
 
         public Icon placeIcon;
@@ -62,7 +62,7 @@ namespace Template
                 car = value;
                 car.Collied += (c) =>
                 {
-                    if (car.Health == 0)
+                    if (car.IsDead)
                         return;
 
                     float scale = hitValue / widthHeath;
@@ -186,7 +186,7 @@ namespace Template
             barFrame.bitmap = directX2DGraphics.Bitmaps[barFrame.index];
             placeIcon.bitmap = directX2DGraphics.Bitmaps[placeIcon.index];
             widthHeath = healthBar.bitmap.Size.Width;
-            hitValue = widthHeath * 0.1f;
+            hitValue = widthHeath * hitValue;
 
             for (int i = 0; i < numbers.Length; i++)
             {
