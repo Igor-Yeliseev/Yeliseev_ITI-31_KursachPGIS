@@ -491,8 +491,6 @@ namespace Template
 
                 if (collied == ContainmentType.Intersects)
                 {
-                    Health -= 10;
-                    Collied?.Invoke(this);
                     CollisionResponce(obj);
                     return true;
                 }
@@ -509,6 +507,12 @@ namespace Template
         /// <param name="obj"></param>
         public override void CollisionResponce(PhysicalObject obj) // Добавить проверки на тип объекта (Стена, Враг, Приз и т.д.)
         {
+            if(_speed > 8)
+            {
+                Health -= 10;
+                Collied?.Invoke(this);
+            }
+
             if (_speed > 0)
             {
                 while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
@@ -519,7 +523,7 @@ namespace Template
                 while (OBBox.Contains(ref obj.OBBox) == ContainmentType.Intersects)
                     MoveProperly(1);
             }
-            _speed = 0;
+            Speed = -_speed * 0.2f;
         }
     }
 

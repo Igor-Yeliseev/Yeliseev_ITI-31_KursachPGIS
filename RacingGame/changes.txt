@@ -1,3 +1,0 @@
-Shaders
-cbuffers (Renderer, Game)
-// Textures

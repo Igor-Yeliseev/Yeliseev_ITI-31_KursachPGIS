@@ -11,8 +11,8 @@ using SharpDX.WIC;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using Template.Graphics;
-using ObjLoader.Loader.Loaders;
 using static Template.MeshObject;
+using ObjLoader.Loader.Loaders;
 using ObjLoader.Loader.Data.Elements;
 
 namespace Template

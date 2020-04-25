@@ -417,24 +417,20 @@ namespace Template
 
                 if (_inputController.LeftPressed)
                 {
-                    //anims.IsWheelsAnimate = false;
                     car.TurnWheelsLeft(alpha);
                 }
                 if (_inputController.RightPressed)
                 {
-                    //anims.IsWheelsAnimate = false;
                     car.TurnWheelsRight(alpha);
                 }
 
                 if (_inputController.UpPressed)
                 {
-                    if (!car.IsCollied)
-                        car.Accelerate();
+                    car.Accelerate();
                 }
                 else if (_inputController.DownPressed)
                 {
-                    if (!car.IsCollied)
-                        car.Brake();
+                    car.Brake();
                 }
                 else
                     car.MoveInertia();
@@ -449,8 +445,8 @@ namespace Template
                 if (_inputController.Space)
                 {
                     //anims.IsEnemyTurned = false;
-
-                    //car.BackWheels();
+                    
+                    car.BackWheels();
                     
                 }
 

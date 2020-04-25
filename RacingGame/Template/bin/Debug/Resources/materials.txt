@@ -1,0 +1,109 @@
+﻿0
+name:			Floor // magenta, plastic
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		white.bmp
+
+1
+name:			Red // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.5		0.5		0.5		1.0
+diffuse:		1.0		0.2		1.0		1.0
+specular:		0.0		0.2		0.5		1.0
+specularPower:	10.0
+textured:		1
+texture:		red.bmp
+
+2
+name:			Green // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.5		0.5		0.5		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.0		0.2		0.5		1.0
+specularPower:	10.0
+textured:		1
+texture:		green.bmp
+
+3
+name:			Blue // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		blue.bmp
+
+4
+name:			Cube // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		cube.png
+
+5
+name:			Delorean // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		delorean.png
+
+6
+name:			Mustang // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		mustang.png
+
+7
+name:			Corvette // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		corvette.png
+
+8
+name:			Road // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		road.png
+
+9
+name:			Camaro // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		camaro.png
+
+10
+name:			Startline // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		startline.jpg

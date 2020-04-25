@@ -62,6 +62,9 @@ namespace Template
                 car = value;
                 car.Collied += (c) =>
                 {
+                    if (car.Health == 0)
+                        return;
+
                     float scale = hitValue / widthHeath;
                     widthHeath -= scale * widthHeath;
                     healthBar.matrix *= Matrix3x2.Scaling(1 - scale, 1.0f, new Vector2(50, lapIcon.bitmap.Size.Height));
