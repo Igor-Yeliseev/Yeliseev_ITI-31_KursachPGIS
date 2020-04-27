@@ -123,7 +123,7 @@ namespace Template
                 {
                     angle = MyMath.Lerp(angle, 0, 1.0f, 0.01f);
                 }
-                else if(angle > maxAngle / 4.0)
+                else if (angle > maxAngle / 4.0)
                 {
                     angle = MyMath.Lerp(angle, 0, 1.3f, 0.01f);
                 }

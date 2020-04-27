@@ -107,3 +107,54 @@ specular:		0.8		0.8		0.8		1.0
 specularPower:	90.0
 textured:		1
 texture:		startline.jpg
+
+11
+name:			Trees // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.2		0.2		0.2		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.8		0.8		0.8		1.0
+specularPower:	90.0
+textured:		1
+texture:		trees.jpg
+
+
+12
+name:			Orange // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.5		0.5		0.5		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.0		0.2		0.5		1.0
+specularPower:	10.0
+textured:		1
+texture:		orange.bmp
+
+13
+name:			Startpoles // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.5		0.5		0.5		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.0		0.2		0.5		1.0
+specularPower:	10.0
+textured:		1
+texture:		startpoles.png
+
+14
+name:			Grass // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.5		0.5		0.5		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.0		0.2		0.5		1.0
+specularPower:	10.0
+textured:		1
+texture:		grass.jpg
+
+15
+name:			stadium // textured
+emissive:		0.0		0.0		0.0		1.0
+ambient:		0.5		0.5		0.5		1.0
+diffuse:		0.3		0.3		0.3		1.0
+specular:		0.0		0.2		0.5		1.0
+specularPower:	10.0
+textured:		1
+texture:		stadium.png

@@ -150,7 +150,7 @@ namespace Template
         }
 
         public int turnCount = 0;
-        public int itrs = 54;
+        public int itrs = 48;
 
 
         /// <summary>
@@ -429,15 +429,15 @@ namespace Template
             }
             else
             {
-                //Speed = MyMath.Lerp(_speed, 0, 1.7f, 0.1f);
-                Speed = MyMath.Lerp(_speed, MaxBackSpeed, 1.0f, 0.1f);
+                Speed = MyMath.Lerp(_speed, -0.3f, 1.7f, 0.1f);
+                //Speed = MyMath.Lerp(_speed, MaxBackSpeed, 1.0f, 0.1f);
             }
         }
 
         /// <summary> Движение по инерции с затуханием скорости </summary>
         public virtual void MoveInertia()
         {
-            Speed = MyMath.Lerp(_speed, 0, 0.3f, 0.2f);
+            Speed = MyMath.Lerp(_speed, 0, 0.4f, 0.2f);
         }
 
 
@@ -474,11 +474,20 @@ namespace Template
         public bool CollisionCheckPoint(CheckPoint chpt)
         {
             colliedCheckPts = OBBox.Contains(ref chpt.OBBox);
-            return (colliedCheckPts == ContainmentType.Intersects) ? true : false;
+            if (colliedCheckPts == ContainmentType.Intersects)
+            {
+                ColliedCheckPoint?.Invoke();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary> Raise event when car collied </summary>
         public event Hit Collied;
+        public event Action ColliedCheckPoint;
 
         /// <summary>
         /// Определение и разрешение коллизий

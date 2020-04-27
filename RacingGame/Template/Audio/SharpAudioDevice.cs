@@ -28,7 +28,7 @@ namespace Audio
         Thread _checkThread;
 
 
-        public long Duration { get; }
+        public int Duration { get; }
 
         /// <summary>
         /// Voice
@@ -53,7 +53,7 @@ namespace Audio
         public SharpAudioVoice(SharpAudioDevice device, string filename)
         {
             _stream = new SoundStream(File.OpenRead(filename));
-            Duration = _stream.Length / 4;
+            Duration = (int)_stream.Length / 4;
             
             _buffer = new AudioBuffer
             {
@@ -76,19 +76,25 @@ namespace Audio
         /// </summary>
         public void Play()
         {
-            //if (_checkThread != null)
-            //    return;
-
             if (_checkThread != null)
             {
                 if (_checkThread.ThreadState == ThreadState.Running)
                     return;
             }
-
-
+            
             _voice.SubmitSourceBuffer(_buffer, _stream.DecodedPacketsInfo);
             _voice.Start();
-            
+            _checkThread = new Thread(new ThreadStart(Check));
+            _checkThread.Start();
+        }
+
+        public void PlayLoop()
+        {
+            _buffer.LoopCount = XAudio2.MaximumLoopCount;
+            _voice.SubmitSourceBuffer(_buffer, _stream.DecodedPacketsInfo);
+            _voice.SetFrequencyRatio(XAudio2.MaximumFrequencyRatio / 2);
+            _voice.Start();
+
             _checkThread = new Thread(new ThreadStart(Check));
             _checkThread.Start();
         }
@@ -160,11 +166,27 @@ namespace Audio
         {
             if (_checkThread == null)
                 return;
-            
+
             _voice.Stop();
             _voice.FlushSourceBuffers();
             _checkThread.Abort();
             Stopped?.Invoke(this);   
+        }
+
+        /// <summary>
+        /// Stop audio
+        /// </summary>
+        public void StopOnce()
+        {
+            if (_checkThread == null)
+                return;
+            if (_checkThread.ThreadState == ThreadState.Aborted)
+                return;
+
+            _voice.Stop();
+            _voice.FlushSourceBuffers();
+            _checkThread.Abort();
+            Stopped?.Invoke(this);
         }
 
         /// <summary>
@@ -177,11 +199,25 @@ namespace Audio
                 return;
             }
 
+            _voice.SetVolume(0.0f);
+            _voice.Stop();
+            //_voice.FlushSourceBuffers();
+            _checkThread.Abort();
+            _checkThread = null;
+            _voice.Dispose();
+            _voice = new SourceVoice(_device.Device, _stream.Format);
+            offset = startPos + samplesPlayed;
+        }
+
+        public void Off()
+        {
+            if (_checkThread == null)
+                return;
+
             _voice.Stop();
             _voice.FlushSourceBuffers();
             _checkThread.Abort();
             _voice = new SourceVoice(_device.Device, _stream.Format);
-            offset = startPos + samplesPlayed;
         }
 
         /// <summary>

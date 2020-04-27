@@ -181,14 +181,19 @@ namespace Template
             _textures.Add(loader.LoadTextureFromFile("Resources\\red.bmp", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\green.bmp", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\blue.bmp", true, _samplerStates.Textured));
-
+            _textures.Add(loader.LoadTextureFromFile("Resources\\orange.bmp", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\trees.jpg", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\startpoles.png", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\road.png", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\stadium.png", true, _samplerStates.Textured));
+
+            _textures.Add(loader.LoadTextureFromFile("Resources\\grass.jpg", true, _samplerStates.Textured));
             SamplerStateDescription samplerStateDescription = new SamplerStateDescription
             {
                 Filter = Filter.MinMagMipPoint,
-                AddressU = TextureAddressMode.Wrap,
-                AddressV = TextureAddressMode.Wrap,
-                AddressW = TextureAddressMode.Wrap,
+                AddressU = TextureAddressMode.Mirror,
+                AddressV = TextureAddressMode.Mirror,
+                AddressW = TextureAddressMode.Mirror,
                 MipLodBias = 0.0f,
                 MaximumAnisotropy = 1,
                 ComparisonFunction = Comparison.Never,
@@ -229,9 +234,17 @@ namespace Template
             var checkPointMeshes = loader.LoadMeshesFromObject("Resources\\checkPoints.obj", _materials[1]);
             gameField.SetCheckPoints(checkPointMeshes);
             // Столбы
-            var pillars = loader.LoadMeshesFromObject("Resources\\pillars.obj", _materials[3]);
+            var pillars = loader.LoadMeshesFromObject("Resources\\pillars.obj", _materials[12]);
             gameField.SetPillars(pillars);
-            gameField.Hedra = loader.LoadMeshesFromObject("Resources\\prism.obj", _materials[2]).First(); 
+            gameField.Hedra = loader.LoadMeshesFromObject("Resources\\prism.obj", _materials[2]).First();
+            // Столбы с фишином
+            var startPoles = loader.LoadMeshesFromObject("Resources\\startpoles.obj", _materials[13]);
+            // Деревья
+            var trees = loader.LoadMeshesFromObject("Resources\\trees.obj", _materials[11]);
+            // Трава
+            var grass = loader.LoadMeshesFromObject("Resources\\grass.obj", _materials[14]);
+            // Стадион
+            var staduim = loader.LoadMeshesFromObject("Resources\\stadium.obj", _materials[15]);
 
             // Машина игрока
             car = new Car(mustang);
@@ -275,7 +288,11 @@ namespace Template
             camaro.ForEach(m => _meshObjects.Add(m));
             delorean.ForEach(m => _meshObjects.Add(m));
             //checkPointMeshes.ForEach(m => _meshObjects.Add(m));
-            
+            trees.ForEach(m => _meshObjects.Add(m));
+            grass.ForEach(m => _meshObjects.Add(m));
+            startPoles.ForEach(m => _meshObjects.Add(m));
+            staduim.ForEach(m => _meshObjects.Add(m));
+
             // 6. Load HUD resources into DirectX 2D object.
             InitHUDResources();
             hudRacing.InitPicsIndicies();
@@ -332,8 +349,12 @@ namespace Template
         private void InitSounds()
         {
             sounds = new Sounds(_inputController, car);
+            sounds.Load("Resources\\Sounds\\idle.wav");
             sounds.Load("Resources\\Sounds\\throttle.wav");
-            sounds.Load("Resources\\Sounds\\reverse.wav");
+            sounds.Load("Resources\\Sounds\\high-rpm.wav");
+            sounds.Load("Resources\\Sounds\\reverse-stop.wav");
+            sounds.Load("Resources\\Sounds\\melodyloop.wav");
+            sounds.Load("Resources\\Sounds\\pickup.wav");
             sounds.Load("Resources\\Sounds\\brake_tires_squal.wav");
             sounds.Load("Resources\\Sounds\\crash.wav");
         }
@@ -438,7 +459,10 @@ namespace Template
                     car.Brake();
                 }
                 else
+                {
                     car.MoveInertia();
+                }
+
                 car.MoveProperly();
                 _character.FollowCar(car);
 
