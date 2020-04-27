@@ -31,7 +31,7 @@ namespace Template
 
         public PhysicalObject(MeshObject mesh) : base(mesh)
         {
-            OBBox = SetOBB(mesh); 
+            OBBox = SetOBB(mesh);
         }
 
         /// <summary>
@@ -72,12 +72,15 @@ namespace Template
         
         public PhysicalObject(List<MeshObject> meshes, Vector3 position) : base(meshes, position)
         {
-
+            OBBox = SetOBB(meshes[0]);
         }
 
+        /// <summary> Конструктор физического объекта </summary>
+        /// <param name="meshes"></param>
         public PhysicalObject(List<MeshObject> meshes) : base(meshes)
         {
-
+            // В 3ds Max первый объект в иерархии должен быть тот, по которому будет строится маска коллицзий 
+            OBBox = SetOBB(meshes[0]);
         }
 
         /// <summary>

@@ -7,12 +7,11 @@ namespace Template
 {
     class GameField
     {
-        private Material material;
         /// <summary> Массив чекпоинтов </summary>
         public CheckPoint[] checkPoints;
         /// <summary> Массив центральных точек боксов чекпоинтов </summary>
         public Vector3[] centerPts; // private
-        private Vector3[] targetPts;
+        //private Vector3[] targetPts;
 
         private List<MeshObject> pillars;
 
@@ -38,6 +37,7 @@ namespace Template
         private TimeHelper timeHelper;
         private Car car;
         private List<EnemyCar> enemies = new List<EnemyCar>();
+        private List<PhysicalObject> prefabs = new List<PhysicalObject>();
 
         private float angle;
         public float Angle { get => angle; set => angle = value; }
@@ -47,10 +47,9 @@ namespace Template
         /// <summary> 2D Худ </summary>
         HUDRacing hud;
 
-        public GameField(TimeHelper timeHelper, HUDRacing hud, Material material)
+        public GameField(TimeHelper timeHelper, HUDRacing hud)
         {
             this.timeHelper = timeHelper;
-            this.material = material;
             this.hud = hud;
             this.hud.lapCount = lapsCount;
             animations = new Animations();
@@ -119,6 +118,10 @@ namespace Template
             enemy.Target = enemy.CheckPoint;
         }
 
+        public void AddPrefab(PhysicalObject prefab)
+        {
+            prefabs.Add(prefab);
+        }
 
         /// <summary>
         /// Проверка окончания гонки
@@ -131,7 +134,7 @@ namespace Template
 
             if (chptIndex < checkPoints.Length && car.CollisionCheckPoint(checkPoints[chptIndex]))
             {
-                checkPoints[chptIndex].SetMaterial(material);
+                //checkPoints[chptIndex].SetMaterial(material);
                 chptIndex++;
                 if (chptIndex == checkPoints.Length)
                 {
@@ -252,10 +255,9 @@ namespace Template
         
         public void CheckCollisions()
         {
-            foreach (var enemy in enemies)
-            {
-                car.CollisionTest(enemy);
-            }
+            enemies.ForEach(enemy => car.CollisionTest(enemy));
+
+            prefabs.ForEach(p => car.CollisionTest(p));
         }
 
     }

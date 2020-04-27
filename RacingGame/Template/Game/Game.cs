@@ -212,7 +212,7 @@ namespace Template
 
             anims = new Animations();
 
-            gameField = new GameField(_timeHelper, hudRacing, _materials[2]);
+            gameField = new GameField(_timeHelper, hudRacing);
 
             // 6. Load meshes.
             _meshObjects = new MeshObjects();
@@ -245,6 +245,8 @@ namespace Template
             var grass = loader.LoadMeshesFromObject("Resources\\grass.obj", _materials[14]);
             // Стадион
             var staduim = loader.LoadMeshesFromObject("Resources\\stadium.obj", _materials[15]);
+            var stadiumPrefab = new StaticPrefab(staduim);
+            gameField.AddPrefab(stadiumPrefab);
 
             // Машина игрока
             car = new Car(mustang);
@@ -349,14 +351,13 @@ namespace Template
         private void InitSounds()
         {
             sounds = new Sounds(_inputController, car);
-            sounds.Load("Resources\\Sounds\\idle.wav");
-            sounds.Load("Resources\\Sounds\\throttle.wav");
-            sounds.Load("Resources\\Sounds\\high-rpm.wav");
-            sounds.Load("Resources\\Sounds\\reverse-stop.wav");
-            sounds.Load("Resources\\Sounds\\melodyloop.wav");
+            //sounds.Load("Resources\\Sounds\\idle.wav");
+            //sounds.Load("Resources\\Sounds\\melodyloop.wav");
             sounds.Load("Resources\\Sounds\\pickup.wav");
-            sounds.Load("Resources\\Sounds\\brake_tires_squal.wav");
             sounds.Load("Resources\\Sounds\\crash.wav");
+
+            //sounds.Load("Resources\\Sounds\\throttle.wav");
+            //sounds.Load("Resources\\Sounds\\brake_tires_squal.wav");
         }
 
         /// <summary>Render form activated callback. Hide cursor.</summary>
@@ -429,16 +430,16 @@ namespace Template
             if (_inputController.KeyboardUpdated)
             {
 
-                if (_inputController.WPressed)
-                {
-                    _character.MoveForwardBy(_timeHelper.DeltaT * _character.Speed);
-                }
-                if (_inputController.SPressed)
-                {
-                    _character.MoveForwardBy(-_timeHelper.DeltaT * _character.Speed);
-                }
-                if (_inputController.DPressed) _character.MoveRightBy(_timeHelper.DeltaT * _character.Speed);
-                if (_inputController.APressed) _character.MoveRightBy(-_timeHelper.DeltaT * _character.Speed);
+                //if (_inputController.WPressed)
+                //{
+                //    _character.MoveForwardBy(_timeHelper.DeltaT * _character.Speed);
+                //}
+                //if (_inputController.SPressed)
+                //{
+                //    _character.MoveForwardBy(-_timeHelper.DeltaT * _character.Speed);
+                //}
+                //if (_inputController.DPressed) _character.MoveRightBy(_timeHelper.DeltaT * _character.Speed);
+                //if (_inputController.APressed) _character.MoveRightBy(-_timeHelper.DeltaT * _character.Speed);
 
 
                 if (_inputController.LeftPressed)
@@ -466,7 +467,7 @@ namespace Template
                 car.MoveProperly();
                 _character.FollowCar(car);
 
-                sounds.Plays();
+                //sounds.Plays();
 
                 //line1.MoveTo(car.AABBox.Maximum);
                 //line2.MoveTo(enemy.AABBox.Maximum);
@@ -487,12 +488,6 @@ namespace Template
                 //line1.MoveTo(enemy.rayFrontRight.Position);
                 //line2.MoveTo(enemy.rayFrontRight.Position + enemy.rayFrontRight.Direction * enemy.minFrontDistance);
 
-
-
-                //enemy.CheckObstacle(ref car.OBBox, alpha);
-                //enemy.Target = target;
-                //enemy.CheckWheelsDirOnTarget(alpha);
-                //enemy.MoveProperly();
 
 
 

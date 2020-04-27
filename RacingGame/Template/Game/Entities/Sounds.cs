@@ -108,7 +108,6 @@ namespace Template
         {
             offset = 0;
             thrtlEnd = true;
-            //HighRPM.PlayLoop();
         }
 
         public bool thrtlEnd = false;

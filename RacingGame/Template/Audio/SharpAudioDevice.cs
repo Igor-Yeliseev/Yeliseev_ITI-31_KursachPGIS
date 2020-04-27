@@ -92,7 +92,6 @@ namespace Audio
         {
             _buffer.LoopCount = XAudio2.MaximumLoopCount;
             _voice.SubmitSourceBuffer(_buffer, _stream.DecodedPacketsInfo);
-            _voice.SetFrequencyRatio(XAudio2.MaximumFrequencyRatio / 2);
             _voice.Start();
 
             _checkThread = new Thread(new ThreadStart(Check));
