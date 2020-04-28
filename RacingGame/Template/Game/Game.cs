@@ -147,8 +147,6 @@ namespace Template
         /// </summary>
         public Game()
         {
-
-            //_gameState = GameState.BeforeStart;
             _helpString = Resources.HelpString;
 
             // Initialization order:
@@ -353,8 +351,8 @@ namespace Template
         {
             sounds.Dispose();
         }
-
-
+        
+        /// <summary> Инициализация и загрузка всех звуков в игру </summary>
         private void InitSounds()
         {
             sounds = new Sounds(_inputController, car);
@@ -570,7 +568,8 @@ namespace Template
                 if (_inputController.Func[2]) _directX3DGraphics.RenderMode = DirectX3DGraphics.RenderModes.Wireframe;
                 // Toggle fullscreen mode by F4, F5.
                 if (_inputController.Func[3]) _directX3DGraphics.IsFullScreen = false;
-                if (_inputController.Func[4]) _directX3DGraphics.IsFullScreen = true;
+                if (_inputController.Func[4])
+                    _directX3DGraphics.IsFullScreen = true;
             }
 
             
@@ -630,7 +629,6 @@ namespace Template
             _directX2DGraphics.BeginDraw();
             _directX2DGraphics.DrawText(text, _HUDResources.textFPSTextFormatIndex, Matrix3x2.Identity,
                                         _directX2DGraphics.RenderTargetClientRectangle, _HUDResources.textFPSBrushIndex + 1); // 0 - Желтый, 1 - Красный, 2 - Черный
-
 
             hudRacing.DrawText();
             hudRacing.DrawBitmaps();

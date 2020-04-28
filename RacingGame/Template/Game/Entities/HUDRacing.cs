@@ -21,8 +21,9 @@ namespace Template
 
         float Left, Right, Bottom, Top;
 
-        DirectX2DGraphics directX2DGraphics;
-        InputController inputController;
+        private DirectX2DGraphics directX2DGraphics;
+        private InputController inputController;
+        private TimeHelper timeHelper;
 
         /// <summary Спидометр </summary>
         Icon speedometer;
@@ -42,13 +43,14 @@ namespace Template
         public Icon[] numbers;
         public Icon placeNumber;
         public int lapIndex = 1;
+        /// <summary> Количество кругов в гонке </summary>
         public int lapCount;
         public int placeIndex = 1;
         Icon slash;
 
         Icon healthBar;
         Icon barFrame;
-        /// <summary> Величина отнятия здоровья (10% от макс здоровья)</summary>
+        /// <summary> Величина отнятия здоровья (% от макс здоровья)</summary>
         float hitValue = 0.2f;
         float widthHeath;
 
@@ -56,6 +58,7 @@ namespace Template
 
         /// <summary> Машина игрока </summary>
         private Car car;
+        /// <summary> Машина игркоа </summary>
         public Car Car
         {
             get { return car; }
@@ -74,8 +77,6 @@ namespace Template
             }
         }
 
-        TimeHelper timeHelper;
-
         /// <summary> Конструктор худа </summary>
         /// <param name="directX2DGraphics"></param>
         /// <param name="inputController"></param>
@@ -84,8 +85,7 @@ namespace Template
             this.directX2DGraphics = directX2DGraphics;
             this.inputController = inputController;
             this.timeHelper = timeHelper;
-
-
+            
             numbers = new Icon[10];
 
             textFormatIndex = directX2DGraphics.NewTextFormat("BankGothic Md BT", FontWeight.UltraBold, FontStyle.Normal,
@@ -95,10 +95,10 @@ namespace Template
 
         private int textFormatIndex;
         private int textBrushIndex;
-
+        
+        /// <summary> Обновить состояние всех изображений hud-а </summary>
         public void Update()
         {
-            
             if (inputController.UpPressed)
             {
                 oldAngle = angle;
@@ -148,6 +148,7 @@ namespace Template
             Top = directX2DGraphics.RenderTargetClientRectangle.Top;
         }
         
+        /// <summary> Инициализация всех индексов картинок </summary>
         public void InitPicsIndicies()
         {
             speedometer.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\speedometer.png");
@@ -170,6 +171,9 @@ namespace Template
             placeIcon.matrix = Matrix3x2.Identity;
         }
 
+        int dd = 0;
+
+        /// <summary> Получить все битмапы картинок </summary>
         public void GetBitmaps()
         {
             speedometer.bitmap = directX2DGraphics.Bitmaps[speedometer.index];
@@ -179,6 +183,8 @@ namespace Template
             ammoIcon.bitmap = directX2DGraphics.Bitmaps[ammoIcon.index];
             barFrame.bitmap = directX2DGraphics.Bitmaps[barFrame.index];
             placeIcon.bitmap = directX2DGraphics.Bitmaps[placeIcon.index];
+            
+            hitValue = 0.2f;
             widthHeath = healthBar.bitmap.Size.Width;
             hitValue = widthHeath * hitValue;
 
@@ -208,8 +214,9 @@ namespace Template
             return transformMatrix;
         }
 
-
+        /// <summary> Отступы по соответствующим осям </summary>
         private float X, Y;
+        /// <summary> Отрисовка всех картинок hud-а </summary>
         public void DrawBitmaps()
         {
             directX2DGraphics.DrawBitmap(speedometer.index, GetTransformMatrix(ref speedometer), 1.0f, BitmapInterpolationMode.Linear);
@@ -236,10 +243,14 @@ namespace Template
             }
         }
 
+        /// <summary> Минуты </summary>
         private int minutes;
         private int minPassed = 60;
+        /// <summary> Время гонки </summary>
         private string raceTime;
 
+        /// <summary> Текущее время гонки </summary>
+        /// <returns></returns>
         private string getTime()
         {
             if (car.Lap == lapCount)
@@ -252,10 +263,10 @@ namespace Template
             }
 
             raceTime = $"0:{ minutes }:{ timeHelper.Time:f2}";
-
             return raceTime;
         }
 
+        /// <summary> Отрисовка текста </summary>
         public void DrawText()
         {
             Matrix3x2 transform = Matrix3x2.Translation(new Vector2(Right * 0.75f, 70));
