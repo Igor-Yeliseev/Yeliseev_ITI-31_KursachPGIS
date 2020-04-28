@@ -26,8 +26,7 @@ namespace Audio
         AudioBuffer _buffer;
         SoundStream _stream;
         Thread _checkThread;
-
-
+        
         public int Duration { get; }
 
         /// <summary>
@@ -169,7 +168,7 @@ namespace Audio
             _voice.Stop();
             _voice.FlushSourceBuffers();
             _checkThread.Abort();
-            Stopped?.Invoke(this);   
+            Stopped?.Invoke(this);
         }
 
         /// <summary>
@@ -242,7 +241,6 @@ namespace Audio
             _voice.Dispose();
             _stream.Dispose();
             _buffer.Stream.Dispose();
-
         }
     }
 }

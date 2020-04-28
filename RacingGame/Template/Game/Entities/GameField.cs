@@ -32,19 +32,24 @@ namespace Template
 
         private int place = 1;
 
+        /// <summary> Индекс для коллеции чекпоинтов </summary>
         private int chptIndex = 0;
 
         private TimeHelper timeHelper;
+        /// <summary> Машина игрока </summary>
         private Car car;
+        /// <summary> Соперники по гонке </summary>
         private List<EnemyCar> enemies = new List<EnemyCar>();
+        /// <summary> Физические объекты в игре</summary>
         private List<PhysicalObject> prefabs = new List<PhysicalObject>();
 
+        /// <summary> Угол поворота коле за один кадр (расчитывается в самом начале во избежание просадок FPS)</summary>
         private float angle;
         public float Angle { get => angle; set => angle = value; }
 
         Animations animations;
 
-        /// <summary> 2D Худ </summary>
+        /// <summary> Мой гоночный 2D Худ </summary>
         HUDRacing hud;
 
         public GameField(TimeHelper timeHelper, HUDRacing hud)
@@ -57,6 +62,8 @@ namespace Template
 
         public void SetCheckPoints(List<MeshObject> meshes)
         {
+            meshes.Sort(new CheckPointsComparer());
+
             checkPoints = new CheckPoint[meshes.Count];
             centerPts = new Vector3[meshes.Count];
 
@@ -69,6 +76,7 @@ namespace Template
 
         }
 
+        /// <summary> Значек из симс </summary>
         MeshObject _hedra1, _hedra2;
         /// <summary> Значок над цилиднром </summary>
         public MeshObject Hedra
@@ -92,13 +100,16 @@ namespace Template
 
         public void Draw(Matrix viewMatrix, Matrix projectionMatrix)
         {
-            pillars[chptIndex * 2].Render(viewMatrix, projectionMatrix);
-            pillars[chptIndex * 2 + 1].Render(viewMatrix, projectionMatrix);
+            int indx = 2 * ((chptIndex != checkPoints.Length - 1) ? chptIndex : chptIndex - 2);
+            indx *= (chptIndex == checkPoints.Length) ? 0 : 1; 
 
-            _hedra1.Position = pillars[chptIndex * 2].Position;
+            pillars[indx].Render(viewMatrix, projectionMatrix);
+            pillars[indx + 1].Render(viewMatrix, projectionMatrix);
+
+            _hedra1.Position = pillars[indx].Position;
             _hedra1.Render(viewMatrix, projectionMatrix);
 
-            _hedra2.Position = pillars[chptIndex * 2 + 1].Position;
+            _hedra2.Position = pillars[indx + 1].Position;
             _hedra2.Render(viewMatrix, projectionMatrix);
 
             _hedra1.YawBy(angle);
@@ -118,6 +129,8 @@ namespace Template
             enemy.Target = enemy.CheckPoint;
         }
 
+        /// <summary> Добавить физический объект </summary>
+        /// <param name="prefab"></param>
         public void AddPrefab(PhysicalObject prefab)
         {
             prefabs.Add(prefab);
@@ -141,7 +154,6 @@ namespace Template
                     car.Lap++;
                     if (car.Lap == lapsCount)
                     {
-                        hud.placeIcon.matrix = Matrix3x2.Identity;
                         hud.placeNumber = hud.numbers[hud.placeIndex];
                         hud.placeNumber.matrix = Matrix3x2.Identity;
                         hud.placeNumber.matrix *= Matrix3x2.Scaling(2.0f);
@@ -197,16 +209,13 @@ namespace Template
                 //enemy.Target = centerPts[enemy.targetIndex];
                 int index = enemy.targetIndex;
                 enemy.CheckPoint = centerPts[index] + checkPoints[index].Direction * randomIncremCoord(checkPoints[index]);
-                line.MoveTo(enemy.CheckPoint);
                 enemy.Target = enemy.CheckPoint;
 
                 enemy.MaxSpeed = MyMath.Random(18, 28);
             }
 
         }
-
-        public MeshObject line;
-
+        
         /// <summary> Двигать врага к цели </summary>
         private void GoToTarget(EnemyCar enemy)
         {
@@ -237,6 +246,7 @@ namespace Template
             GoToTarget(enemy);
         }
 
+        /// <summary> Симуляция движения соперников </summary>
         public void MoveEnemies()
         {
             for (int i = 0; i < enemies.Count; i++)
@@ -253,6 +263,7 @@ namespace Template
         }
 
         
+        /// <summary> Проверка и обработка столкновений всех физических объектов </summary>
         public void CheckCollisions()
         {
             enemies.ForEach(enemy => car.CollisionTest(enemy));

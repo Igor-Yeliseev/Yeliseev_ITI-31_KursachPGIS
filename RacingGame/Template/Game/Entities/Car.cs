@@ -14,11 +14,11 @@ namespace Template
     class Car : PhysicalObject
     {
         /// <summary> Переднее левое колесо </summary>
-        public MeshObject wheel1;
+        protected MeshObject wheel1;
         /// <summary> Переднее правое колесо </summary>
         protected MeshObject wheel2;
         /// <summary> Car's body mesh </summary>
-        public MeshObject Body;
+        protected MeshObject Body;
 
         /// <summary> Вектор направления движения </summary>
         protected Vector3 _direction;
@@ -33,12 +33,12 @@ namespace Template
         /// <summary> Задний мост (точка центра) </summary>
         protected Vector3 _rearAxle;
         /// <summary> Задний мост (точка центра) </summary>
-        public Vector3 RearAxle { get => _rearAxle; set => _rearAxle = value; }
+        protected Vector3 RearAxle { get => _rearAxle; set => _rearAxle = value; }
 
         /// <summary> Вектор направления машины (от центра заднего до центре переднего моста) </summary>
         protected Vector3 _carDirection;
         /// <summary> Вектор направления машины (от центра заднего до центре переднего моста) </summary>
-        public Vector3 CarDirection { get => _carDirection; set => _carDirection = value; }
+        public Vector3 CarDirection { get => _carDirection; private set => _carDirection = value; }
 
         /// <summary> Мертв ли враг </summary>
         public bool IsDead { get; set; }
@@ -97,7 +97,7 @@ namespace Template
         }
 
         /// <summary> Угол поворота </summary>
-        float angle = 0;
+        private float angle = 0;
         /// <summary> Угол поворота </summary>
         public float Angle { get => angle; private set => angle = value; }
 
@@ -152,7 +152,6 @@ namespace Template
         public int turnCount = 0;
         public int itrs = 48;
 
-
         /// <summary>
         /// Конструктор машины
         /// </summary>
@@ -188,17 +187,6 @@ namespace Template
             TranslateAABB(_position);
         }
         
-
-        public MeshObject this[string name]
-        {
-            get
-            {
-                var mesh = _meshes.Where(m => m.Name == name);
-                return mesh.FirstOrDefault();
-            }
-        }
-
-
         public virtual void TurnWheelsLeft(float alpha)
         {
             if (turnCount >= -itrs)
@@ -439,7 +427,6 @@ namespace Template
         {
             Speed = MyMath.Lerp(_speed, 0, 0.4f, 0.2f);
         }
-
 
         /// <summary>
         /// Анимация возврата коле в начальное положение

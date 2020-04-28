@@ -234,15 +234,15 @@ namespace Template
         {
             _renderTarget.BeginDraw();
         }
-
+        
         /// <summary>Draw text.</summary>
         /// <param name="text">String to draw.</param>
         /// <param name="textFormatIndex">Index of text format in internal collection.</param>
         /// <param name="layoutRectangle">Rectangle in witch draw text.</param>
         /// <param name="brushIndex">Index of brush in internal collection.</param>
-        public void DrawText(string text, int textFormatIndex, RawRectangleF layoutRectangle, int brushIndex)
+        public void DrawText(string text, int textFormatIndex, Matrix3x2 transform, RawRectangleF layoutRectangle, int brushIndex)
         {
-            _renderTarget.Transform = Matrix3x2.Identity;
+            _renderTarget.Transform = transform;
             _renderTarget.DrawText(text, _textFormats[textFormatIndex], layoutRectangle, _solidColorBrushes[brushIndex]);
         }
 
@@ -251,8 +251,7 @@ namespace Template
         /// <param name="transformMatrix">Coordinate transform matrix.</param>
         /// <param name="opacity">Opacity.</param>
         /// <param name="interpolationMode">Interpolation mode.</param>
-        public void DrawBitmap(int bitmapIndex, Matrix3x2 transformMatrix, float opacity,
-            SharpDX.Direct2D1.BitmapInterpolationMode interpolationMode)
+        public void DrawBitmap(int bitmapIndex, Matrix3x2 transformMatrix, float opacity, SharpDX.Direct2D1.BitmapInterpolationMode interpolationMode)
         {
             _renderTarget.Transform = transformMatrix;
             _renderTarget.DrawBitmap(_bitmaps[bitmapIndex], opacity, interpolationMode);

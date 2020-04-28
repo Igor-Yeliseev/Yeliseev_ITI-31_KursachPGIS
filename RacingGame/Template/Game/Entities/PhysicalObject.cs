@@ -9,6 +9,9 @@ namespace Template
         public OrientedBoundingBox OBBox;
         /// <summary> The axis aligned bounding box </summary>
         public BoundingBox AABBox;
+
+        /// <summary> Переместить AABB </summary>
+        /// <param name="vector"></param>
         protected void TranslateAABB(Vector3 vector)
         {
             AABBox.Minimum += vector;

@@ -122,7 +122,7 @@ namespace Template
         {
             if (!firstRun)
             {
-                Idle.PlayLoop();
+                //Idle.PlayLoop();
                 Melody.Voice.SetVolume(0.75f);
                 Melody.PlayLoop();
                 firstRun = true;
@@ -176,7 +176,7 @@ namespace Template
         {
             foreach (var sound in sounds)
             {
-                if(sound != null)
+                if (sound != null)
                 {
                     sound.Stop();
                     sound.Dispose();

@@ -1,5 +1,6 @@
 ﻿using SharpDX;
 using SharpDX.Direct2D1;
+using SharpDX.DirectWrite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace Template
         public Icon[] numbers;
         public Icon placeNumber;
         public int lapIndex = 1;
-        public int lapCount = 0;
+        public int lapCount;
         public int placeIndex = 1;
         Icon slash;
 
@@ -53,6 +54,7 @@ namespace Template
 
         public Icon placeIcon;
 
+        /// <summary> Машина игрока </summary>
         private Car car;
         public Car Car
         {
@@ -72,39 +74,31 @@ namespace Template
             }
         }
 
-        public HUDRacing(DirectX2DGraphics directX2DGraphics, InputController inputController)
+        TimeHelper timeHelper;
+
+        /// <summary> Конструктор худа </summary>
+        /// <param name="directX2DGraphics"></param>
+        /// <param name="inputController"></param>
+        public HUDRacing(DirectX2DGraphics directX2DGraphics, InputController inputController, TimeHelper timeHelper)
         {
             this.directX2DGraphics = directX2DGraphics;
             this.inputController = inputController;
+            this.timeHelper = timeHelper;
+
 
             numbers = new Icon[10];
+
+            textFormatIndex = directX2DGraphics.NewTextFormat("BankGothic Md BT", FontWeight.UltraBold, FontStyle.Normal,
+                                FontStretch.Normal, 55, TextAlignment.Leading, ParagraphAlignment.Near);
+            textBrushIndex = directX2DGraphics.NewSolidColorBrush(new SharpDX.Mathematics.Interop.RawColor4(0.78f, 0.337f, 0.153f, 1.0f));
         }
+
+        private int textFormatIndex;
+        private int textBrushIndex;
 
         public void Update()
         {
-            if (inputController.Space)
-            {
-                //numbers[placeIndex].matrix = Matrix3x2.Identity;
-                //placeNumber = numbers[placeIndex];
-                //placeNumber.matrix = Matrix3x2.Identity;
-                //placeNumber.matrix *= Matrix3x2.Scaling(2.0f);
-
-                //lapIndex++;
-                //if (lapIndex > 9) lapIndex = 0;
-
-                //if (widthHeath > 0)
-                //{
-                //    float scale = hitValue / widthHeath;
-                //    widthHeath -= scale * widthHeath;
-                //    healthBar.matrix *= Matrix3x2.Scaling(1 - scale, 1.0f, new Vector2(50, lapIcon.bitmap.Size.Height));
-                //}
-
-                //float scale = hitValue / widthHeath;
-                //widthHeath += scale * widthHeath;
-                //healthBar.matrix *= Matrix3x2.Scaling(1 + scale, 1.0f, new Vector2(50, lapIcon.bitmap.Size.Height));
-
-            }
-
+            
             if (inputController.UpPressed)
             {
                 oldAngle = angle;
@@ -173,7 +167,7 @@ namespace Template
             
             speedometer.matrix = arrowSpeed.matrix = lapIcon.matrix = healthBar.matrix = 
                 barFrame.matrix = slash.matrix = ammoIcon.matrix = Matrix3x2.Identity;
-            //placeIcon.matrix *= 0;
+            placeIcon.matrix = Matrix3x2.Identity;
         }
 
         public void GetBitmaps()
@@ -218,33 +212,54 @@ namespace Template
         private float X, Y;
         public void DrawBitmaps()
         {
-            directX2DGraphics.DrawBitmap(speedometer.index, GetTransformMatrix(ref speedometer), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
-            directX2DGraphics.DrawBitmap(arrowSpeed.index, GetTransformMatrix(ref arrowSpeed), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
-            directX2DGraphics.DrawBitmap(lapIcon.index, GetTransformMatrix(ref lapIcon, 50, 0), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
-            directX2DGraphics.DrawBitmap(numbers[lapIndex].index, GetTransformMatrix(ref numbers[lapIndex], 50 + lapIcon.bitmap.Size.Width, 0),
-                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(speedometer.index, GetTransformMatrix(ref speedometer), 1.0f, BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(arrowSpeed.index, GetTransformMatrix(ref arrowSpeed), 1.0f, BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(lapIcon.index, GetTransformMatrix(ref lapIcon, 50, 0), 1.0f, BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(numbers[lapIndex].index, GetTransformMatrix(ref numbers[lapIndex], 50 + lapIcon.bitmap.Size.Width, 0), 1.0f, BitmapInterpolationMode.Linear);
 
             X = lapIcon.bitmap.Size.Width + numbers[lapIndex].bitmap.Size.Width;
-            directX2DGraphics.DrawBitmap(slash.index, GetTransformMatrix(ref slash, X, 0), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(slash.index, GetTransformMatrix(ref slash, X, 0), 1.0f, BitmapInterpolationMode.Linear);
             
-            directX2DGraphics.DrawBitmap(numbers[lapCount].index, GetTransformMatrix(ref numbers[lapCount], X + 60, 0),
-                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(numbers[lapCount].index, GetTransformMatrix(ref numbers[lapCount], X + 60, 0), 1.0f, BitmapInterpolationMode.Linear);
 
             Y = lapIcon.bitmap.Size.Height;
-            directX2DGraphics.DrawBitmap(healthBar.index, GetTransformMatrix(ref healthBar, 50, Y),
-                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
-            directX2DGraphics.DrawBitmap(barFrame.index, GetTransformMatrix(ref barFrame, 50-6, Y - 6),
-                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(healthBar.index, GetTransformMatrix(ref healthBar, 50, Y), 1.0f, BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(barFrame.index, GetTransformMatrix(ref barFrame, 50-6, Y - 6), 1.0f, BitmapInterpolationMode.Linear);
 
-            directX2DGraphics.DrawBitmap(ammoIcon.index, GetTransformMatrix(ref ammoIcon, 50, Y + 20),
-                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+            directX2DGraphics.DrawBitmap(ammoIcon.index, GetTransformMatrix(ref ammoIcon, 50, Y + 20), 1.0f, BitmapInterpolationMode.Linear);
 
+            if(car.Lap == lapCount)
+            {
+                directX2DGraphics.DrawBitmap(placeIcon.index, GetTransformMatrix(ref placeIcon, (Right - placeIcon.bitmap.Size.Width) / 2,
+                                        (Bottom - placeIcon.bitmap.Size.Height) / 2), 1.0f, BitmapInterpolationMode.Linear);
+                directX2DGraphics.DrawBitmap(placeNumber.index, GetTransformMatrix(ref placeNumber, 400, 50), 1.0f, BitmapInterpolationMode.Linear);
+            }
+        }
 
-            directX2DGraphics.DrawBitmap(placeIcon.index, GetTransformMatrix(ref placeIcon, (Right - placeIcon.bitmap.Size.Width) / 2,
-                                                                                            (Bottom - placeIcon.bitmap.Size.Height) / 2), 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+        private int minutes;
+        private int minPassed = 60;
+        private string raceTime;
 
-            directX2DGraphics.DrawBitmap(placeNumber.index, GetTransformMatrix(ref placeNumber, 400, 50),
-                                          1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
+        private string getTime()
+        {
+            if (car.Lap == lapCount)
+                return raceTime;
+
+            if (timeHelper.Time >= minPassed)
+            {
+                minPassed += 60;
+                minutes++;
+            }
+
+            raceTime = $"0:{ minutes }:{ timeHelper.Time:f2}";
+
+            return raceTime;
+        }
+
+        public void DrawText()
+        {
+            Matrix3x2 transform = Matrix3x2.Translation(new Vector2(Right * 0.75f, 70));
+            directX2DGraphics.DrawText(getTime(), textFormatIndex, transform, directX2DGraphics.RenderTargetClientRectangle, textBrushIndex);
         }
     }
 }

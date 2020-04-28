@@ -161,6 +161,7 @@
     <Compile Include="Game\Entities\Box.cs" />
     <Compile Include="Game\Entities\Car.cs" />
     <Compile Include="Game\Entities\CheckPoint.cs" />
+    <Compile Include="Game\Entities\CheckPointsComparer.cs" />
     <Compile Include="Game\Entities\Enemy.cs" />
     <Compile Include="Game\Entities\GameField.cs" />
     <Compile Include="Game\Entities\GameObject.cs" />
@@ -203,7 +204,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
-    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

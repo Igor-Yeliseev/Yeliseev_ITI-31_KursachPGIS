@@ -158,6 +158,7 @@ namespace Template
             _renderForm.UserResized += RenderFormResizedCallback;
             _renderForm.Activated += RenderFormActivatedCallback;
             _renderForm.Deactivate += RenderFormDeactivateCallback;
+            _renderForm.Closing += RenderForm_Closing;
             // Input controller and time helper.
             _inputController = new InputController(_renderForm);
             _timeHelper = new TimeHelper();
@@ -170,7 +171,7 @@ namespace Template
             // 4. DirectX 2D.
             _directX2DGraphics = new DirectX2DGraphics(_directX3DGraphics);
             // Мой худ
-            hudRacing = new HUDRacing(_directX2DGraphics, _inputController);
+            hudRacing = new HUDRacing(_directX2DGraphics, _inputController, _timeHelper);
             // 5. Load materials
             Loader loader = new Loader(_directX3DGraphics, _directX2DGraphics, _renderer, _directX2DGraphics.ImagingFactory);
             _samplerStates = new SamplerStates(_directX3DGraphics);
@@ -348,11 +349,17 @@ namespace Template
 
         }
 
+        private void RenderForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            sounds.Dispose();
+        }
+
+
         private void InitSounds()
         {
             sounds = new Sounds(_inputController, car);
             //sounds.Load("Resources\\Sounds\\idle.wav");
-            //sounds.Load("Resources\\Sounds\\melodyloop.wav");
+            sounds.Load("Resources\\Sounds\\melodyloop.wav");
             sounds.Load("Resources\\Sounds\\pickup.wav");
             sounds.Load("Resources\\Sounds\\crash.wav");
 
@@ -388,14 +395,11 @@ namespace Template
             hudRacing.GetRectSides();
             hudRacing.GetBitmaps();
         }
-
-        float ANGLE;
+        
         float deltaTime = 0;
         float alpha;
-        float whlAngle;
         string screen = "";
-        int ct = 0, ch = 0;
-        //FileStream fs;
+        
 
         /// <summary>Callback for RenderLoop.Run. Handle input and render scene.</summary>
         public void RenderLoopCallback()
@@ -422,8 +426,6 @@ namespace Template
                 car.MoveBy(new Vector3(-30.0f, 0.0f, 13.0f));
                 enemy.MoveBy(new Vector3(-30.0f, 0.0f, -5.0f));
                 
-                gameField.line = line2;
-
                 box2.MoveBy(new Vector3(-13.0f, 0.0f, 20.0f));
             }
 
@@ -463,11 +465,10 @@ namespace Template
                 {
                     car.MoveInertia();
                 }
-
                 car.MoveProperly();
                 _character.FollowCar(car);
 
-                //sounds.Plays();
+                sounds.Plays();
 
                 //line1.MoveTo(car.AABBox.Maximum);
                 //line2.MoveTo(enemy.AABBox.Maximum);
@@ -475,9 +476,7 @@ namespace Template
                 if (_inputController.Space)
                 {
                     //anims.IsEnemyTurned = false;
-                    
                     car.BackWheels();
-                    
                 }
 
 
@@ -562,7 +561,6 @@ namespace Template
 
                 if (_inputController.Esc)
                 {
-                    sounds.Dispose();
                     _renderForm.Close();
                 }                               // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 // Toggle help by F1.
@@ -575,16 +573,7 @@ namespace Template
                 if (_inputController.Func[4]) _directX3DGraphics.IsFullScreen = true;
             }
 
-
-            // Collision Detection
-            //if (enemy.CollisionTest(box2))
-            //{
-            //    //enemy.CollisionResponce(box2);
-            //    //enemy.Speed = 0;
-            //}
-            //screen = (car.IsCollied) ? "True" : "False";
-
-
+            
             _viewMatrix = _camera.GetViewMatrix();
 
             _renderer.BeginRender();
@@ -605,8 +594,7 @@ namespace Template
                 {
                     _renderer.SetPerObjectConstants(_timeHelper.Time, 0);
                 }
-                MeshObject meshObject = _meshObjects[i];
-                meshObject.Render(_viewMatrix, _projectionMatrix);
+                _meshObjects[i].Render(_viewMatrix, _projectionMatrix);
             }
 
             gameField.Draw(_viewMatrix, _projectionMatrix);
@@ -638,15 +626,13 @@ namespace Template
                                 $"Data: {screen}\n";
 
             if (_displayHelp) text += "\n\n" + _helpString;
-            float armorWidthInDIP = _directX2DGraphics.Bitmaps[_HUDResources.armorIconIndex].Size.Width;
-            float armorHeightInDIP = _directX2DGraphics.Bitmaps[_HUDResources.armorIconIndex].Size.Height;
-            Matrix3x2 armorTransformMatrix = Matrix3x2.Translation(new Vector2(_directX2DGraphics.RenderTargetClientRectangle.Right - armorWidthInDIP - 1, 1));
-
+            
             _directX2DGraphics.BeginDraw();
-            _directX2DGraphics.DrawText(text, _HUDResources.textFPSTextFormatIndex, _directX2DGraphics.RenderTargetClientRectangle, _HUDResources.textFPSBrushIndex + 1); // 0 - Желтый, 1 - Красный, 2 - Черный
+            _directX2DGraphics.DrawText(text, _HUDResources.textFPSTextFormatIndex, Matrix3x2.Identity,
+                                        _directX2DGraphics.RenderTargetClientRectangle, _HUDResources.textFPSBrushIndex + 1); // 0 - Желтый, 1 - Красный, 2 - Черный
 
-            _directX2DGraphics.DrawBitmap(_HUDResources.armorIconIndex, armorTransformMatrix, 1.0f, SharpDX.Direct2D1.BitmapInterpolationMode.Linear);
 
+            hudRacing.DrawText();
             hudRacing.DrawBitmaps();
 
             _directX2DGraphics.EndDraw();

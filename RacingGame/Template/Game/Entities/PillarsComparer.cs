@@ -21,4 +21,5 @@ namespace Template
                 return 0;
         }
     }
+
 }
