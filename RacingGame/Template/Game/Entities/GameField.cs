@@ -1,6 +1,8 @@
 ﻿using SharpDX;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using Template.Graphics;
 
 namespace Template
@@ -46,18 +48,20 @@ namespace Template
         /// <summary> Угол поворота коле за один кадр (расчитывается в самом начале во избежание просадок FPS)</summary>
         private float angle;
         public float Angle { get => angle; set => angle = value; }
-
-        Animations animations;
+        
 
         /// <summary> Мой гоночный 2D Худ </summary>
         HUDRacing hud;
+        /// <summary> Игровые звуки</summary>
+        Sounds sounds;
 
-        public GameField(TimeHelper timeHelper, HUDRacing hud)
+
+        public GameField(TimeHelper timeHelper, HUDRacing hud, Sounds sounds)
         {
             this.timeHelper = timeHelper;
             this.hud = hud;
             this.hud.lapCount = lapsCount;
-            animations = new Animations();
+            this.sounds = sounds;
         }
 
         public void SetCheckPoints(List<MeshObject> meshes)
@@ -114,11 +118,15 @@ namespace Template
 
             _hedra1.YawBy(angle);
             _hedra2.YawBy(angle);
+
+            // Отрисовка бонусов и ловушек
+            bonuses.ForEach(b => b.Draw(viewMatrix, projectionMatrix, angle * 0.7f));
         }
 
         public void SetCar(Car car)
         {
             this.car = car;
+            sounds.Car = car;
         }
 
         public void AddEnemy(EnemyCar enemy)
@@ -127,6 +135,29 @@ namespace Template
             enemy.MaxSpeed = 25;
             enemy.CheckPoint = centerPts[0] + checkPoints[0].Direction * randomIncremCoord(checkPoints[0]);
             enemy.Target = enemy.CheckPoint;
+        }
+
+        /// <summary> Бонусы </summary>
+        private List<Bonus> bonuses = new List<Bonus>();
+
+        /// <summary> Добавить бонус </summary>
+        /// <param name="bonus"> Добавляемый бонус </param>
+        public void AddBonus(Bonus bonus)
+        {
+            bonuses.Add(bonus);
+            sounds.AddSoundBonus(bonus);
+            hud.AddBonus(bonus);
+        }
+
+        /// <summary>
+        /// Словарь мешей бонусов по типу бонуса
+        /// </summary>
+        private Dictionary<BonusType, MeshObject> bonusMeshes = new Dictionary<BonusType, MeshObject>();
+        /// <summary> Добавить меши бонусов </summary>
+        /// <param name="mesh"></param>
+        public void AddBonusMesh(MeshObject mesh, BonusType type)
+        {
+            bonusMeshes.Add(type, mesh);
         }
 
         /// <summary> Добавить физический объект </summary>
@@ -165,6 +196,66 @@ namespace Template
                     chptIndex = 0;
                 }
             }
+        }
+
+
+        int sign = 0;
+        Bonus spike;
+        int countHP, countSpeed, countDamage;
+
+        /// <summary>
+        /// Метод создания бонусов на карте
+        /// </summary>
+        public void CreateBonuses()
+        {
+
+            countHP = bonuses.Where(b => b.Type == BonusType.Health).Count();
+            countSpeed = bonuses.Where(b => b.Type == BonusType.Speed).Count();
+            countDamage = bonuses.Where(b => b.Type == BonusType.Damage).Count();
+
+            if (spike != null)
+            {
+                var dir = spike.Position - (car.Position - (car.Direction * 10));
+                if (Math.Sign(MyVector.CosProduct(spike.Direction, dir)) != sign)
+                {
+                    bonuses.Remove(spike);
+                    spike.Dispose();
+                    sign = 0;
+                }
+            }
+
+            if (countHP == 0)
+            {
+                Bonus heatlh = new Bonus((MeshObject)bonusMeshes[BonusType.Health].Clone(), BonusType.Health, 20);
+                heatlh.MoveTo(getRandPos(chptIndex, heatlh.Position.Y));
+                AddBonus(heatlh);
+            }
+            if (countSpeed == 0)
+            {
+                Bonus speed = new Bonus((MeshObject)bonusMeshes[BonusType.Speed].Clone(), BonusType.Speed, 20);
+                speed.MoveTo(getRandPos(chptIndex + 1, speed.Position.Y));
+                AddBonus(speed);
+            }
+            if (countDamage == 0)
+            {
+                Bonus damage = new Bonus((MeshObject)bonusMeshes[BonusType.Damage].Clone(), BonusType.Damage, 20);
+                damage.MoveTo(getRandPos(chptIndex, damage.Position.Y));
+                // Знак косого произведения
+                sign = Math.Sign(MyVector.CosProduct(damage.Direction, damage.Position - car.Position));
+                spike = damage;
+                AddBonus(damage);
+            }
+
+        }
+
+        private Vector3 getRandPos(int idx, float Y = 0)
+        {
+            if (idx == checkPoints.Length - 1)
+                idx = 0;
+
+            var pt = centerPts[idx] + checkPoints[idx].Direction * randomIncremCoord(checkPoints[idx]);
+            pt += (checkPoints[idx + 1].Position - checkPoints[idx].Position) * 0.8f;
+            return new Vector3(pt.X, Y, pt.Z);
         }
 
         /// <summary> Рандом приращения координаты от центра чекпоинта </summary>
@@ -269,6 +360,16 @@ namespace Template
             enemies.ForEach(enemy => car.CollisionTest(enemy));
 
             prefabs.ForEach(p => car.CollisionTest(p));
+            
+            int countB = bonuses.Count;
+            for (int i = 0; i < countB; i++)
+            {
+                if (bonuses[i].CollisionTest(car))
+                {
+                    bonuses.RemoveAt(i);
+                    countB--;
+                }
+            }
         }
 
     }

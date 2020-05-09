@@ -26,15 +26,19 @@ namespace Template
             {
                 return (collied == ContainmentType.Intersects) ? true : false;
             }
-            set
+            protected set
             {
                 collied = (value == true) ? ContainmentType.Intersects : ContainmentType.Disjoint;
             }
         }
 
+
+
         public PhysicalObject(MeshObject mesh) : base(mesh)
         {
             OBBox = SetOBB(mesh);
+            OBBox.Translate(mesh.Position);
+            TranslateAABB(mesh.Position);
         }
 
         /// <summary>

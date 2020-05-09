@@ -93,7 +93,6 @@ namespace Template
         #endregion
 
         private Material _material;
-
         public Material Material { get => _material; set => _material = value; }
         
 
@@ -229,7 +228,9 @@ namespace Template
 
         public object Clone()
         {
-            return (MeshObject) MemberwiseClone();
+            MeshObject mesh = new MeshObject(_name, _directX3DGraphics, _renderer, (Vector4)_position, _yaw, _pitch, _roll,
+                _vertices, _indexes, _material);
+            return (MeshObject) mesh;
         }
         
     }

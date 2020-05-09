@@ -98,7 +98,7 @@ namespace Template
         private Character _character;
         private Car car;
         private EnemyCar enemy, enemy2, enemy3;
-        private Box box1, box2, box3;
+        //private Box box1, box2, box3;
         private GameField gameField;
 
         private Sounds sounds;
@@ -181,10 +181,13 @@ namespace Template
             _textures.Add(loader.LoadTextureFromFile("Resources\\green.bmp", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\blue.bmp", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\orange.bmp", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\black.bmp", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\trees.jpg", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\startpoles.png", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\road.png", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\stadium.png", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\bonus-nitro.png", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\bonus-health.png", true, _samplerStates.Textured));
 
             _textures.Add(loader.LoadTextureFromFile("Resources\\grass.jpg", true, _samplerStates.Textured));
             SamplerStateDescription samplerStateDescription = new SamplerStateDescription
@@ -209,9 +212,12 @@ namespace Template
             _textures.Add(loader.LoadTextureFromFile("Resources\\startline.jpg", true, _samplerStates.Textured));
             _materials = loader.LoadMaterials("Resources\\materials.txt", _textures);
 
+            // Load game sounds
+            InitSounds();
+
             anims = new Animations();
 
-            gameField = new GameField(_timeHelper, hudRacing);
+            gameField = new GameField(_timeHelper, hudRacing, sounds);
 
             // 6. Load meshes.
             _meshObjects = new MeshObjects();
@@ -219,10 +225,6 @@ namespace Template
             line2 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[3]);
             line3 = (MeshObject)line1.Clone();
             line4 = (MeshObject)line2.Clone();
-
-            var mbox1 = loader.LoadMeshObject("Resources\\box.txt", _materials);
-            var mbox2 = loader.LoadMeshObject("Resources\\box.txt", _materials);
-            var mbox3 = (MeshObject)mbox1.Clone(); mbox3.MoveBy(new Vector3(-50.0f, 1.0f, 50.0f));
 
             var mustang = loader.LoadMeshesFromObject("Resources\\mustang.obj", _materials[6]);
             var corvette = loader.LoadMeshesFromObject("Resources\\corvette.obj", _materials[7]);
@@ -246,6 +248,18 @@ namespace Template
             var staduim = loader.LoadMeshesFromObject("Resources\\stadium.obj", _materials[15]);
             var stadiumPrefab = new StaticPrefab(staduim);
             gameField.AddPrefab(stadiumPrefab);
+            // Бонусы
+            var bonusNitro = loader.LoadMeshFromObject("Resources\\bonus.obj", _materials[16]);
+            var bonusHealth = loader.LoadMeshFromObject("Resources\\bonus.obj", _materials[17]);
+            var bonusSpike = loader.LoadMeshFromObject("Resources\\spikes.obj", _materials[18]);
+            //bonusNitro.MoveBy(new Vector3(0, 0, 65));
+            //bonusSpike.MoveBy(new Vector3(-25, 0, 45));
+            //gameField.AddBonus(new Bonus(bonusSpike, BonusType.Damage, 40));
+            //gameField.AddBonus(new Bonus(bonusNitro, BonusType.Speed, 10));
+            //gameField.AddBonus(new Bonus(bonusHealth, BonusType.Health, 50));
+            gameField.AddBonusMesh(bonusSpike, BonusType.Damage);
+            gameField.AddBonusMesh(bonusNitro, BonusType.Speed);
+            gameField.AddBonusMesh(bonusHealth, BonusType.Health);
 
             // Машина игрока
             car = new Car(mustang);
@@ -260,11 +274,14 @@ namespace Template
             //gameField.AddEnemy(enemy3);
 
             // Кубы для тестов
-            box1 = new Box(mbox1);
-            box3 = new Box(mbox3);
-            box1.MoveBy(new Vector3(0.0f, 1.0f, 0.0f)); mbox1.Material = _materials[1];
-            box2 = new Box(mbox2);
-            box2.MoveBy(new Vector3(0.0f, 1.0f, 5.0f));
+            //var mbox1 = loader.LoadMeshObject("Resources\\box.txt", _materials);
+            //var mbox2 = loader.LoadMeshObject("Resources\\box.txt", _materials);
+            //var mbox3 = (MeshObject)mbox1.Clone(); mbox3.MoveBy(new Vector3(-50.0f, 1.0f, 50.0f));
+            //box1 = new Box(mbox1);
+            //box3 = new Box(mbox3);
+            //box1.MoveBy(new Vector3(0.0f, 1.0f, 0.0f)); mbox1.Material = _materials[1];
+            //box2 = new Box(mbox2);
+            //box2.MoveBy(new Vector3(0.0f, 1.0f, 5.0f));
 
             // Перемещения
             enemy2.MoveBy(new Vector3(-45.0f, 0.0f, 7.0f));
@@ -274,9 +291,6 @@ namespace Template
 
 
             // Добавление мешей
-            _meshObjects.Add(mbox1);
-            _meshObjects.Add(mbox2);
-            _meshObjects.Add(mbox3);
             _meshObjects.Add(line1);
             _meshObjects.Add(line2);
             _meshObjects.Add(line3);
@@ -298,12 +312,9 @@ namespace Template
             InitHUDResources();
             hudRacing.InitPicsIndicies();
 
-            // Load game sounds
-            InitSounds();
-
             loader = null;
 
-            _illumination = new Illumination(Vector4.Zero, new Vector4(1.0f, 1.0f, 0.9f, 1.0f), new LightSource[]
+            _illumination = new Illumination(Vector4.Zero, new Vector4(1.0f, 1.0f, 1.0f, 1.0f), new LightSource[]
             {
                 new LightSource(LightSource.LightType.DirectionalLight,
                     new Vector4(0.0f, 20.0f, 0.0f, 1.0f),   // Position
@@ -324,13 +335,13 @@ namespace Template
                     0.005f,
                     1),
                 new LightSource(LightSource.LightType.PointLight,
-                    new Vector4(-4.0f, 2.0f, 0.0f, 1.0f),
-                    Vector4.Zero,
-                    new Vector4(1.0f, 1.0f, 1.0f, 1.0f),
-                    0.0f,
-                    0.0f, //0.8f,
-                    0.02f, //0.0002f,
-                    0.005f,
+                    new Vector4(-4.0f, 2.0f, 0.0f, 1.0f), // Position
+                    Vector4.Zero,                         // Direction
+                    new Vector4(1.0f, 1.0f, 1.0f, 1.0f),  // Color
+                    0.0f,                                 // Spot angle
+                    1.0f,                                 // Const atten
+                    0.02f, //0.0002f,                     // Linear atten
+                    0.005f,                               // Quadratic atten
                     1),
                 new LightSource(),
                 new LightSource(),
@@ -350,16 +361,20 @@ namespace Template
         private void RenderForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             sounds.Dispose();
+            threadBonuses.Abort();
         }
         
         /// <summary> Инициализация и загрузка всех звуков в игру </summary>
         private void InitSounds()
         {
-            sounds = new Sounds(_inputController, car);
+            sounds = new Sounds(_inputController);
             //sounds.Load("Resources\\Sounds\\idle.wav");
             sounds.Load("Resources\\Sounds\\melodyloop.wav");
             sounds.Load("Resources\\Sounds\\pickup.wav");
             sounds.Load("Resources\\Sounds\\crash.wav");
+            sounds.Load("Resources\\Sounds\\bonus-nitro.wav");
+            sounds.Load("Resources\\Sounds\\bonus-health.wav");
+            sounds.Load("Resources\\Sounds\\bonus-tire-puncture.wav");
 
             //sounds.Load("Resources\\Sounds\\throttle.wav");
             //sounds.Load("Resources\\Sounds\\brake_tires_squal.wav");
@@ -397,7 +412,23 @@ namespace Template
         float deltaTime = 0;
         float alpha;
         string screen = "";
-        
+        int cv = 1;
+
+        /// <summary> Поток для бонусов и ловушек </summary>
+        Thread threadBonuses = new Thread(new ParameterizedThreadStart(func));
+        /// <summary> Функция для потока генерации призов и ловушек </summary>
+        /// <param name="gameField"></param>
+        static void func(object gameField)
+        {
+            GameField gf = (GameField)gameField;
+
+            while (true)
+            {
+                gf.CreateBonuses();
+                Thread.Sleep(1000);
+            }
+        }
+
 
         /// <summary>Callback for RenderLoop.Run. Handle input and render scene.</summary>
         public void RenderLoopCallback()
@@ -411,7 +442,7 @@ namespace Template
                 _character.YawBy(_inputController.MouseRelativePositionX * _angularCameraRotationStep); // вправо влево
             }
 
-            alpha = 2.0f * (float)Math.PI * 0.25f * deltaTime;
+            alpha = (float)Math.PI * 0.0135f;
 
             if (_firstRun)
             {
@@ -423,23 +454,22 @@ namespace Template
                 hudRacing.Car = car;
                 car.MoveBy(new Vector3(-30.0f, 0.0f, 13.0f));
                 enemy.MoveBy(new Vector3(-30.0f, 0.0f, -5.0f));
-                
-                box2.MoveBy(new Vector3(-13.0f, 0.0f, 20.0f));
+                threadBonuses.Start(gameField);
             }
 
             if (_inputController.KeyboardUpdated)
             {
 
-                //if (_inputController.WPressed)
-                //{
-                //    _character.MoveForwardBy(_timeHelper.DeltaT * _character.Speed);
-                //}
-                //if (_inputController.SPressed)
-                //{
-                //    _character.MoveForwardBy(-_timeHelper.DeltaT * _character.Speed);
-                //}
-                //if (_inputController.DPressed) _character.MoveRightBy(_timeHelper.DeltaT * _character.Speed);
-                //if (_inputController.APressed) _character.MoveRightBy(-_timeHelper.DeltaT * _character.Speed);
+                if (_inputController.WPressed)
+                {
+                    _character.MoveForwardBy(_timeHelper.DeltaT * _character.Speed);
+                }
+                if (_inputController.SPressed)
+                {
+                    _character.MoveForwardBy(-_timeHelper.DeltaT * _character.Speed);
+                }
+                if (_inputController.DPressed) _character.MoveRightBy(_timeHelper.DeltaT * _character.Speed);
+                if (_inputController.APressed) _character.MoveRightBy(-_timeHelper.DeltaT * _character.Speed);
 
 
                 if (_inputController.LeftPressed)
@@ -468,22 +498,12 @@ namespace Template
 
                 sounds.Plays();
 
-                //line1.MoveTo(car.AABBox.Maximum);
-                //line2.MoveTo(enemy.AABBox.Maximum);
 
                 if (_inputController.Space)
                 {
                     //anims.IsEnemyTurned = false;
-                    car.BackWheels();
+                    //car.BackWheels();
                 }
-
-
-                // Вражеская машина
-                //enemy.Move();
-                //line3.MoveTo(car.RearAxle);
-                //line4.MoveTo(car.RearAxle + car.CarDirection);
-                //line1.MoveTo(enemy.rayFrontRight.Position);
-                //line2.MoveTo(enemy.rayFrontRight.Position + enemy.rayFrontRight.Direction * enemy.minFrontDistance);
 
 
 
@@ -507,6 +527,9 @@ namespace Template
                 gameField.CheckRaceFinish();
                 //gameField.MoveEnemies();
                 gameField.CheckCollisions();
+                //gameField.CreateBonuses();
+
+
 
                 //if (_inputController.Num1Pressed)
                 //{
@@ -579,7 +602,7 @@ namespace Template
 
             _illumination.EyePosition = (Vector4)_camera.Position;
             LightSource light2 = _illumination[2];
-            if (RandomUtil.NextFloat(_random, 0.0f, 1.0f) < 0.2f) light2.Enabled = (1 ==light2.Enabled ? 0 : 1);
+            if (RandomUtil.NextFloat(_random, 0.0f, 1.0f) < 0.2f) light2.Enabled = (1 == light2.Enabled ? 0 : 1);
             _illumination[2] = light2;
             _renderer.UpdateIlluminationProperties(_illumination);
 

@@ -24,7 +24,20 @@ namespace Template
 
         public override bool CollisionTest(PhysicalObject obj)
         {
-            return false;
+            if (AABBox.Intersects(obj.AABBox))
+            {
+                collied = OBBox.Contains(ref obj.OBBox);
+
+                if (collied == SharpDX.ContainmentType.Intersects)
+                {
+                    CollisionResponce(obj);
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
         }
     }
 }

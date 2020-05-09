@@ -20,6 +20,9 @@ namespace Template
         private bool IsThrottled = true;
 
         public SharpAudioVoice Pickup;
+        public SharpAudioVoice BonusHealth;
+        public SharpAudioVoice TirePuncture;
+        public SharpAudioVoice BonusNitro;
         public SharpAudioVoice Melody;
         /// <summary> Звук столкновения с другой машиной </summary>
         public SharpAudioVoice Crash;
@@ -32,23 +35,51 @@ namespace Template
 
         InputController inputController;
         Car car;
+        /// <summary> Задать звуки для машины</summary>
+        public Car Car
+        {
+            set
+            {
+                car = value;
 
-        public Sounds(InputController inputController, Car car)
+                car.Collied += (c) =>
+                {
+                    Crash.Play();
+                };
+                car.ColliedCheckPoint += () =>
+                {
+                    Pickup.Play();
+                };
+            }
+        }
+
+
+        public Sounds(InputController inputController)
         {
             this.inputController = inputController;
-            this.car = car;
-            this.car.Collied += (c) =>
-            {
-                Crash.Play();
-            };
-            this.car.ColliedCheckPoint += () =>
-            {
-                Pickup.Play();
-            };
             sounds = new List<SharpAudioVoice>();
             sounds.Capacity = 7;
         }
         
+
+        /// <summary> Добавить звук на бонус</summary>
+        /// <param name="bonus"></param>
+        public void AddSoundBonus(Bonus bonus)
+        {
+            switch (bonus.Type)
+            {
+                case BonusType.Health:
+                    bonus.OnCatched += (v) => BonusHealth.Play();
+                    break;
+                case BonusType.Speed:
+                    bonus.OnCatched += (v) => BonusNitro.Play();
+                    break;
+                case BonusType.Damage:
+                    bonus.OnCatched += (v) => TirePuncture.Play();
+                    break;
+            }
+        }
+
         public void Load(string fileName)
         {
             if (fileName.Contains("idle"))
@@ -71,6 +102,24 @@ namespace Template
             {
                 Crash = new SharpAudioVoice(_device, fileName);
                 sounds.Add(Crash);
+            }
+            else if (fileName.Contains("bonus"))
+            {
+                if (fileName.Contains("nitro"))
+                {
+                    BonusNitro = new SharpAudioVoice(_device, fileName);
+                    sounds.Add(BonusNitro);
+                }
+                else if(fileName.Contains("health"))
+                {
+                    BonusHealth = new SharpAudioVoice(_device, fileName);
+                    sounds.Add(BonusHealth);
+                }
+                else if (fileName.Contains("tire-puncture"))
+                {
+                    TirePuncture = new SharpAudioVoice(_device, fileName);
+                    sounds.Add(TirePuncture);
+                }
             }
             else if (fileName.Contains("brake"))
             {

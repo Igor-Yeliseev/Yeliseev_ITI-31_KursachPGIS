@@ -65,14 +65,32 @@ namespace Template
             set
             {
                 car = value;
-                car.Collied += (c) =>
+                car.Collied += (persent) =>
                 {
                     if (car.IsDead)
                         return;
 
+                    hitValue = persent * widthHeath;
+
                     float scale = hitValue / widthHeath;
                     widthHeath -= scale * widthHeath;
                     healthBar.matrix *= Matrix3x2.Scaling(1 - scale, 1.0f, new Vector2(50, lapIcon.bitmap.Size.Height));
+                };
+            }
+        }
+
+        public void AddBonus(Bonus bonus)
+        {
+            if(bonus.Type == BonusType.Health)
+            {
+                bonus.OnCatched += (persent) =>
+                {
+                    if (persent == 0)
+                        return;
+
+                    float scale = persent;
+                    widthHeath += scale * widthHeath;
+                    healthBar.matrix *= Matrix3x2.Scaling(1 + scale, 1.0f, new Vector2(50, lapIcon.bitmap.Size.Height));
                 };
             }
         }

@@ -13,7 +13,7 @@ namespace Template
 
         protected Vector3 _position;
 
-        public Vector3 Position { get => _position; }
+        public Vector3 Position { get => _position;}
 
         public GameObject(MeshObject mesh)
         {

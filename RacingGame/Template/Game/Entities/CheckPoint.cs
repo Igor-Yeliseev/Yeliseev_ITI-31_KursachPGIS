@@ -18,7 +18,7 @@ namespace Template
         {
             Name = mesh.Name;
             index = int.Parse(Name.Last().ToString());
-
+            _position = OBBox.Center;
         }
 
         /// <summary>

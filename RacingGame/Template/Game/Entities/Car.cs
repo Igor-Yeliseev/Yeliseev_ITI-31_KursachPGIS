@@ -9,7 +9,6 @@ using Template.Graphics;
 
 namespace Template
 {
-    internal delegate void Hit(Car car);
 
     class Car : PhysicalObject
     {
@@ -44,9 +43,9 @@ namespace Template
         public bool IsDead { get; set; }
 
         /// <summary> Здоровье </summary>
-        protected int _health = 100;
+        protected float _health = 100;
         /// <summary> Здоровье </summary>
-        public int Health
+        public float Health
         {
             get
             {
@@ -417,7 +416,7 @@ namespace Template
             }
             else
             {
-                Speed = MyMath.Lerp(_speed, -0.3f, 1.7f, 0.1f);
+                Speed = MyMath.Lerp(_speed, -3.0f, 1.7f, 0.1f);
                 //Speed = MyMath.Lerp(_speed, MaxBackSpeed, 1.0f, 0.1f);
             }
         }
@@ -473,7 +472,7 @@ namespace Template
         }
 
         /// <summary> Raise event when car collied </summary>
-        public event Hit Collied;
+        public event Action<float> Collied;
         public event Action ColliedCheckPoint;
 
         /// <summary>
@@ -497,7 +496,7 @@ namespace Template
             else
                 return false;
         }
-
+        
         /// <summary>
         /// Разрешение столкновения машины и объекта
         /// </summary>
@@ -506,8 +505,8 @@ namespace Template
         {
             if(_speed > 8)
             {
+                Collied?.Invoke(20 / Health);
                 Health -= 20;
-                Collied?.Invoke(this);
             }
 
             if (_speed > 0)
