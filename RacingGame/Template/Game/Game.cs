@@ -97,7 +97,7 @@ namespace Template
         /// <summary>Character.</summary>
         private Character _character;
         private Car car;
-        private EnemyCar enemy, enemy2, enemy3;
+        private EnemyCar enemy1, enemy2, enemy3;
         private GameField gameField;
 
         private Sounds sounds;
@@ -264,16 +264,19 @@ namespace Template
             gameField.SetCar(car);
             // Машина соперника
             var delorean = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
-            enemy = new EnemyCar(delorean);
+            enemy1 = new EnemyCar(delorean);
             enemy2 = new EnemyCar(camaro);
             enemy3 = new EnemyCar(corvette);
-            gameField.AddEnemy(enemy);
+            gameField.AddEnemy(enemy1);
             gameField.AddEnemy(enemy2);
             gameField.AddEnemy(enemy3);
 
             // Перемещения
-            enemy2.MoveBy(new Vector3(-45.0f, 0.0f, 7.0f));
-            enemy3.MoveBy(new Vector3(-55.0f, 0.0f, 7.0f));
+            car.MoveBy(new Vector3(0.0f, 0.0f, -50.0f));
+
+            enemy1.MoveBy(new Vector3(9.0f, 0.0f, -29.0f));
+            enemy2.MoveBy(new Vector3(-7.0f, 0.0f, -30.0f));
+            enemy3.MoveBy(new Vector3(1.0f, 0.0f, -30.0f));
             line2.MoveTo(new Vector3(0, 0, 0));
             line1.MoveTo(camaro.First().CenterPosition);
 
@@ -437,8 +440,6 @@ namespace Template
 
                 RenderFormResizedCallback(this, new EventArgs());
                 hudRacing.Car = car;
-                car.MoveBy(new Vector3(-30.0f, 0.0f, 13.0f));
-                enemy.MoveBy(new Vector3(-30.0f, 0.0f, -5.0f));
                 threadBonuses.Start(gameField);
             }
 
@@ -625,11 +626,11 @@ namespace Template
                                 $"car Position X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
                                 $"car Speed: {car.Speed} ups\n\n" +
                                 
-                                $"enemy Position   X: {enemy.Position.X} Y:{enemy.Position.Y} Z:{enemy.Position.Z}\n" +
-                                $"enemy Direction   X: {enemy.Direction.X} Y:{enemy.Direction.Y} Z:{enemy.Direction.Z}\n" +
-                                $"enemy Speed: {enemy.Speed} ups\n" +
-                                $"enemy MaxSpeed: {enemy.MaxSpeed} ups\n" +
-                                $"enemy Acceleration: {enemy.Acceleration} ups\n" +
+                                $"enemy Position   X: {enemy1.Position.X} Y:{enemy1.Position.Y} Z:{enemy1.Position.Z}\n" +
+                                $"enemy Direction   X: {enemy1.Direction.X} Y:{enemy1.Direction.Y} Z:{enemy1.Direction.Z}\n" +
+                                $"enemy Speed: {enemy1.Speed} ups\n" +
+                                $"enemy MaxSpeed: {enemy1.MaxSpeed} ups\n" +
+                                $"enemy Acceleration: {enemy1.Acceleration} ups\n" +
                                 $"Data: {screen}\n";
 
             if (_displayHelp) text += "\n\n" + _helpString;
