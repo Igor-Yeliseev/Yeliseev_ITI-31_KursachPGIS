@@ -56,5 +56,20 @@ namespace Template
         {
             MoveTo(v.X, v.Y, v.Z);
         }
+
+        public virtual void RotateY(float angle)
+        {
+            _meshes.ForEach(m => m.YawBy(angle));
+        }
+
+        public virtual void RotateX(float angle)
+        {
+            _meshes.ForEach(m => m.PitchBy(angle));
+        }
+
+        public virtual void RotateZ(float angle)
+        {
+            _meshes.ForEach(m => m.RollBy(angle));
+        }
     }
 }

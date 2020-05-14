@@ -257,9 +257,9 @@ namespace Template
             //gameField.AddBonus(new Bonus(bonusSpike, BonusType.Damage, 40));
             //gameField.AddBonus(new Bonus(bonusNitro, BonusType.Speed, 10));
             //gameField.AddBonus(new Bonus(bonusHealth, BonusType.Health, 50));
-            gameField.AddBonusMesh(bonusSpike, BonusType.Damage);
-            gameField.AddBonusMesh(bonusNitro, BonusType.Speed);
-            gameField.AddBonusMesh(bonusHealth, BonusType.Health);
+            gameField.AddBonusMesh(bonusSpike, SurpriseType.Damage);
+            gameField.AddBonusMesh(bonusNitro, SurpriseType.Speed);
+            gameField.AddBonusMesh(bonusHealth, SurpriseType.Health);
 
             // Машина игрока
             car = new Car(mustang);

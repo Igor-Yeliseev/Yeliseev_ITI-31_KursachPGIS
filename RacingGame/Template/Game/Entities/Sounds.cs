@@ -64,17 +64,17 @@ namespace Template
 
         /// <summary> Добавить звук на бонус</summary>
         /// <param name="bonus"></param>
-        public void AddSoundBonus(Bonus bonus)
+        public void AddSoundBonus(Surprise bonus)
         {
             switch (bonus.Type)
             {
-                case BonusType.Health:
+                case SurpriseType.Health:
                     bonus.OnCatched += (v) => BonusHealth.Play();
                     break;
-                case BonusType.Speed:
+                case SurpriseType.Speed:
                     bonus.OnCatched += (v) => BonusNitro.Play();
                     break;
-                case BonusType.Damage:
+                case SurpriseType.Damage:
                     bonus.OnCatched += (v) => TirePuncture.Play();
                     break;
             }

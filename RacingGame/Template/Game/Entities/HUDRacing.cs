@@ -79,9 +79,9 @@ namespace Template
             }
         }
 
-        public void AddBonus(Bonus bonus)
+        public void AddBonus(Surprise bonus)
         {
-            if(bonus.Type == BonusType.Health)
+            if(bonus.Type == SurpriseType.Health)
             {
                 bonus.OnCatched += (persent) =>
                 {

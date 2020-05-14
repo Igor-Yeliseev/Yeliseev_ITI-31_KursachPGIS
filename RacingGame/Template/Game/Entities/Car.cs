@@ -27,12 +27,12 @@ namespace Template
         /// <summary> Передний мост (точка центра) </summary>
         protected Vector3 _frontAxle;
         /// <summary> Передний мост (точка центра) </summary>
-        public Vector3 FrontAxle { get => _frontAxle; set => _frontAxle = value; }
+        //public Vector3 FrontAxle { get => _frontAxle; set => _frontAxle = value; }
 
         /// <summary> Задний мост (точка центра) </summary>
         protected Vector3 _rearAxle;
         /// <summary> Задний мост (точка центра) </summary>
-        protected Vector3 RearAxle { get => _rearAxle; set => _rearAxle = value; }
+        //protected Vector3 RearAxle { get => _rearAxle; set => _rearAxle = value; }
 
         /// <summary> Вектор направления машины (от центра заднего до центре переднего моста) </summary>
         protected Vector3 _carDirection;

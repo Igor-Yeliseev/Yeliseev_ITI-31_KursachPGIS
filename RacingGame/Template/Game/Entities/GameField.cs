@@ -138,11 +138,11 @@ namespace Template
         }
 
         /// <summary> Бонусы </summary>
-        private List<Bonus> bonuses = new List<Bonus>();
+        private List<Surprise> bonuses = new List<Surprise>();
 
         /// <summary> Добавить бонус </summary>
         /// <param name="bonus"> Добавляемый бонус </param>
-        public void AddBonus(Bonus bonus)
+        public void AddBonus(Surprise bonus)
         {
             bonuses.Add(bonus);
             sounds.AddSoundBonus(bonus);
@@ -152,10 +152,10 @@ namespace Template
         /// <summary>
         /// Словарь мешей бонусов по типу бонуса
         /// </summary>
-        private Dictionary<BonusType, MeshObject> bonusMeshes = new Dictionary<BonusType, MeshObject>();
+        private Dictionary<SurpriseType, MeshObject> bonusMeshes = new Dictionary<SurpriseType, MeshObject>();
         /// <summary> Добавить меши бонусов </summary>
         /// <param name="mesh"></param>
-        public void AddBonusMesh(MeshObject mesh, BonusType type)
+        public void AddBonusMesh(MeshObject mesh, SurpriseType type)
         {
             bonusMeshes.Add(type, mesh);
         }
@@ -200,7 +200,7 @@ namespace Template
 
 
         int sign = 0;
-        Bonus spike;
+        Surprise spike;
         int countHP, countSpeed, countDamage;
 
         /// <summary>
@@ -209,9 +209,9 @@ namespace Template
         public void CreateBonuses()
         {
 
-            countHP = bonuses.Where(b => b.Type == BonusType.Health).Count();
-            countSpeed = bonuses.Where(b => b.Type == BonusType.Speed).Count();
-            countDamage = bonuses.Where(b => b.Type == BonusType.Damage).Count();
+            countHP = bonuses.Where(b => b.Type == SurpriseType.Health).Count();
+            countSpeed = bonuses.Where(b => b.Type == SurpriseType.Speed).Count();
+            countDamage = bonuses.Where(b => b.Type == SurpriseType.Damage).Count();
 
             if (spike != null)
             {
@@ -226,19 +226,19 @@ namespace Template
 
             if (countHP == 0)
             {
-                Bonus heatlh = new Bonus((MeshObject)bonusMeshes[BonusType.Health].Clone(), BonusType.Health, 20);
+                Surprise heatlh = new Surprise((MeshObject)bonusMeshes[SurpriseType.Health].Clone(), SurpriseType.Health, 20);
                 heatlh.MoveTo(getRandPos(chptIndex, heatlh.Position.Y));
                 AddBonus(heatlh);
             }
             if (countSpeed == 0)
             {
-                Bonus speed = new Bonus((MeshObject)bonusMeshes[BonusType.Speed].Clone(), BonusType.Speed, 20);
+                Surprise speed = new Surprise((MeshObject)bonusMeshes[SurpriseType.Speed].Clone(), SurpriseType.Speed, 20);
                 speed.MoveTo(getRandPos(chptIndex + 1, speed.Position.Y));
                 AddBonus(speed);
             }
             if (countDamage == 0)
             {
-                Bonus damage = new Bonus((MeshObject)bonusMeshes[BonusType.Damage].Clone(), BonusType.Damage, 20);
+                Surprise damage = new Surprise((MeshObject)bonusMeshes[SurpriseType.Damage].Clone(), SurpriseType.Damage, 20);
                 damage.MoveTo(getRandPos(chptIndex, damage.Position.Y));
                 // Знак косого произведения
                 sign = Math.Sign(MyVector.CosProduct(damage.Direction, damage.Position - car.Position));

@@ -73,7 +73,6 @@ namespace Template
 
         public override void CollisionResponce(PhysicalObject obj)
         {
-            throw new NotImplementedException();
         }
     }
 }
