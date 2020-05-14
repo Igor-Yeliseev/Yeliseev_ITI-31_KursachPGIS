@@ -33,7 +33,7 @@ namespace Template
             }
         }
 
-        private int place = 1;
+        //private int place = 1;
 
         /// <summary> Индекс для коллеции чекпоинтов </summary>
         private int chptIndex = 0;
