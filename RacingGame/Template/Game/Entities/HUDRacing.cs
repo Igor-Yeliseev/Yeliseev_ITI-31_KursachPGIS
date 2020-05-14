@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Template.Entities.Abstract_Factory;
 
 namespace Template
 {
@@ -79,11 +80,11 @@ namespace Template
             }
         }
 
-        public void AddBonus(Surprise bonus)
+        public void AddBonus(SurPrise surprise)
         {
-            if(bonus.Type == SurpriseType.Health)
+            if(surprise.Type == SurpriseType.Health)
             {
-                bonus.OnCatched += (persent) =>
+                surprise.OnCatched += (persent) =>
                 {
                     if (persent == 0)
                         return;

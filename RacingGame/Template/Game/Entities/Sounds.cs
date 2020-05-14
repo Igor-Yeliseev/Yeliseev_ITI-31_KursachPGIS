@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Template.Entities.Abstract_Factory;
 
 namespace Template
 {
@@ -60,22 +61,22 @@ namespace Template
             sounds = new List<SharpAudioVoice>();
             sounds.Capacity = 7;
         }
-        
 
-        /// <summary> Добавить звук на бонус</summary>
-        /// <param name="bonus"></param>
-        public void AddSoundBonus(Surprise bonus)
+
+        /// <summary> Добавить звук на сюрприз</summary>
+        /// <param name="surprise"></param>
+        public void AddSoundBonus(SurPrise surprise)
         {
-            switch (bonus.Type)
+            switch (surprise.Type)
             {
                 case SurpriseType.Health:
-                    bonus.OnCatched += (v) => BonusHealth.Play();
+                    surprise.OnCatched += (v) => BonusHealth.Play();
                     break;
                 case SurpriseType.Speed:
-                    bonus.OnCatched += (v) => BonusNitro.Play();
+                    surprise.OnCatched += (v) => BonusNitro.Play();
                     break;
                 case SurpriseType.Damage:
-                    bonus.OnCatched += (v) => TirePuncture.Play();
+                    surprise.OnCatched += (v) => TirePuncture.Play();
                     break;
             }
         }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Template.Entities.Abstract_Factory;
 using Template.Graphics;
 
 namespace Template
@@ -18,7 +19,7 @@ namespace Template
         private List<MeshObject> pillars;
 
         /// <summary> Количество кругов в гонке </summary>
-        private int lapsCount = 1;
+        private int lapsCount = 4;
         /// <summary> Количество кругов в гонке </summary>
         public int LapCount
         {
@@ -62,6 +63,8 @@ namespace Template
             this.hud = hud;
             this.hud.lapCount = lapsCount;
             this.sounds = sounds;
+
+
         }
 
         public void SetCheckPoints(List<MeshObject> meshes)
@@ -120,7 +123,7 @@ namespace Template
             _hedra2.YawBy(angle);
 
             // Отрисовка бонусов и ловушек
-            bonuses.ForEach(b => b.Draw(viewMatrix, projectionMatrix, angle * 0.7f));
+            surprises.ForEach(b => b.Draw(viewMatrix, projectionMatrix, angle * 0.7f));
         }
 
         public void SetCar(Car car)
@@ -137,16 +140,16 @@ namespace Template
             enemy.Target = enemy.CheckPoint;
         }
 
-        /// <summary> Бонусы </summary>
-        private List<Surprise> bonuses = new List<Surprise>();
+        /// <summary> Сюрпризы </summary>
+        private List<SurPrise> surprises = new List<SurPrise>();
 
         /// <summary> Добавить бонус </summary>
         /// <param name="bonus"> Добавляемый бонус </param>
-        public void AddBonus(Surprise bonus)
+        public void AddBonus(SurPrise surprise)
         {
-            bonuses.Add(bonus);
-            sounds.AddSoundBonus(bonus);
-            hud.AddBonus(bonus);
+            surprises.Add(surprise);
+            sounds.AddSoundBonus(surprise);
+            hud.AddBonus(surprise);
         }
 
         /// <summary>
@@ -200,25 +203,28 @@ namespace Template
 
 
         int sign = 0;
-        Surprise spike;
+        SurPrise spike;
         int countHP, countSpeed, countDamage;
+        /// <summary> Фабрика сюрпризов </summary>
+        ISurpriseCreator surpriseFactory = null;
+        SurPrise prise;
 
         /// <summary>
         /// Метод создания бонусов на карте
         /// </summary>
-        public void CreateBonuses()
+        public void CreateSurprises()
         {
 
-            countHP = bonuses.Where(b => b.Type == SurpriseType.Health).Count();
-            countSpeed = bonuses.Where(b => b.Type == SurpriseType.Speed).Count();
-            countDamage = bonuses.Where(b => b.Type == SurpriseType.Damage).Count();
+            countHP = surprises.Where(b => b.Type == SurpriseType.Health).Count();
+            countSpeed = surprises.Where(b => b.Type == SurpriseType.Speed).Count();
+            countDamage = surprises.Where(b => b.Type == SurpriseType.Damage).Count();
 
             if (spike != null)
             {
                 var dir = spike.Position - (car.Position - (car.Direction * 10));
                 if (Math.Sign(MyVector.CosProduct(spike.Direction, dir)) != sign)
                 {
-                    bonuses.Remove(spike);
+                    surprises.Remove(spike);
                     spike.Dispose();
                     sign = 0;
                 }
@@ -226,24 +232,37 @@ namespace Template
 
             if (countHP == 0)
             {
-                Surprise heatlh = new Surprise((MeshObject)bonusMeshes[SurpriseType.Health].Clone(), SurpriseType.Health, 20);
-                heatlh.MoveTo(getRandPos(chptIndex, heatlh.Position.Y));
-                AddBonus(heatlh);
+                surpriseFactory = new HealthCreator();
+                SurPrise health = surpriseFactory.Create((MeshObject)bonusMeshes[SurpriseType.Health].Clone());
+                health.MoveTo(getRandPos(chptIndex, health.Position.Y));
+
+                //Surprise heatlh = new Surprise((MeshObject)bonusMeshes[SurpriseType.Health].Clone(), SurpriseType.Health, 20);
+                //heatlh.MoveTo(getRandPos(chptIndex, heatlh.Position.Y));
+                AddBonus(health);
             }
             if (countSpeed == 0)
             {
-                Surprise speed = new Surprise((MeshObject)bonusMeshes[SurpriseType.Speed].Clone(), SurpriseType.Speed, 20);
+                surpriseFactory = new ExtraSpeedCreator();
+                SurPrise speed = surpriseFactory.Create((MeshObject)bonusMeshes[SurpriseType.Speed].Clone());
                 speed.MoveTo(getRandPos(chptIndex + 1, speed.Position.Y));
+
+                //Surprise speed = new Surprise((MeshObject)bonusMeshes[SurpriseType.Speed].Clone(), SurpriseType.Speed, 20);
+                //speed.MoveTo(getRandPos(chptIndex + 1, speed.Position.Y));
                 AddBonus(speed);
             }
             if (countDamage == 0)
             {
-                Surprise damage = new Surprise((MeshObject)bonusMeshes[SurpriseType.Damage].Clone(), SurpriseType.Damage, 20);
-                damage.MoveTo(getRandPos(chptIndex, damage.Position.Y));
+                surpriseFactory = new TrapCreator();
+                SurPrise trap = surpriseFactory.Create((MeshObject)bonusMeshes[SurpriseType.Damage].Clone());
+                trap.MoveTo(getRandPos(chptIndex, trap.Position.Y));
+
+
+                //Surprise damage = new Surprise((MeshObject)bonusMeshes[SurpriseType.Damage].Clone(), SurpriseType.Damage, 20);
+                //damage.MoveTo(getRandPos(chptIndex, damage.Position.Y));
                 // Знак косого произведения
-                sign = Math.Sign(MyVector.CosProduct(damage.Direction, damage.Position - car.Position));
-                spike = damage;
-                AddBonus(damage);
+                sign = Math.Sign(MyVector.CosProduct(trap.Direction, trap.Position - car.Position));
+                spike = trap;
+                AddBonus(trap);
             }
 
         }
@@ -361,12 +380,12 @@ namespace Template
 
             prefabs.ForEach(p => car.CollisionTest(p));
             
-            int countB = bonuses.Count;
+            int countB = surprises.Count;
             for (int i = 0; i < countB; i++)
             {
-                if (bonuses[i].CollisionTest(car))
+                if (surprises[i].CollisionTest(car))
                 {
-                    bonuses.RemoveAt(i);
+                    surprises.RemoveAt(i);
                     countB--;
                 }
             }

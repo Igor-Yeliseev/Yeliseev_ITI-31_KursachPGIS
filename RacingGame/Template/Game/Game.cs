@@ -98,7 +98,6 @@ namespace Template
         private Character _character;
         private Car car;
         private EnemyCar enemy, enemy2, enemy3;
-        //private Box box1, box2, box3;
         private GameField gameField;
 
         private Sounds sounds;
@@ -111,7 +110,6 @@ namespace Template
 
         /// <summary>Projection matrix.</summary>
         private Matrix _projectionMatrix;
-
         /// <summary>View matrix.</summary>
         private Matrix _viewMatrix;
 
@@ -270,18 +268,8 @@ namespace Template
             enemy2 = new EnemyCar(camaro);
             enemy3 = new EnemyCar(corvette);
             gameField.AddEnemy(enemy);
-            //gameField.AddEnemy(enemy2);
-            //gameField.AddEnemy(enemy3);
-
-            // Кубы для тестов
-            //var mbox1 = loader.LoadMeshObject("Resources\\box.txt", _materials);
-            //var mbox2 = loader.LoadMeshObject("Resources\\box.txt", _materials);
-            //var mbox3 = (MeshObject)mbox1.Clone(); mbox3.MoveBy(new Vector3(-50.0f, 1.0f, 50.0f));
-            //box1 = new Box(mbox1);
-            //box3 = new Box(mbox3);
-            //box1.MoveBy(new Vector3(0.0f, 1.0f, 0.0f)); mbox1.Material = _materials[1];
-            //box2 = new Box(mbox2);
-            //box2.MoveBy(new Vector3(0.0f, 1.0f, 5.0f));
+            gameField.AddEnemy(enemy2);
+            gameField.AddEnemy(enemy3);
 
             // Перемещения
             enemy2.MoveBy(new Vector3(-45.0f, 0.0f, 7.0f));
@@ -375,9 +363,6 @@ namespace Template
             sounds.Load("Resources\\Sounds\\bonus-nitro.wav");
             sounds.Load("Resources\\Sounds\\bonus-health.wav");
             sounds.Load("Resources\\Sounds\\bonus-tire-puncture.wav");
-
-            //sounds.Load("Resources\\Sounds\\throttle.wav");
-            //sounds.Load("Resources\\Sounds\\brake_tires_squal.wav");
         }
 
         /// <summary>Render form activated callback. Hide cursor.</summary>
@@ -424,7 +409,7 @@ namespace Template
 
             while (true)
             {
-                gf.CreateBonuses();
+                gf.CreateSurprises();
                 Thread.Sleep(1000);
             }
         }
@@ -525,9 +510,9 @@ namespace Template
 
                 // Игровое поле
                 gameField.CheckRaceFinish();
-                //gameField.MoveEnemies();
+                gameField.MoveEnemies();
                 gameField.CheckCollisions();
-                //gameField.CreateBonuses();
+                gameField.CreateSurprises();
 
 
 

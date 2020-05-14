@@ -158,6 +158,14 @@
     <Compile Include="Audio\SharpAudioDevice.cs" />
     <Compile Include="Audio\SharpAudioVoice.cs" />
     <Compile Include="Game\Animation.cs" />
+    <Compile Include="Game\Entities\Abstract Factory\ExtraSpeed.cs" />
+    <Compile Include="Game\Entities\Abstract Factory\ExtraSpeedCreator.cs" />
+    <Compile Include="Game\Entities\Abstract Factory\Health.cs" />
+    <Compile Include="Game\Entities\Abstract Factory\HealthCreator.cs" />
+    <Compile Include="Game\Entities\Abstract Factory\ISurpriseCreator.cs" />
+    <Compile Include="Game\Entities\Abstract Factory\SurPrise.cs" />
+    <Compile Include="Game\Entities\Abstract Factory\Trap.cs" />
+    <Compile Include="Game\Entities\Abstract Factory\TrapCreator.cs" />
     <Compile Include="Game\Entities\Surprise.cs" />
     <Compile Include="Game\Entities\Box.cs" />
     <Compile Include="Game\Entities\Car.cs" />
