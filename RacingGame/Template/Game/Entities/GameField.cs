@@ -19,9 +19,9 @@ namespace Template
         private List<MeshObject> pillars;
 
         /// <summary> Количество кругов в гонке </summary>
-        private int lapsCount = 4;
+        private int lapsCount = 1;
         /// <summary> Количество кругов в гонке </summary>
-        public int LapCount
+        public int LapsCount
         {
             get => lapsCount;
             set
@@ -37,19 +37,31 @@ namespace Template
 
         /// <summary> Индекс для коллеции чекпоинтов </summary>
         private int chptIndex = 0;
-
+        /// <summary> Тайм хелпер </summary>
         private TimeHelper timeHelper;
         /// <summary> Машина игрока </summary>
         private Car car;
         /// <summary> Соперники по гонке </summary>
-        private List<EnemyCar> enemies = new List<EnemyCar>();
+        private List<Enemy> enemies = new List<Enemy>();
         /// <summary> Физические объекты в игре</summary>
         private List<PhysicalObject> prefabs = new List<PhysicalObject>();
 
-        /// <summary> Угол поворота коле за один кадр (расчитывается в самом начале во избежание просадок FPS)</summary>
+        /// <summary> Угол за один кадр (расчитывается в самом начале во избежание просадок FPS)</summary>
         private float angle;
         public float Angle { get => angle; set => angle = value; }
         
+        /// <summary> Количество физических объектов на сцене</summary>
+        public int PhysObjCount
+        {
+            get
+            {
+                return prefabs.Count +
+                       enemies.Count +
+                       surprises.Count +
+                       checkPoints.Length +
+                       1; // <- This is a player
+            }
+        }
 
         /// <summary> Мой гоночный 2D Худ </summary>
         HUDRacing hud;
@@ -63,8 +75,6 @@ namespace Template
             this.hud = hud;
             this.hud.lapCount = lapsCount;
             this.sounds = sounds;
-
-
         }
 
         public void SetCheckPoints(List<MeshObject> meshes)
@@ -105,6 +115,9 @@ namespace Template
             this.pillars = pillars;
         }
 
+        /// <summary> Специфическая отрисовка </summary>
+        /// <param name="viewMatrix"></param>
+        /// <param name="projectionMatrix"></param>
         public void Draw(Matrix viewMatrix, Matrix projectionMatrix)
         {
             int indx = 2 * ((chptIndex != checkPoints.Length - 1) ? chptIndex : chptIndex - 2);
@@ -126,13 +139,13 @@ namespace Template
             surprises.ForEach(b => b.Draw(viewMatrix, projectionMatrix, angle * 0.7f));
         }
 
-        public void SetCar(Car car)
+        public void SetPlayer(Car car)
         {
             this.car = car;
             sounds.Car = car;
         }
 
-        public void AddEnemy(EnemyCar enemy)
+        public void AddEnemy(Enemy enemy)
         {
             enemies.Add(enemy);
             enemy.MaxSpeed = 25;
@@ -144,8 +157,8 @@ namespace Template
         private List<SurPrise> surprises = new List<SurPrise>();
 
         /// <summary> Добавить бонус </summary>
-        /// <param name="bonus"> Добавляемый бонус </param>
-        public void AddBonus(SurPrise surprise)
+        /// <param name="surprise"> Добавляемый сюрприз </param>
+        private void AddBonus(SurPrise surprise)
         {
             surprises.Add(surprise);
             sounds.AddSoundBonus(surprise);
@@ -158,7 +171,7 @@ namespace Template
         private Dictionary<SurpriseType, MeshObject> bonusMeshes = new Dictionary<SurpriseType, MeshObject>();
         /// <summary> Добавить меши бонусов </summary>
         /// <param name="mesh"></param>
-        public void AddBonusMesh(MeshObject mesh, SurpriseType type)
+        public void AddPriseMesh(MeshObject mesh, SurpriseType type)
         {
             bonusMeshes.Add(type, mesh);
         }
@@ -189,7 +202,7 @@ namespace Template
                     if (car.Lap == lapsCount)
                     {
                         hud.placeNumber = hud.numbers[hud.placeIndex];
-                        hud.placeNumber.matrix = Matrix3x2.Identity;
+                        //hud.placeNumber.matrix = Matrix3x2.Identity;
                         hud.placeNumber.matrix *= Matrix3x2.Scaling(2.0f);
                         chptIndex = 0;
                         return;
@@ -204,20 +217,19 @@ namespace Template
 
         int sign = 0;
         SurPrise spike;
-        int countHP, countSpeed, countDamage;
+        int countHP, countSpeed, countDamage, countTire;
         /// <summary> Фабрика сюрпризов </summary>
         ISurpriseCreator surpriseFactory = null;
         SurPrise prise;
 
-        /// <summary>
-        /// Метод создания бонусов на карте
-        /// </summary>
+        /// <summary> Метод создания сюрпризов на карте </summary>
         public void CreateSurprises()
         {
 
             countHP = surprises.Where(b => b.Type == SurpriseType.Health).Count();
             countSpeed = surprises.Where(b => b.Type == SurpriseType.Speed).Count();
             countDamage = surprises.Where(b => b.Type == SurpriseType.Damage).Count();
+            countTire = surprises.Where(b => b.Type == SurpriseType.Tire).Count();
 
             if (spike != null)
             {
@@ -250,20 +262,28 @@ namespace Template
                 //speed.MoveTo(getRandPos(chptIndex + 1, speed.Position.Y));
                 AddBonus(speed);
             }
-            if (countDamage == 0)
-            {
-                surpriseFactory = new TrapCreator();
-                SurPrise trap = surpriseFactory.Create((MeshObject)bonusMeshes[SurpriseType.Damage].Clone());
-                trap.MoveTo(getRandPos(chptIndex, trap.Position.Y));
+            //if (countTire == 0)
+            //{
+            //    surpriseFactory = new TireCreator();
+            //    SurPrise tire = surpriseFactory.Create((MeshObject)bonusMeshes[SurpriseType.Tire].Clone());
+            //    tire.MoveTo(getRandPos(chptIndex + 1, tire.Position.Y));
+
+            //    AddBonus(tire);
+            //}
+            //if (countDamage == 0)
+            //{
+            //    surpriseFactory = new TrapCreator();
+            //    SurPrise trap = surpriseFactory.Create((MeshObject)bonusMeshes[SurpriseType.Damage].Clone());
+            //    trap.MoveTo(getRandPos(chptIndex, trap.Position.Y));
 
 
-                //Surprise damage = new Surprise((MeshObject)bonusMeshes[SurpriseType.Damage].Clone(), SurpriseType.Damage, 20);
-                //damage.MoveTo(getRandPos(chptIndex, damage.Position.Y));
-                // Знак косого произведения
-                sign = Math.Sign(MyVector.CosProduct(trap.Direction, trap.Position - car.Position));
-                spike = trap;
-                AddBonus(trap);
-            }
+            //    //Surprise damage = new Surprise((MeshObject)bonusMeshes[SurpriseType.Damage].Clone(), SurpriseType.Damage, 20);
+            //    //damage.MoveTo(getRandPos(chptIndex, damage.Position.Y));
+            //    // Знак косого произведения
+            //    sign = Math.Sign(MyVector.CosProduct(trap.Direction, trap.Position - car.Position));
+            //    spike = trap;
+            //    AddBonus(trap);
+            //}
 
         }
 
@@ -291,7 +311,7 @@ namespace Template
         /// Поворот врага к цели
         /// </summary>
         /// <param name="angle"></param>
-        private void RotateEnemyToTarget(float angle, EnemyCar enemy)
+        private void RotateEnemyToTarget(float angle, Enemy enemy)
         {
             enemy.Target = enemy.CheckPoint;
             enemy.CheckWheelsDirOnTarget(angle);
@@ -327,7 +347,7 @@ namespace Template
         }
         
         /// <summary> Двигать врага к цели </summary>
-        private void GoToTarget(EnemyCar enemy)
+        private void GoToTarget(Enemy enemy)
         {
             if (!enemy.CollisionCheckPoint(checkPoints[enemy.targetIndex])) // Двигать врага к цели пока не столкнется
             {
@@ -347,7 +367,7 @@ namespace Template
         }
 
         /// <summary> Поворачивать и перемещать врага к цели </summary>
-        private void MoveEnemyToTargets(EnemyCar enemy)
+        private void MoveEnemyToTargets(Enemy enemy)
         {
             if (enemy.IsFinishRace)
                 return;
@@ -372,7 +392,6 @@ namespace Template
             }
         }
 
-        
         /// <summary> Проверка и обработка столкновений всех физических объектов </summary>
         public void CheckCollisions()
         {

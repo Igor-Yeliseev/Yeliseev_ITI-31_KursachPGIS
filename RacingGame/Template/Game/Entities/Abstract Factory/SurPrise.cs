@@ -7,9 +7,17 @@ using System.Threading.Tasks;
 
 namespace Template.Entities.Abstract_Factory
 {
+    public enum SurpriseType
+    {
+        Health,
+        Damage,
+        Speed,
+        Tire
+    }
+
     abstract class SurPrise : StaticPrefab, IDisposable
     {
-
+        
         /// <summary> Направление вдоль прямоугольника коллизий </summary>
         public Vector3 Direction;
 
@@ -69,11 +77,23 @@ namespace Template.Entities.Abstract_Factory
                         car.Health += Value;
                         break;
                     case SurpriseType.Speed:
-                        car.MaxSpeed -= car.MaxSpeed * (Value / 100);
+                        car.MaxSpeed += Car.MAX_SPEED * (Value / 100);
                         OnCatched?.Invoke(0);
                         break;
                     case SurpriseType.Damage:
-                        car.MaxSpeed -= car.MaxSpeed * (Value / 100);
+                        if (car.MaxSpeed - Car.MAX_SPEED * (Value / 100) > 0)
+                        {
+                            car.MaxSpeed -= Car.MAX_SPEED * (Value / 100);
+                        }
+                        else
+                            car.MaxSpeed = 0.0f;
+                        OnCatched?.Invoke(0);
+                        break;
+                    case SurpriseType.Tire:
+                        if(car.MaxSpeed < Car.MAX_SPEED)
+                        {
+                            car.MaxSpeed += car.MaxSpeed * (Value / 100);
+                        }
                         OnCatched?.Invoke(0);
                         break;
                 }

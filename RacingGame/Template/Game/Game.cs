@@ -14,6 +14,7 @@ using SharpDX.Windows;
 using Template.Properties; // For work with resources of project Assembly.Properties. Then we can access to all inside Resorces.resx.
 using Template.Graphics;
 using System.IO;
+using Template.Entities.Abstract_Factory;
 
 namespace Template
 {
@@ -97,13 +98,11 @@ namespace Template
         /// <summary>Character.</summary>
         private Character _character;
         private Car car;
-        private EnemyCar enemy1, enemy2, enemy3;
+        private Enemy enemy1, enemy2, enemy3;
         private GameField gameField;
 
         private Sounds sounds;
-
-        /// <summary> Ogbjects animations </summary>
-        Animations anims;
+        
 
         /// <summary>Camera object.</summary>
         private Camera _camera;
@@ -186,6 +185,7 @@ namespace Template
             _textures.Add(loader.LoadTextureFromFile("Resources\\stadium.png", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\bonus-nitro.png", true, _samplerStates.Textured));
             _textures.Add(loader.LoadTextureFromFile("Resources\\bonus-health.png", true, _samplerStates.Textured));
+            _textures.Add(loader.LoadTextureFromFile("Resources\\bonus-tire.png", true, _samplerStates.Textured));
 
             _textures.Add(loader.LoadTextureFromFile("Resources\\grass.jpg", true, _samplerStates.Textured));
             SamplerStateDescription samplerStateDescription = new SamplerStateDescription
@@ -212,9 +212,7 @@ namespace Template
 
             // Load game sounds
             InitSounds();
-
-            anims = new Animations();
-
+            
             gameField = new GameField(_timeHelper, hudRacing, sounds);
 
             // 6. Load meshes.
@@ -247,45 +245,43 @@ namespace Template
             var stadiumPrefab = new StaticPrefab(staduim);
             gameField.AddPrefab(stadiumPrefab);
             // Бонусы
-            var bonusNitro = loader.LoadMeshFromObject("Resources\\bonus.obj", _materials[16]);
+            var bonusNitro = loader.LoadMeshFromObject("Resources\\bonus.obj",  _materials[16]);
             var bonusHealth = loader.LoadMeshFromObject("Resources\\bonus.obj", _materials[17]);
             var bonusSpike = loader.LoadMeshFromObject("Resources\\spikes.obj", _materials[18]);
+            var bonusTire = loader.LoadMeshFromObject("Resources\\bonus.obj",   _materials[19]);
             //bonusNitro.MoveBy(new Vector3(0, 0, 65));
             //bonusSpike.MoveBy(new Vector3(-25, 0, 45));
-            //gameField.AddBonus(new Bonus(bonusSpike, BonusType.Damage, 40));
-            //gameField.AddBonus(new Bonus(bonusNitro, BonusType.Speed, 10));
-            //gameField.AddBonus(new Bonus(bonusHealth, BonusType.Health, 50));
-            gameField.AddBonusMesh(bonusSpike, SurpriseType.Damage);
-            gameField.AddBonusMesh(bonusNitro, SurpriseType.Speed);
-            gameField.AddBonusMesh(bonusHealth, SurpriseType.Health);
+            gameField.AddPriseMesh(bonusSpike, SurpriseType.Damage);
+            gameField.AddPriseMesh(bonusNitro, SurpriseType.Speed);
+            gameField.AddPriseMesh(bonusHealth, SurpriseType.Health);
+            gameField.AddPriseMesh(bonusTire, SurpriseType.Tire);
 
             // Машина игрока
             car = new Car(mustang);
-            gameField.SetCar(car);
+            gameField.SetPlayer(car);
             // Машина соперника
             var delorean = loader.LoadMeshesFromObject("Resources\\delorean.obj", _materials[5]);
-            enemy1 = new EnemyCar(delorean);
-            enemy2 = new EnemyCar(camaro);
-            enemy3 = new EnemyCar(corvette);
+            enemy1 = new Enemy(delorean);
+            enemy2 = new Enemy(camaro);
+            enemy3 = new Enemy(corvette);
             gameField.AddEnemy(enemy1);
             gameField.AddEnemy(enemy2);
             gameField.AddEnemy(enemy3);
 
             // Перемещения
             car.MoveBy(new Vector3(0.0f, 0.0f, -50.0f));
-
             enemy1.MoveBy(new Vector3(9.0f, 0.0f, -29.0f));
             enemy2.MoveBy(new Vector3(-7.0f, 0.0f, -30.0f));
             enemy3.MoveBy(new Vector3(1.0f, 0.0f, -30.0f));
-            line2.MoveTo(new Vector3(0, 0, 0));
-            line1.MoveTo(camaro.First().CenterPosition);
+            //line2.MoveTo(new Vector3(0, 0, 0));
+            //line1.MoveTo(camaro.First().CenterPosition);
 
 
             // Добавление мешей
-            _meshObjects.Add(line1);
-            _meshObjects.Add(line2);
-            _meshObjects.Add(line3);
-            _meshObjects.Add(line4);
+            //_meshObjects.Add(line1);
+            //_meshObjects.Add(line2);
+            //_meshObjects.Add(line3);
+            //_meshObjects.Add(line4);
             _meshObjects.Add(startline);
             _meshObjects.Add(road);
 
@@ -293,7 +289,6 @@ namespace Template
             corvette.ForEach(m => _meshObjects.Add(m));
             camaro.ForEach(m => _meshObjects.Add(m));
             delorean.ForEach(m => _meshObjects.Add(m));
-            //checkPointMeshes.ForEach(m => _meshObjects.Add(m));
             trees.ForEach(m => _meshObjects.Add(m));
             grass.ForEach(m => _meshObjects.Add(m));
             startPoles.ForEach(m => _meshObjects.Add(m));
@@ -310,29 +305,11 @@ namespace Template
                 new LightSource(LightSource.LightType.DirectionalLight,
                     new Vector4(0.0f, 20.0f, 0.0f, 1.0f),   // Position
                     new Vector4(0.0f, -1.0f, 0.0f, 1.0f),   // Direction
-                    new Vector4(1.0f, 0.9f, 0.8f, 1.0f),    // Color
+                    new Vector4(1.0f, 1.0f, 1.0f, 1.0f),    // Color
                     0.0f,                                   // Spot angle
                     1.0f,                                   // Const atten
                     0.0f,                                   // Linear atten
                     0.0f,                                   // Quadratic atten
-                    1),
-                new LightSource(LightSource.LightType.SpotLight,
-                    new Vector4(0.0f, 8.0f, 0.0f, 1.0f),
-                    new Vector4(0.0f, -1.0f, 0.0f, 1.0f),
-                    new Vector4(0.7f, 0.7f, 1.0f, 1.0f),
-                    Game3DObject._PI2 / 4.0f,
-                    1.0f,
-                    0.02f,
-                    0.005f,
-                    1),
-                new LightSource(LightSource.LightType.PointLight,
-                    new Vector4(-4.0f, 2.0f, 0.0f, 1.0f), // Position
-                    Vector4.Zero,                         // Direction
-                    new Vector4(1.0f, 1.0f, 1.0f, 1.0f),  // Color
-                    0.0f,                                 // Spot angle
-                    1.0f,                                 // Const atten
-                    0.02f, //0.0002f,                     // Linear atten
-                    0.005f,                               // Quadratic atten
                     1),
                 new LightSource(),
                 new LightSource(),
@@ -345,7 +322,6 @@ namespace Template
             _character = new Character(new Vector4(0.0f, 6.0f, -12.0f, 1.0f), Game3DObject._PI, 0.0f, 0.0f); //********
             _camera = new Camera(new Vector4(0.0f, 0.0f, 0.0f, 1.0f));
             _camera.AttachToObject(_character);
-
 
         }
 
@@ -445,7 +421,6 @@ namespace Template
 
             if (_inputController.KeyboardUpdated)
             {
-
                 if (_inputController.WPressed)
                 {
                     _character.MoveForwardBy(_timeHelper.DeltaT * _character.Speed);
@@ -457,36 +432,43 @@ namespace Template
                 if (_inputController.DPressed) _character.MoveRightBy(_timeHelper.DeltaT * _character.Speed);
                 if (_inputController.APressed) _character.MoveRightBy(-_timeHelper.DeltaT * _character.Speed);
 
+                if (!car.IsDead)
+                {
 
-                if (_inputController.LeftPressed)
-                {
-                    car.TurnWheelsLeft(alpha);
-                }
-                if (_inputController.RightPressed)
-                {
-                    car.TurnWheelsRight(alpha);
-                }
+                    if (_inputController.LeftPressed)
+                    {
+                        car.TurnWheelsLeft(alpha);
+                    }
+                    if (_inputController.RightPressed)
+                    {
+                        car.TurnWheelsRight(alpha);
+                    }
 
-                if (_inputController.UpPressed)
-                {
-                    car.Accelerate();
+                    if (_inputController.UpPressed)
+                    {
+                        car.Accelerate();
+                    }
+                    else if (_inputController.DownPressed)
+                    {
+                        car.Brake();
+                    }
+                    else
+                    {
+                        car.MoveInertia();
+                    }
+
+                    car.MoveProperly();
                 }
-                else if (_inputController.DownPressed)
-                {
-                    car.Brake();
-                }
-                else
-                {
-                    car.MoveInertia();
-                }
-                car.MoveProperly();
+                
                 _character.FollowCar(car);
 
-                sounds.Plays();
+                //sounds.Plays();
 
 
                 if (_inputController.Space)
                 {
+                    _character.Position = new Vector3(_character.Position.X, _character.Position.Y + 2, _character.Position.Z);
+
                     //anims.IsEnemyTurned = false;
                     //car.BackWheels();
                 }
@@ -511,7 +493,7 @@ namespace Template
 
                 // Игровое поле
                 gameField.CheckRaceFinish();
-                gameField.MoveEnemies();
+                //gameField.MoveEnemies();
                 gameField.CheckCollisions();
                 gameField.CreateSurprises();
 
@@ -622,7 +604,7 @@ namespace Template
                                 $"Pos: {_character.Position.X,6:f1}, {_character.Position.Y,6:f1}, {_character.Position.Z,6:f1}\n" +
                                 $"Yaw: {_character.Yaw}, Pitch: {_character.Pitch}, Roll: {_character.Roll}\n\n" +
 
-                                $"car itrs: {car.turnCount} \n" +
+                                $"car itrs: {/*car.turnCount*/0} \n" +
                                 $"car Position X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
                                 $"car Speed: {car.Speed} ups\n\n" +
                                 
@@ -636,8 +618,8 @@ namespace Template
             if (_displayHelp) text += "\n\n" + _helpString;
             
             _directX2DGraphics.BeginDraw();
-            _directX2DGraphics.DrawText(text, _HUDResources.textFPSTextFormatIndex, Matrix3x2.Identity,
-                                        _directX2DGraphics.RenderTargetClientRectangle, _HUDResources.textFPSBrushIndex + 1); // 0 - Желтый, 1 - Красный, 2 - Черный
+            //_directX2DGraphics.DrawText(text, _HUDResources.textFPSTextFormatIndex, Matrix3x2.Identity,
+            //                            _directX2DGraphics.RenderTargetClientRectangle, _HUDResources.textFPSBrushIndex + 1); // 0 - Желтый, 1 - Красный, 2 - Черный
 
             hudRacing.DrawText();
             hudRacing.DrawBitmaps();

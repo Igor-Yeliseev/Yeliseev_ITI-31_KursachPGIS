@@ -32,8 +32,6 @@ namespace Template
             }
         }
 
-
-
         public PhysicalObject(MeshObject mesh) : base(mesh)
         {
             OBBox = SetOBB(mesh);

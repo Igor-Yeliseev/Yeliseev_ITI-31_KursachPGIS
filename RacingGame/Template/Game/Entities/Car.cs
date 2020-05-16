@@ -1,11 +1,6 @@
 ﻿using SharpDX;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Template.Graphics;
 
 namespace Template
 {
@@ -26,13 +21,9 @@ namespace Template
 
         /// <summary> Передний мост (точка центра) </summary>
         protected Vector3 _frontAxle;
-        /// <summary> Передний мост (точка центра) </summary>
-        //public Vector3 FrontAxle { get => _frontAxle; set => _frontAxle = value; }
-
+        
         /// <summary> Задний мост (точка центра) </summary>
         protected Vector3 _rearAxle;
-        /// <summary> Задний мост (точка центра) </summary>
-        //protected Vector3 RearAxle { get => _rearAxle; set => _rearAxle = value; }
 
         /// <summary> Вектор направления машины (от центра заднего до центре переднего моста) </summary>
         protected Vector3 _carDirection;
@@ -41,7 +32,7 @@ namespace Template
 
         /// <summary> Мертв ли враг </summary>
         public bool IsDead { get; set; }
-
+        
         /// <summary> Здоровье </summary>
         protected float _health = 100;
         /// <summary> Здоровье </summary>
@@ -90,7 +81,7 @@ namespace Template
                     scale = Math.Abs(scale * (value / (scale * 60)));
 
                 Acceleration = (value - _speed);
-                
+
                 _speed = value;
             }
         }
@@ -104,6 +95,8 @@ namespace Template
         /// На сколько процентов изменилась скорость
         /// </summary>
         public float Acceleration { get; set; }
+
+        public static float MAX_SPEED { get { return 30.0f; } } 
 
         /// <summary>
         /// Максимальная скорость автомобиля
@@ -148,8 +141,8 @@ namespace Template
             }
         }
 
-        public int turnCount = 0;
-        public int itrs = 48;
+        protected int turnCount = 0;
+        protected int itrs = 48;
 
         /// <summary>
         /// Конструктор машины
@@ -522,6 +515,5 @@ namespace Template
             Speed = -_speed * 0.2f;
         }
     }
-
     
 }

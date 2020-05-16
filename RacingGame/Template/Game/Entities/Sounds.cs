@@ -13,18 +13,16 @@ namespace Template
     {
         SharpAudioDevice _device = new SharpAudioDevice();
         /// <summary> Звук холостого хода </summary>
-        public SharpAudioVoice Idle;
+        private SharpAudioVoice Idle;
         /// <summary> Звук при максимальных оборотах </summary>
-        public SharpAudioVoice HighRPM;
+        private SharpAudioVoice HighRPM;
         /// <summary> Звук разгоняющегося двигателя </summary>
-        public SharpAudioVoice Throttle;
-        private bool IsThrottled = true;
-
-        public SharpAudioVoice Pickup;
-        public SharpAudioVoice BonusHealth;
-        public SharpAudioVoice TirePuncture;
-        public SharpAudioVoice BonusNitro;
-        public SharpAudioVoice Melody;
+        private SharpAudioVoice Throttle;
+        private SharpAudioVoice Pickup;
+        private SharpAudioVoice BonusHealth;
+        private SharpAudioVoice TirePuncture;
+        private SharpAudioVoice BonusNitro;
+        private SharpAudioVoice Melody;
         /// <summary> Звук столкновения с другой машиной </summary>
         public SharpAudioVoice Crash;
         /// <summary> Звук торможения </summary>
@@ -59,7 +57,7 @@ namespace Template
         {
             this.inputController = inputController;
             sounds = new List<SharpAudioVoice>();
-            sounds.Capacity = 7;
+            sounds.Capacity = 8;
         }
 
 
@@ -72,6 +70,9 @@ namespace Template
                 case SurpriseType.Health:
                     surprise.OnCatched += (v) => BonusHealth.Play();
                     break;
+                case SurpriseType.Tire:
+                    surprise.OnCatched += (v) => BonusHealth.Play();
+                    break;
                 case SurpriseType.Speed:
                     surprise.OnCatched += (v) => BonusNitro.Play();
                     break;
@@ -81,6 +82,9 @@ namespace Template
             }
         }
 
+
+        /// <summary> Загрузки звука </summary>
+        /// <param name="fileName"></param>
         public void Load(string fileName)
         {
             if (fileName.Contains("idle"))

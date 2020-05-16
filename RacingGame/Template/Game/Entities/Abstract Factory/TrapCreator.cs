@@ -10,6 +10,7 @@ namespace Template.Entities.Abstract_Factory
     {
         public SurPrise Create(MeshObject mesh)
         {
+            // 20% от максимальной скорости
             return new Trap(mesh, 20);
         }
     }

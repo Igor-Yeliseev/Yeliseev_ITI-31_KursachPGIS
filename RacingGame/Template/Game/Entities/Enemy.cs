@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Template
 {
-    class EnemyCar : Car
+    class Enemy : Car
     {
         public int targetIndex = 0;
 
@@ -57,7 +57,7 @@ namespace Template
         /// <summary> Расстояние от точки вращения до поцизии центральнго бокового левого сенсора </summary>
         Vector3 rayCenSideRhtToRearAxle;
 
-        public EnemyCar(List<MeshObject> meshes) : base(meshes)
+        public Enemy(List<MeshObject> meshes) : base(meshes)
         {
             IsDead = false;
             wheelsDirection = _direction;
@@ -477,7 +477,7 @@ namespace Template
             }
             else if (interLeft && distanceL <= minFrontDistance)
             {
-                TurnWheelsRight(alpha); //TurnCar(alpha); // Поворачиваю направо
+                TurnWheelsRight(alpha); // Поворачиваю направо
                 Brake();
                 _isFrontObstacle = true;
             }

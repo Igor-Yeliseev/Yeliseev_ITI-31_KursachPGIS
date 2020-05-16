@@ -2,10 +2,6 @@
 using SharpDX.Direct2D1;
 using SharpDX.DirectWrite;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Template.Entities.Abstract_Factory;
 
 namespace Template
@@ -38,7 +34,7 @@ namespace Template
 
         /// <summary> Круги </summary>
         Icon lapIcon;
-        Icon ammoIcon;
+        //Icon ammoIcon;
 
         /// <summary> Цифры </summary>
         public Icon[] numbers;
@@ -56,6 +52,7 @@ namespace Template
         float widthHeath;
 
         public Icon placeIcon;
+        public Icon gameoverIcon;
 
         /// <summary> Машина игрока </summary>
         private Car car;
@@ -176,8 +173,8 @@ namespace Template
             healthBar.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\HealthBar.png");
             barFrame.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\barFrame.png");
             slash.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\slash.png");
-            ammoIcon.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\ammo.png");
             placeIcon.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\place.png");
+            gameoverIcon.index = directX2DGraphics.LoadBitmapFromFile("Resources\\HUD\\game-over.png");
 
             for (int i = 0; i < numbers.Length; i++)
             {
@@ -186,7 +183,7 @@ namespace Template
             }
             
             speedometer.matrix = arrowSpeed.matrix = lapIcon.matrix = healthBar.matrix = 
-                barFrame.matrix = slash.matrix = ammoIcon.matrix = Matrix3x2.Identity;
+                barFrame.matrix = slash.matrix = gameoverIcon.matrix = Matrix3x2.Identity;
             placeIcon.matrix = Matrix3x2.Identity;
         }
 
@@ -199,9 +196,9 @@ namespace Template
             lapIcon.bitmap = directX2DGraphics.Bitmaps[lapIcon.index];
             healthBar.bitmap = directX2DGraphics.Bitmaps[healthBar.index];
             slash.bitmap = directX2DGraphics.Bitmaps[slash.index];
-            ammoIcon.bitmap = directX2DGraphics.Bitmaps[ammoIcon.index];
             barFrame.bitmap = directX2DGraphics.Bitmaps[barFrame.index];
             placeIcon.bitmap = directX2DGraphics.Bitmaps[placeIcon.index];
+            gameoverIcon.bitmap = directX2DGraphics.Bitmaps[gameoverIcon.index];
             
             hitValue = 0.2f;
             widthHeath = healthBar.bitmap.Size.Width;
@@ -252,14 +249,19 @@ namespace Template
             directX2DGraphics.DrawBitmap(healthBar.index, GetTransformMatrix(ref healthBar, 50, Y), 1.0f, BitmapInterpolationMode.Linear);
             directX2DGraphics.DrawBitmap(barFrame.index, GetTransformMatrix(ref barFrame, 50-6, Y - 6), 1.0f, BitmapInterpolationMode.Linear);
 
-            directX2DGraphics.DrawBitmap(ammoIcon.index, GetTransformMatrix(ref ammoIcon, 50, Y + 20), 1.0f, BitmapInterpolationMode.Linear);
-
             if(car.Lap == lapCount)
             {
                 directX2DGraphics.DrawBitmap(placeIcon.index, GetTransformMatrix(ref placeIcon, (Right - placeIcon.bitmap.Size.Width) / 2,
                                         (Bottom - placeIcon.bitmap.Size.Height) / 2), 1.0f, BitmapInterpolationMode.Linear);
                 directX2DGraphics.DrawBitmap(placeNumber.index, GetTransformMatrix(ref placeNumber, 400, 50), 1.0f, BitmapInterpolationMode.Linear);
             }
+
+            if (car.IsDead)
+            {
+                directX2DGraphics.DrawBitmap(gameoverIcon.index, GetTransformMatrix(ref gameoverIcon, (Right - gameoverIcon.bitmap.Size.Width) / 2,
+                                        (Bottom - gameoverIcon.bitmap.Size.Height) / 2), 1.0f, BitmapInterpolationMode.Linear);
+            }
+
         }
 
         /// <summary> Минуты </summary>

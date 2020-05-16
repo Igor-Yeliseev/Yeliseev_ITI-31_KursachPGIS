@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Audio.SharpAudioVoice" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="20.5" Y="3.5" Width="1.5" />
+    <Position X="18" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAIggQCICAAAAAAAAgAAQAAAAiAAAoAAAAAgQABo=</HashCode>
       <FileName>Audio\SharpAudioDevice.cs</FileName>
@@ -9,108 +9,93 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Audio.SharpAudioDevice" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="18.75" Y="3.5" Width="1.5" />
+    <Position X="16.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACCAAgCAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>Audio\SharpAudioVoice.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Template.Animations" Collapsed="true">
-    <Position X="11.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAEABAAAAAAAAAEAAEAAAAAAAAA=</HashCode>
-      <FileName>Game\Animation.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Template.Character" Collapsed="true">
-    <Position X="14.5" Y="6.75" Width="1.5" />
+    <Position X="19" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAgAAAAAAAAAAAAAAAABIEAAgAAABQAAAAAAAAA=</HashCode>
       <FileName>Game\Character.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Template.Bonus" Collapsed="true">
-    <Position X="7.25" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACAgAgAAACAAAAAAAAAAAAAAAQAiAAAAAAA=</HashCode>
-      <FileName>Game\Entities\Bonus.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Template.Box" Collapsed="true">
-    <Position X="0.5" Y="3.25" Width="1.5" />
+    <Position X="16.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAaAAAAAAACAAABAAAAEAAAAEAAAKAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Entities\Box.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.Car" Collapsed="true">
-    <Position X="2.75" Y="3.25" Width="1.5" />
+    <Position X="8.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAIACAAQAaUA8BAAQCAVNAgDSABIAgEABEAOEEl0IgA=</HashCode>
+      <HashCode>IAIACAAQAaUA8BAAQCAVFAgDSABIAgEABEAeEEh0IgA=</HashCode>
       <FileName>Game\Entities\Car.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.CheckPoint" Collapsed="true">
-    <Position X="5" Y="3.25" Width="1.5" />
+    <Position X="10.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAACAAAAQAAAAAAAAkAAACAAABAAA=</HashCode>
       <FileName>Game\Entities\CheckPoint.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.CheckPointsComparer" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.5" Y="0.5" Width="1.5" />
+    <Position X="18" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Game\Entities\CheckPointsComparer.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Template.EnemyCar" Collapsed="true">
-    <Position X="2.75" Y="4.75" Width="1.5" />
+  <Class Name="Template.Enemy" Collapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AB4UAIAUI4AAphIAIADKBCQASAjBADCoCEAAIRhgIiA=</HashCode>
       <FileName>Game\Entities\Enemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.GameField" Collapsed="true">
-    <Position X="2.5" Y="6" Width="1.5" />
+    <Position X="1.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAgAREwAQBEQogAQwMQQEGIAFAAEQATBAkAAAAhAAQA=</HashCode>
+      <HashCode>EAoABVkAQBEQohAYwMQQMCAAFAAEAATBEkAAEAhAAQA=</HashCode>
       <FileName>Game\Entities\GameField.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.GameObject" Collapsed="true">
-    <Position X="3.75" Y="0.5" Width="1.5" />
+    <Position X="6.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAIAAAAQAAAgAAAIAA=</HashCode>
+      <HashCode>AAAAWAAAAAAAAAAgAAAAAAAAAAAIAAAAQAAAgAAAIAA=</HashCode>
       <FileName>Game\Entities\GameObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.HUDRacing" Collapsed="true">
-    <Position X="4.5" Y="6" Width="1.5" />
+    <Position X="4" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQCREAASARAAAAQAAwSsAIQAgAIAwUIGIOCgMNQYIA=</HashCode>
       <FileName>Game\Entities\HUDRacing.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.MyMath" Collapsed="true">
-    <Position X="0.5" Y="6.75" Width="1.5" />
+    <Position X="10.5" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAABAAAgAQAAAAAAAA=</HashCode>
       <FileName>Game\Entities\MyMath.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.PhysicalObject" Collapsed="true">
-    <Position X="3.75" Y="1.75" Width="1.5" />
+    <Position X="6.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAQAEACgAAAAIAAAgAAACCAAAIAA=</HashCode>
       <FileName>Game\Entities\PhysicalObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.PillarsComparer" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="18.75" Y="2.5" Width="1.5" />
+    <Position X="16.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Game\Entities\PillarsComparer.cs</FileName>
@@ -118,29 +103,29 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Template.Sounds" Collapsed="true">
-    <Position X="4.5" Y="6.75" Width="1.5" />
+    <Position X="6.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAChhABgCSQAAAQCBAAABDAAAACEgAAAIABCAAAgCAA=</HashCode>
+      <HashCode>BAChhABgCSQAAAQCBAAABDAAAAAEgAAAIABCAAAgCAA=</HashCode>
       <FileName>Game\Entities\Sounds.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.StaticPrefab" Collapsed="true">
-    <Position X="7.25" Y="3.25" Width="1.5" />
+    <Position X="4" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>Game\Entities\StaticPrefab.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.Game" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="18.75" Y="0.5" Width="1.5" />
+    <Position X="14.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAiAlAQQASEGIEAAAQgBAAYBEAiGCBHFAQASoCAAAAs=</HashCode>
+      <HashCode>AAiAFAQQASEGIEAAAQgBAAYBEAiGCBHFAQASoCAAAAs=</HashCode>
       <FileName>Game\Game.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Template.InputController" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="15.25" Y="1.5" Width="1.5" />
+    <Position X="19.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIgBAGBBUSQAAQQAhLNOWAECASsAAFUEEEiFMuMEdTU=</HashCode>
       <FileName>Game\InputController.cs</FileName>
@@ -148,21 +133,21 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Template.TimeHelper" Collapsed="true">
-    <Position X="17" Y="4.5" Width="1.5" />
+    <Position X="14.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAwAAAAAEAAgBAAAAAAAAAAQAAAABAAAAAEAAAAAMQA=</HashCode>
       <FileName>Game\TimeHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.Camera" Collapsed="true">
-    <Position X="12.25" Y="6.75" Width="1.5" />
+    <Position X="21.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAEAAABAAAAAABCAAAAgAAACAAAAAgCA=</HashCode>
       <FileName>Graphics\Camera.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.DirectX2DGraphics" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="15.25" Y="0.5" Width="1.5" />
+    <Position X="19.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gEAQCAAAgCAAAwwMoAAhQEEBAJAIgACCIAQCAAEAAIg=</HashCode>
       <FileName>Graphics\DirectX2DGraphics.cs</FileName>
@@ -170,7 +155,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Template.DirectX3DGraphics" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="17" Y="0.5" Width="1.5" />
+    <Position X="21.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACCQAAEEACAAAwwAAAAAEAACUIAGgIAAAgCCCAEBAKA=</HashCode>
       <FileName>Graphics\DirectX3DGraphics.cs</FileName>
@@ -178,14 +163,14 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Template.Game3DObject" Collapsed="true">
-    <Position X="14.5" Y="5.5" Width="1.5" />
+    <Position X="19" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CAAAAAgAEAAAAAEgACAAAAAAAAAIAAIgAABAgIAAIBQ=</HashCode>
       <FileName>Graphics\Game3DObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.MeshObject" Collapsed="true">
-    <Position X="16.75" Y="6.75" Width="1.5" />
+    <Position X="16.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gEgAIAABECAAAAEgABAgAAQBFACIAACAGBkgAAAAIBA=</HashCode>
       <FileName>Graphics\MeshObject.cs</FileName>
@@ -193,14 +178,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Template.MyVector" Collapsed="true">
-    <Position X="0.5" Y="6" Width="1.5" />
+    <Position X="10.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAQQAAAAAAAAAABAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Graphics\MyVector.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.Renderer" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.75" Y="3.5" Width="1.5" />
+    <Position X="19.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAgACDAEAAAQgEIAgQABAAgCAEAAAAAIAAAAAAE=</HashCode>
       <FileName>Graphics\Renderer.cs</FileName>
@@ -208,49 +193,117 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Template.Program" Collapsed="true">
-    <Position X="20.5" Y="2.5" Width="1.5" />
+    <Position X="18" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.Loader" Collapsed="true">
-    <Position X="2.5" Y="6.75" Width="1.5" />
+    <Position X="10.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAUACAAACABBAAAAAAAAAEBEAIQAACgAEAIAQAIEAA=</HashCode>
       <FileName>Resources\Loader.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Template.Entities.Abstract_Factory.ExtraSpeed" Collapsed="true">
+    <Position X="5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\ExtraSpeed.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Template.Entities.Abstract_Factory.ExtraSpeedCreator" BaseTypeListCollapsed="true">
+    <Position X="7.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\ExtraSpeedCreator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Template.Entities.Abstract_Factory.Health" Collapsed="true">
+    <Position X="1.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\Health.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Template.Entities.Abstract_Factory.HealthCreator" BaseTypeListCollapsed="true">
+    <Position X="1" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\HealthCreator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Template.Entities.Abstract_Factory.SurPrise" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAgAgAAACAAAAAAAAAAAAAAAQAiAAAAAAA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\SurPrise.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Template.Entities.Abstract_Factory.Tire" Collapsed="true">
+    <Position X="3.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\Tire.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Template.Entities.Abstract_Factory.TireCreator" BaseTypeListCollapsed="true">
+    <Position X="3" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\TireCreator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Template.Entities.Abstract_Factory.Trap" Collapsed="true">
+    <Position X="6.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\Trap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Template.Entities.Abstract_Factory.TrapCreator" BaseTypeListCollapsed="true">
+    <Position X="5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\TrapCreator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
   <Class Name="Template.Graphics.Illumination" Collapsed="true">
-    <Position X="13.5" Y="1.5" Width="1.5" />
+    <Position X="18" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAGAABAAgAAAAAAIAgAAAABAAAAAA=</HashCode>
       <FileName>Graphics\Illumination.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.Graphics.LightSource" Collapsed="true">
-    <Position X="17" Y="1.5" Width="1.5" />
+    <Position X="14.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAAAAAIAgACAgAAAAACAAAAAEgAEAgCAQAAA=</HashCode>
       <FileName>Graphics\LightSource.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.Graphics.Material" Collapsed="true">
-    <Position X="20.5" Y="1.5" Width="1.5" />
+    <Position X="18" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAIAAAAQgQAAAAAgAgAAQAAAAAACAEAAMAAEQAAAA=</HashCode>
       <FileName>Graphics\Material.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.Graphics.Materials" Collapsed="true">
-    <Position X="11.75" Y="2.5" Width="1.5" />
+    <Position X="19.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAACAABAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Graphics\Materials.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.Graphics.MeshObjects" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.5" Y="2.5" Width="1.5" />
+    <Position X="21.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAASAAAAAACAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Graphics\MeshObjects.cs</FileName>
@@ -258,7 +311,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Template.Graphics.SamplerStates" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="15.25" Y="3.5" Width="1.5" />
+    <Position X="23.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAASAAAAAAAAAAAAAQAAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>Graphics\SamplerStates.cs</FileName>
@@ -266,7 +319,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Template.Graphics.Texture" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="13.5" Y="4.5" Width="1.5" />
+    <Position X="21.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAABCCIAABAAAAgAkQAABAAEAAAAAEAAIEAAAA=</HashCode>
       <FileName>Graphics\Texture.cs</FileName>
@@ -274,7 +327,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Template.Graphics.Textures" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="15.25" Y="4.5" Width="1.5" />
+    <Position X="23.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAASAAAAAACAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Graphics\Textures.cs</FileName>
@@ -282,26 +335,33 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Template.Properties.Resources" Collapsed="true">
-    <Position X="13.5" Y="3.5" Width="1.5" />
+    <Position X="21.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAQBEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Template.Properties.Settings" Collapsed="true">
-    <Position X="17" Y="3.5" Width="1.5" />
+    <Position X="14.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Enum Name="Template.BonusType" Collapsed="true">
-    <Position X="7.25" Y="6" Width="1.5" />
+  <Interface Name="Template.Entities.Abstract_Factory.ISurpriseCreator">
+    <Position X="4" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACACAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Game\Entities\Bonus.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\ISurpriseCreator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Template.Entities.Abstract_Factory.SurpriseType" Collapsed="true">
+    <Position X="8.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACACAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Game\Entities\Abstract Factory\SurPrise.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Delegate Name="Audio.SoundStop" Collapsed="true">
-    <Position X="7.25" Y="6.75" Width="1.5" />
+    <Position X="8.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
       <FileName>Audio\SharpAudioDevice.cs</FileName>
