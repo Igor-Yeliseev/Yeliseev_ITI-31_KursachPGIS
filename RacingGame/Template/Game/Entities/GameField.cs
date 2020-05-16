@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Template.Entities.Abstract_Factory;
-using Template.Graphics;
 
 namespace Template
 {
@@ -13,8 +11,7 @@ namespace Template
         /// <summary> Массив чекпоинтов </summary>
         public CheckPoint[] checkPoints;
         /// <summary> Массив центральных точек боксов чекпоинтов </summary>
-        public Vector3[] centerPts; // private
-        //private Vector3[] targetPts;
+        private Vector3[] centerPts; // private
 
         private List<MeshObject> pillars;
 
@@ -32,9 +29,7 @@ namespace Template
                 }
             }
         }
-
-        //private int place = 1;
-
+        
         /// <summary> Индекс для коллеции чекпоинтов </summary>
         private int chptIndex = 0;
         /// <summary> Тайм хелпер </summary>
@@ -194,7 +189,6 @@ namespace Template
 
             if (chptIndex < checkPoints.Length && car.CollisionCheckPoint(checkPoints[chptIndex]))
             {
-                //checkPoints[chptIndex].SetMaterial(material);
                 chptIndex++;
                 if (chptIndex == checkPoints.Length)
                 {
@@ -262,28 +256,28 @@ namespace Template
                 //speed.MoveTo(getRandPos(chptIndex + 1, speed.Position.Y));
                 AddBonus(speed);
             }
-            //if (countTire == 0)
-            //{
-            //    surpriseFactory = new TireCreator();
-            //    SurPrise tire = surpriseFactory.Create((MeshObject)bonusMeshes[SurpriseType.Tire].Clone());
-            //    tire.MoveTo(getRandPos(chptIndex + 1, tire.Position.Y));
+            if (countTire == 0)
+            {
+                surpriseFactory = new TireCreator();
+                SurPrise tire = surpriseFactory.Create((MeshObject)bonusMeshes[SurpriseType.Tire].Clone());
+                tire.MoveTo(getRandPos(chptIndex + 1, tire.Position.Y));
 
-            //    AddBonus(tire);
-            //}
-            //if (countDamage == 0)
-            //{
-            //    surpriseFactory = new TrapCreator();
-            //    SurPrise trap = surpriseFactory.Create((MeshObject)bonusMeshes[SurpriseType.Damage].Clone());
-            //    trap.MoveTo(getRandPos(chptIndex, trap.Position.Y));
+                AddBonus(tire);
+            }
+            if (countDamage == 0)
+            {
+                surpriseFactory = new TrapCreator();
+                SurPrise trap = surpriseFactory.Create((MeshObject)bonusMeshes[SurpriseType.Damage].Clone());
+                trap.MoveTo(getRandPos(chptIndex, trap.Position.Y));
 
 
-            //    //Surprise damage = new Surprise((MeshObject)bonusMeshes[SurpriseType.Damage].Clone(), SurpriseType.Damage, 20);
-            //    //damage.MoveTo(getRandPos(chptIndex, damage.Position.Y));
-            //    // Знак косого произведения
-            //    sign = Math.Sign(MyVector.CosProduct(trap.Direction, trap.Position - car.Position));
-            //    spike = trap;
-            //    AddBonus(trap);
-            //}
+                //Surprise damage = new Surprise((MeshObject)bonusMeshes[SurpriseType.Damage].Clone(), SurpriseType.Damage, 20);
+                //damage.MoveTo(getRandPos(chptIndex, damage.Position.Y));
+                // Знак косого произведения
+                sign = Math.Sign(MyVector.CosProduct(trap.Direction, trap.Position - car.Position));
+                spike = trap;
+                AddBonus(trap);
+            }
 
         }
 
@@ -335,8 +329,7 @@ namespace Template
                         return;
                     }
                 }
-
-                //enemy.Target = centerPts[enemy.targetIndex];
+                
                 int index = enemy.targetIndex;
                 enemy.CheckPoint = centerPts[index] + checkPoints[index].Direction * randomIncremCoord(checkPoints[index]);
                 enemy.Target = enemy.CheckPoint;
@@ -358,10 +351,6 @@ namespace Template
                 else
                     enemy.Accelerate();
             }
-            //else
-            //{
-            //    enemy.Brake();
-            //}
 
             enemy.MoveProperly();
         }

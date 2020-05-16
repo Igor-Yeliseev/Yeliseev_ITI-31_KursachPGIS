@@ -23,13 +23,6 @@
       <FileName>Game\Character.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Template.Box" Collapsed="true">
-    <Position X="16.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Game\Entities\Box.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Template.Car" Collapsed="true">
     <Position X="8.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
@@ -119,7 +112,7 @@
   <Class Name="Template.Game" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="14.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAiAFAQQASEGIEAAAQgBAAYBEAiGCBHFAQASoCAAAAs=</HashCode>
+      <HashCode>AAiABAQQASEGIEAAAQgBAAYBEAgGCBGFAQASgCAAAAs=</HashCode>
       <FileName>Game\Game.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />

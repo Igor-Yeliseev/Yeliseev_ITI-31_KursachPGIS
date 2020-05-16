@@ -167,7 +167,6 @@
     <Compile Include="Game\Entities\Abstract Factory\TireCreator.cs" />
     <Compile Include="Game\Entities\Abstract Factory\Trap.cs" />
     <Compile Include="Game\Entities\Abstract Factory\TrapCreator.cs" />
-    <Compile Include="Game\Entities\Box.cs" />
     <Compile Include="Game\Entities\Car.cs" />
     <Compile Include="Game\Entities\CheckPoint.cs" />
     <Compile Include="Game\Entities\CheckPointsComparer.cs" />

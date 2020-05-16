@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using SharpDX.Windows;
 using Device11 = SharpDX.Direct3D11.Device;
-using Buffer11 = SharpDX.Direct3D11.Buffer;
 using SharpDX.Direct3D;
 
 namespace Template
@@ -196,12 +191,7 @@ namespace Template
                 DeviceCreationFlags.BgraSupport, // |                                // ???DeviceCreationFlags.None. For Direct2D need BGRA support
                 //DeviceCreationFlags.Debug, //| DeviceCreationFlags.Debuggable,   // Not for all devices and drivers
                 _swapChainDescription, out _device, out _swapChain);
-
-            //int q_l = _device.CheckMultisampleQualityLevels(Format.R8G8B8A8_SInt, 4); Check@@@@
-            //Console.WriteLine(q_l);
-            //q_l = _device.CheckMultisampleQualityLevels(Format.R32G32B32_Float, 4);
-            //Console.WriteLine(q_l);
-
+            
             // Device visualization context.
             _deviceContext = _device.ImmediateContext;
 

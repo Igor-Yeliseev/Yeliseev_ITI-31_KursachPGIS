@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Template.Entities.Abstract_Factory
 {
     class ExtraSpeed : SurPrise
@@ -14,7 +9,6 @@ namespace Template.Entities.Abstract_Factory
         }
 
         public override SurpriseType Type => SurpriseType.Speed;
-
 
     }
 }

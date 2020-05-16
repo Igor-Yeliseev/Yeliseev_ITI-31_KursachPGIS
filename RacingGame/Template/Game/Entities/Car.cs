@@ -181,6 +181,15 @@ namespace Template
         
         public virtual void TurnWheelsLeft(float alpha)
         {
+            if (_speed > MaxSpeed * 0.5) // Доработать
+            {
+                alpha /= 2;
+            }
+            else if (_speed > MaxSpeed * 0.7)
+            {
+                alpha *= 0.3f;
+            }
+
             if (turnCount >= -itrs)
             {
                 _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(-alpha));
@@ -192,6 +201,15 @@ namespace Template
 
         public virtual void TurnWheelsRight(float alpha)
         {
+            if (_speed > MaxSpeed * 0.5) // Доработать
+            {
+                alpha /= 2;
+            }
+            else if (_speed > MaxSpeed * 0.7)
+            {
+                alpha *= 0.3f;
+            }
+
             if (turnCount <= itrs)
             {
                 _direction = Vector3.Transform(_direction, Matrix3x3.RotationY(alpha));
@@ -266,13 +284,6 @@ namespace Template
         {
             int sign = Math.Sign(_speed);
             if (_speed == 0) return;
-
-            //if (_speed > MaxSpeed * 0.7) // Доработать
-            //{
-            //    itrs = 24;
-            //}
-            //else
-            //    itrs = 54;
 
             MoveProperly(sign);
         }

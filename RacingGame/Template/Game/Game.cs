@@ -1,59 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Resources;
 using SharpDX;
-using SharpDX.DXGI;
-using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.Windows;
 using Template.Properties; // For work with resources of project Assembly.Properties. Then we can access to all inside Resorces.resx.
 using Template.Graphics;
-using System.IO;
 using Template.Entities.Abstract_Factory;
 
 namespace Template
 {
     class Game : IDisposable
     {
-        // TODO: Realize game state logic.
-        ///// <summary>Game states.</summary>
-        ///// <remarks>
-        ///// <list type="bullet">
-        ///// <listheader>Correct state transitions:</listheader>
-        ///// <item>BeforeStart -> Play,</item>
-        ///// <item>BeforeStart -> Exit,</item>
-        ///// <item>Play <-> Pause,</item>
-        ///// <item>Play -> Finish,</item>
-        ///// <item>Play -> Die,</item>
-        ///// <item>Finish -> BeforeStart,</item>
-        ///// <item>Die -> BeforeStart,</item>
-        ///// <item>BeforeStart -> Exit,</item>
-        ///// <item>Pause -> Exit,</item>
-        ///// <item>Finish -> Exit,</item>
-        ///// <item>Die -> Exit</item>
-        ///// </list>
-        ///// </remarks>
-        //public enum GameState
-        //{
-        //    BeforeStart,
-        //    Play,
-        //    Pause,
-        //    Finish,
-        //    Die,
-        //    Exit
-        //}
-
-        ///// <summary>Game states.</summary>
-        //private GameState _gameState;
-        ///// <summary>Game states.</summary>
-        //public GameState State { get => _gameState; }
-
-        // TODO: HUD to separate class.
         public struct HUDResources
         {
             public int textFPSTextFormatIndex;
@@ -82,8 +41,6 @@ namespace Template
         private Materials _materials;
         private Illumination _illumination;
         
-        
-        private MeshObject line1, line2, line3, line4;
         
         /// <summary>List of objects with meshes.</summary>
         private MeshObjects _meshObjects;
@@ -150,6 +107,7 @@ namespace Template
             // 1. Render form.
             _renderForm = new RenderForm("SharpDX");
             _renderForm.ClientSize = new System.Drawing.Size(1600, 900);
+            _renderForm.Text = "Автомобильные гонки";
             _renderForm.UserResized += RenderFormResizedCallback;
             _renderForm.Activated += RenderFormActivatedCallback;
             _renderForm.Deactivate += RenderFormDeactivateCallback;
@@ -159,7 +117,7 @@ namespace Template
             _timeHelper = new TimeHelper();
             _random = new Random();
             // 2. DirectX 3D.
-            _directX3DGraphics = new DirectX3DGraphics(_renderForm) { RenderMode = DirectX3DGraphics.RenderModes.Wireframe};
+            _directX3DGraphics = new DirectX3DGraphics(_renderForm) { RenderMode = DirectX3DGraphics.RenderModes.Solid};
             // 3. Renderer.
             _renderer = new Renderer(_directX3DGraphics);
             _renderer.CreateConstantBuffers();
@@ -217,10 +175,6 @@ namespace Template
 
             // 6. Load meshes.
             _meshObjects = new MeshObjects();
-            line1 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[1]);
-            line2 = loader.LoadMeshFromObject("Resources\\line.obj", _materials[3]);
-            line3 = (MeshObject)line1.Clone();
-            line4 = (MeshObject)line2.Clone();
 
             var mustang = loader.LoadMeshesFromObject("Resources\\mustang.obj", _materials[6]);
             var corvette = loader.LoadMeshesFromObject("Resources\\corvette.obj", _materials[7]);
@@ -278,10 +232,6 @@ namespace Template
 
 
             // Добавление мешей
-            //_meshObjects.Add(line1);
-            //_meshObjects.Add(line2);
-            //_meshObjects.Add(line3);
-            //_meshObjects.Add(line4);
             _meshObjects.Add(startline);
             _meshObjects.Add(road);
 
@@ -462,38 +412,19 @@ namespace Template
                 
                 _character.FollowCar(car);
 
-                //sounds.Plays();
+                sounds.Plays();
 
 
                 if (_inputController.Space)
                 {
                     _character.Position = new Vector3(_character.Position.X, _character.Position.Y + 2, _character.Position.Z);
-
-                    //anims.IsEnemyTurned = false;
+                    
                     //car.BackWheels();
                 }
 
-
-
-
-                // АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ ----- АНИМАЦИЯ
-                // Поворот врага вдоль указанного направления
-                //if (!_inputController.Space && !anims.IsEnemyTurned)
-                //{
-                //    anims.AnimateEnemyToTarget(enemy, alpha);
-                //}
-
-                // Анимация возврата колес
-                //if((!_inputController.RightPressed && !_inputController.LeftPressed) && car.IsWheelsTirned)
-                //{
-                //    anims.IsWheelsAnimate = true;
-                //} anims.AnimateWheels(car, alpha);
-                // --------------------------------------------------------------------------------------------------------------------------------
-
-
                 // Игровое поле
                 gameField.CheckRaceFinish();
-                //gameField.MoveEnemies();
+                gameField.MoveEnemies();
                 gameField.CheckCollisions();
                 gameField.CreateSurprises();
 
@@ -607,7 +538,7 @@ namespace Template
                                 $"car itrs: {/*car.turnCount*/0} \n" +
                                 $"car Position X: {car.Position.X} Y:{car.Position.Y} Z:{car.Position.Z}\n" +
                                 $"car Speed: {car.Speed} ups\n\n" +
-                                
+
                                 $"enemy Position   X: {enemy1.Position.X} Y:{enemy1.Position.Y} Z:{enemy1.Position.Z}\n" +
                                 $"enemy Direction   X: {enemy1.Direction.X} Y:{enemy1.Direction.Y} Z:{enemy1.Direction.Z}\n" +
                                 $"enemy Speed: {enemy1.Speed} ups\n" +
@@ -616,7 +547,7 @@ namespace Template
                                 $"Data: {screen}\n";
 
             if (_displayHelp) text += "\n\n" + _helpString;
-            
+
             _directX2DGraphics.BeginDraw();
             //_directX2DGraphics.DrawText(text, _HUDResources.textFPSTextFormatIndex, Matrix3x2.Identity,
             //                            _directX2DGraphics.RenderTargetClientRectangle, _HUDResources.textFPSBrushIndex + 1); // 0 - Желтый, 1 - Красный, 2 - Черный
